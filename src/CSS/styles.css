@@ -1,0 +1,64 @@
+/*Use this in the future to consolidate styling*/
+
+#main_body {
+	overflow-y: scroll;
+	text-align: left;
+}
+
+#navbackground {
+	background-color: #4d000d;
+	height: 10%;
+	text-align: right;
+	z-index: 1;
+}
+
+#nav-div {
+	height: 10%;
+	text-align: right;
+}
+
+#logo {
+	color: white;
+	font-family: "Lato", sans-serif;
+	font-size: 20px;
+}
+
+#login-button {
+	background-color: white;
+	color: black;
+	margin-right: 10px;
+}
+#add-agency-button {
+	background-color: white;
+	color: black;
+	margin-right: 10px;
+}
+#edit-agency-button {
+	background-color: white;
+	color: black;
+	margin-right: 10px;
+}
+#logout-button {
+	background-color: white;
+	color: black;
+	margin-right: 10px;
+}
+
+.navbar {
+	min-height: 50px;
+}
+
+#basic-navbar-nav {
+	margin-right: auto;
+	/*color: white;*/
+	background-color: #4d000d;
+}
+
+.right {
+	position: absolute;
+	right: 50px;
+	align-self: center;
+}
+
+
+  

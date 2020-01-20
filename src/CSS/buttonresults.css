@@ -1,0 +1,136 @@
+#parent {
+   display: flex;
+   
+}
+
+#br-back-button {
+   margin-top: 2%;
+   margin-left: 80%;
+   margin-bottom: 2%;
+}
+
+#btn-text{
+   font-size: 30px;
+}
+
+.centered {
+   text-align: center;
+   float: center;
+}
+
+#main-component-btn-results {
+   position: relative;
+   text-align: center;
+   width: 90%;
+   height: 100%;
+   display: inline-block;
+   background-image: url("../Images/clocktower_cropped.jpg");
+   background-repeat: no-repeat;
+   background-size: 100% 100%;
+   background-color: #000000;
+   padding-top: 10px;
+   font-size: 10%;
+
+}
+
+#help_text {
+   padding-top: 2%;
+   color: white;
+}
+
+#hotline-component {
+   position: fixed;
+   margin-top: -10px;
+   right: 0;
+   background-color: #cfcdcc;
+   top: 0px;
+   height: 110%;
+   width: 10%;
+   z-index: -1;
+   float: left;
+   
+}
+
+#hotline-text {
+   text-align: center;
+   bottom: 10px;
+}
+
+.hotline-titles {
+   font-size: 100%;
+   display: inline-block;
+}
+
+.hotline-numbers {
+   font-size: 75%;
+}
+
+
+#navbar-button {
+   width: 80%;
+   height: 100%;
+   background-color: #b8b8b8;
+   outline-color: #7a0f21;
+   color: black;
+   display: inline-block;
+   font-size: 50%;
+   
+}
+#navbar-button-survey {
+   background-color: #b8b8b8;
+   outline-color: #7a0f21;
+   color: black;
+   padding-bottom: 2%;
+}
+#col {
+   padding-bottom: 2%;
+   
+}
+
+#button-grid{
+   position: relative;
+   left: 0;
+   padding-bottom: 2%;
+   padding-top: 1%;
+   text-align: center;
+   align-content: center;
+   font-size: 50%;
+}
+
+#wrapper {
+   position: relative;
+   vertical-align: top;
+   display: inline-block;
+   padding-bottom: 10%;
+   text-align: center;
+   top: 120px;
+}
+
+.event-component {
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   font-size: 20px;
+
+   background-color: #cfcdcc;
+}
+#event-table {
+   width: 100%;
+   outline: solid black;
+   height: 80%;
+   background-color: #b8b8b8;
+   color: black;
+}
+
+#events-heading {
+   outline: solid black;
+   background-color: #4D000D;
+   color: white;
+   height: 5%;
+}
+
+#scrollable {
+   overflow-y: scroll;
+   text-align: left;
+   height: 85%;
+}
