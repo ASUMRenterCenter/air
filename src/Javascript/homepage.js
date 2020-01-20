@@ -46,7 +46,7 @@ export default class Homepage extends Component {
 							<div className="col">
 								<div className="card-deck">
 									<div className="card btn">
-										<button onClick={(e) => this.handleClick(taxonomy.fields['id'], e)} type="button" className="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title={taxonomy.fields['description']}>
+										<button onClick={(e) => this.handleClick(taxonomy.id, e)} type="button" className="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title={taxonomy.fields['description']}>
 											<TaxonomyCard {...taxonomy.fields} />
 										</button>		
 									</div>

@@ -22,24 +22,26 @@ export default class buttonresults extends React.Component{
 		this.state = {
          parent_id: "string",
          taxonomies: [],
-         id: toString(this.props.match.params.id),
+         id: this.props.match.params.id,
 		}
    }
 
-   find_ids(){
-      base('taxonomy').find(this.state.id, function(err, record) {
-         if (err) { console.error(err); return; }
-         console.log('Retrieved', record.id);
-         this.state.parent_id = record.parent_id;
-     });
+   // find_ids(){
+   //    console.log()
+   //    base('taxonomy').find(this.state.id, function(err, record) {
+   //       if (err) { console.error(err); return; }
+   //       console.log('Retrieved', record.id);
+   //       this.state.parent_id = record.parent_id;
+   //   });
 
-   }
+   // }
 
    componentDidMount() {
-      this.find_ids()
+      //this.find_ids()
+      console.log("This id: " + this.state.id)
 		base('taxonomy').select({
-         filterByFormula: '{parent_id} != ""',
-         // filterByFormula: "'parent_id' != '${this.state.id}'",
+         // filterByFormula: '{parent_id} != ""',
+         filterByFormula: '{parent_id} = "${this.state.id}"',
          view : "Grid view",
 		}).eachPage((taxonomies, fetchNextPage) => {
 			this.setState({
