@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import Airtable from 'airtable';
 
 import history from './history';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
-
-const base = new Airtable({ apiKey: 'key68OVjXXeLKQuEl' }).base('app6JuPyfzqD3RZiA');
 
 
 export default class Homepage extends Component {
@@ -17,7 +14,7 @@ export default class Homepage extends Component {
 	}
 
 	componentDidMount() {
-		base('taxonomy').select({
+		this.props.database('taxonomy').select({
 			filterByFormula: '{parent_id} = ""',
 			view: "Grid view",
 		}).eachPage((taxonomies, fetchNextPage) => {
@@ -27,12 +24,12 @@ export default class Homepage extends Component {
 			console.log(taxonomies)
 			fetchNextPage();
 		}, function done(error) {
-			console.log(error);
+			console.log("Will Return An Error:" + error);
 		});
 	}
 
-	handleClick(id, e){
-		{history.push('/ButtonResults/' + id)} 
+	handleClick(name, id, e){
+		{history.push('/ButtonResults/' + name + '/' + id)} 
 	}
 
 	render() {
@@ -40,12 +37,12 @@ export default class Homepage extends Component {
 			<div className="outermost">
 				{this.state.taxonomies.length > 0 ? (
 					this.state.taxonomies.map((taxonomy, index) =>
-					<div className ="container mt-3" key={taxonomy['id']}>
+					<div className ="container mt-3" key={taxonomy.fields['id']}>
 						<div className="row">
 							<div className="col">
 								<div className="card-deck">
 									<div className="card btn">
-										<button onClick={(e) => this.handleClick(taxonomy.fields['id'], e)} type="button" className="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title={taxonomy.fields['x-description']}>
+										<button onClick={(e) => this.handleClick(taxonomy.fields['name'], taxonomy.fields['id'], e)} type="button" className="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title={taxonomy.fields['x-description']}>
 											<TaxonomyCard {...taxonomy.fields} />
 										</button>		
 									</div>

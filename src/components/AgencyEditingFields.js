@@ -1,6 +1,5 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
 import '../CSS/ComponentStyle.css'
 import {Col} from "react-bootstrap"
 import SaveChangesButton from "./SaveChangesButton.js"

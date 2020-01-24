@@ -1,8 +1,7 @@
 import React from 'react';
-import { Row, Col, Image, Button, Jumbotron } from 'react-bootstrap'
-import Accordion from 'react-bootstrap/Accordion'
+import { Jumbotron } from 'react-bootstrap'
 import SurveyResultSection from './SurveyResultSection.js'
-import '../CSS/ComponentStyle.css'
+import '../../CSS/ComponentStyle.css'
 import PrintSaveShare from './PrintSaveShare'
 
 

@@ -2,7 +2,6 @@ import React from "react";
 import $ from "jquery";
 import {
 	Button,
-	Image,
 	Container,
 	Row,
 	Col,
@@ -11,7 +10,6 @@ import {
 	ButtonToolbar
 } from "../../node_modules/react-bootstrap";
 import "../CSS/loginpage.css";
-import Nav from "./navbar";
 
 class Loginpage extends React.Component {
 	constructor(props) {
