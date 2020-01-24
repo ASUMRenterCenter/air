@@ -55,7 +55,7 @@ export default class buttonresults extends React.Component{
 	}
 
 	handleClick(id, e){
-		{history.push('/ButtonResults/' + id)} 
+		{history.push('/ButtonResults/' + id)}
 	}
 
    render (){
@@ -74,7 +74,7 @@ export default class buttonresults extends React.Component{
 					// 				<div className="card btn">
 					// 					<button onClick={(e) => this.handleClick(taxonomy.fields['id'], e)} type="button" className="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title={taxonomy.fields['description']}>
 					// 						<TaxonomyCard {...taxonomy.fields} />
-					// 					</button>		
+					// 					</button>
 					// 				</div>
 					// 			</div>
 					// 		</div>
@@ -142,6 +142,6 @@ const TaxonomyCard = ({id, name, description, image}) => (
 		<div className="card-body">
 			<h5 className="card-title">{name}</h5>
 		</div>
-	</div>				
+	</div>
 
 );

@@ -4,7 +4,8 @@ import Accordion from 'react-bootstrap/Accordion'
 import SurveyResultSection from './SurveyResultSection.js'
 import SurveyResult from './SurveyResult'
 import '../CSS/ComponentStyle.css'
-import PrintSaveShare from './PrintSaveShare'
+import PrintButton from './PrintButton'
+import SavePageButton from './SavePageButton'
 
 
 
@@ -13,8 +14,11 @@ function AgencyInfoPage() {
     <div>
       <Jumbotron>
         <h1>[Agency Name] Information</h1>
+        <PrintButton></PrintButton>
         <div id="printSaveShare">
-          <PrintSaveShare id="printSaveShare"></PrintSaveShare>
+          <PrintButton id="printSaveShare"></PrintButton>
+
+          <SavePageButton id='printSaveShare'></SavePageButton>
         </div>
       </Jumbotron>
       <div class = "agencyInfoText">
