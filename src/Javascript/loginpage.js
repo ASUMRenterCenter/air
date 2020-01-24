@@ -2,7 +2,6 @@ import React from "react";
 import $ from "jquery";
 import {
 	Button,
-	Image,
 	Container,
 	Row,
 	Col,
@@ -11,18 +10,12 @@ import {
 	ButtonToolbar
 } from "../../node_modules/react-bootstrap";
 import "../CSS/loginpage.css";
-import Nav from "./navbar";
-import Airtable from "airtable";
 
-const base = new Airtable({ apiKey: "key68OVjXXeLKQuEl" }).base(
-	"app6JuPyfzqD3RZiA"
-);
-//const table = base("ogranization_accounts");
 class Loginpage extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			ogranization_accounts: [],
+			organization_accounts: [],
 			username: "",
 			password: ""
 		};
@@ -32,21 +25,33 @@ class Loginpage extends React.Component {
 	}
 
 	componentDidMount() {
-		base("organization_accounts")
+		this.props
+			.database("organization_accounts")
 			.select({
-				filterByFormula: "{org_acc_id}"
+				fields: ["org_acc_id", "org_name", "username", "password"],
+				sort: [{ field: "org_acc_id", direction: "asc" }]
 			})
 			.eachPage(
-				(ogranization_accounts, fetchNextPage) => {
+				(organization_accounts, fetchNextPage) => {
 					this.setState({
-						ogranization_accounts
+						organization_accounts
 					});
-					console.log(ogranization_accounts);
+					console.log(organization_accounts);
+					fetchNextPage();
+				}
+				/* function page(records, fetchNextPage) {
+					records.forEach(function(record) {
+						console.log("Retrieved", record.get("org_acc_id"));
+					});
 					fetchNextPage();
 				},
-				function done(error) {
-					console.log(error);
-				}
+				function done(err) {
+					if (err) {
+						console.error(err);
+					} else {
+						return;
+					}
+				} */
 			);
 	}
 
@@ -57,11 +62,8 @@ class Loginpage extends React.Component {
 		//document.getElementById("add-agency-button").setAttribute("active", "true");
 	}
 
-	handleSubmit(id, e) {
-		/* {
-			history.push("/ButtonResults/" + id);
-		} */
-		e.preventDefault();
+	handleSubmit(e) {
+		if (this.state.organization_accounts) e.preventDefault();
 	}
 
 	handleChange(e) {
@@ -97,23 +99,29 @@ class Loginpage extends React.Component {
 							<Col md={{ span: 4, offset: 1 }}>
 								<form onSubmit={e => this.handleSubmit()}>
 									<Form.Group controlId="formBasicUsername">
-										<Form.Label>Enter Username</Form.Label>
-										<Form.Control
+										<label class="form-label" for="formBasicUsername">
+											Enter Username
+										</label>
+										<input
 											type="username"
+											name="username"
 											placeholder="Username"
-											value={this.state.username}
-											onChange={this.handleChange}
+											className="form-control"
+											//value={this.state.username}
+											onChange={event => this.handleChange(event)}
 										/>
 										<ForgotUsername />
 									</Form.Group>
 
 									<Form.Group controlId="formBasicPassword">
 										<Form.Label>Password</Form.Label>
-										<Form.Control
+										<input
 											type="password"
+											name="password"
 											placeholder="Password"
-											value={this.state.password}
-											onChange={this.handleChange}
+											className="form-control"
+											//value={this.state.password}
+											onChange={event => this.handleChange(event)}
 										/>
 										<ForgotPassword />
 									</Form.Group>

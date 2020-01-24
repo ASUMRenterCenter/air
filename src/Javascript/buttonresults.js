@@ -1,19 +1,7 @@
 import React from "react";
-import Airtable from 'airtable';
 import history from './history';
-import { Button, Image, Container, Row, Col} from '../../node_modules/react-bootstrap';
 import "../CSS/buttonresults.css";
-import community_garden from "../Images/ButtonImages/community_garden.png";
-import food from "../Images/ButtonImages/food.png";
-import emergency_food from "../Images/ButtonImages/emergency_food.png";
-import food_delivery from "../Images/ButtonImages/food_delivery.png";
-import benefit from "../Images/ButtonImages/benefit.png";
-import nutrition from "../Images/ButtonImages/nutrition.png";
-import money from "../Images/ButtonImages/money.png";
-import see_all from "../Images/ButtonImages/see_all.png";
-import phone from "../Images/ButtonImages/phone.png";
 
-const base = new Airtable({ apiKey: 'key68OVjXXeLKQuEl' }).base('app6JuPyfzqD3RZiA');
 
 export default class buttonresults extends React.Component{
    constructor(props) {
@@ -21,14 +9,13 @@ export default class buttonresults extends React.Component{
 		this.state = {
          taxonomies: [],
          parent_id: this.props.match.params.parent_id,
+         parent_name: this.props.match.params.parent_name,
 		}
    }
 
    componentDidMount() {
-      //this.find_ids()
       var filter = "({parent_id} = '" + this.state.parent_id + "')";
-      // '{parent_id} = ""'
-		base('taxonomy').select({
+		this.props.database('taxonomy').select({
          filterByFormula: filter,
          view : "Grid view",
 		}).eachPage((taxonomies, fetchNextPage) => {
@@ -40,33 +27,39 @@ export default class buttonresults extends React.Component{
 		}, function done(error) {
 			console.log(error);
 		});
-	}
-
-	handleClick(id, e){
-		{history.push('/ButtonResults/' + id)} 
+   }
+   
+   componentDidUpdate(){
+      console.log("Taxonomy Length: " + this.state.taxonomies.length)
+      if(this.state.taxonomies.length == 0){
+         history.push('/CategoryResults/' + this.state.parent_name)
+      }
+   }
+	handleClick(name, id, e){
+		{history.push('/ButtonResults/' + name + '/' + id)} 
 	}
 
    render (){
       return (
 			<div className="outermost">
+            <h1>You chose {this.state.parent_name}. Can we narrow the resources down further for you?</h1>
 				{this.state.taxonomies.length > 0 ? (
                this.state.taxonomies.map((taxonomy, index) =>
-               
-					<div className ="container mt-3" key={taxonomy['id']}>
+					<div className ="container mt-3" key={taxonomy.fields['id']}>
 						<div className="row">
 							<div className="col">
 								<div className="card-deck">
 									<div className="card btn">
-										<button onClick={(e) => this.handleClick(taxonomy.fields['id'], e)} type="button" className="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title={taxonomy.fields['x-description']}>
+										<button onClick={(e) => this.handleClick(taxonomy.fields['name'], taxonomy.fields['id'], e)} type="button" className="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title={taxonomy.fields['x-description']}>
 											<TaxonomyCard {...taxonomy.fields} />
 										</button>		
 									</div>
 								</div>
 							</div>
 						</div>
-						</div>
+					</div>
 					)
-				):(<p>FIXME: If the button results taxonomies array is empty goto agency results page. Will modify buttonresults.js line 80 once the agency results page is setup.</p>)
+				):(<p>Please Wait While We Search For Results.</p>)
 				}
 			</div>
 		)

@@ -1,6 +1,6 @@
 import React from "react"
 import Button from "react-bootstrap/Button"
-import "../CSS/ComponentStyle.css"
+import "../../CSS/ComponentStyle.css"
 import Card from "react-bootstrap/Card"
 import Accordion from "react-bootstrap/Accordion"
 
