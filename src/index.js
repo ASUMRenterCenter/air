@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
-import history from './Javascript/history';
+import history from "./Javascript/history";
 import "./CSS/styles.css";
 import Navbar from "./Javascript/navbar";
 import ExitButton from "./Javascript/exitbutton";
@@ -24,9 +24,9 @@ const routing = (
 			<Route
 				exact
 				path="*"
-				component={() => (
+				component={props => (
 					<div>
-						<Navbar />
+						<Navbar {...props} />
 					</div>
 				)}
 			/>
@@ -51,7 +51,7 @@ const routing = (
 				/>
 				<Route
 					path="/ButtonResults/:id"
-					component={(props) => (
+					component={props => (
 						<div>
 							<ButtonResults {...props} />
 							<ExitButton />
@@ -104,6 +104,15 @@ const routing = (
 					component={() => (
 						<div>
 							<AgencyInfoPage />
+						</div>
+					)}
+				/>
+				<Route
+					path="/Organization_Home/:id"
+					component={props => (
+						<div>
+							<Homepage />
+							<ExitButton />
 						</div>
 					)}
 				/>

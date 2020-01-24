@@ -71,17 +71,16 @@ Added 1/19/20 by Kathryn Reese
 To use NPM start you first have to install npx.
 Here are a list of commands that should be run in order to use this app:
 
-$ curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+\$ curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 
-$ sudo apt-get install -y nodejs
+\$ sudo apt-get install -y nodejs
 
-$ node --version   (To check if it installed correctly)
+\$ node --version (To check if it installed correctly)
 
 cd into the app folder
 
 Note: you may also need to install these:
 
-npm install bootstrap popper.js jquery
-npm install airtable
+npm install
 
-$ npm start
+\$ npm start

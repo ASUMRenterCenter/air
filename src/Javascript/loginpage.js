@@ -12,10 +12,28 @@ import {
 } from "../../node_modules/react-bootstrap";
 import "../CSS/loginpage.css";
 import Nav from "./navbar";
+import Airtable from "airtable";
 
+const base = new Airtable({ apiKey: "key68OVjXXeLKQuEl" }).base(
+	"app6JuPyfzqD3RZiA"
+);
+const table = base("ogranization_accounts");
 class Loginpage extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			username: "",
+			password: ""
+		};
+
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+	}
+
+	componentDidMount() {
+		table.select({
+			fields: ["username", "password"]
+		});
 	}
 
 	showButtons() {
@@ -23,6 +41,17 @@ class Loginpage extends React.Component {
 		$("#edit-agency-button").removeClass("disabled");
 		//document.getElementById("add-agency-button").removeAttribute("disabled");
 		//document.getElementById("add-agency-button").setAttribute("active", "true");
+	}
+
+	handleSubmit(e) {
+		//alert("Proceed?");
+		e.preventDefault();
+	}
+
+	handleChange(e) {
+		this.setState({
+			[e.target.name]: e.target.value
+		});
 	}
 
 	render() {
@@ -50,27 +79,36 @@ class Loginpage extends React.Component {
 					<Container id="login-container" class="centered">
 						<Row>
 							<Col md={{ span: 4, offset: 1 }}>
-								<Form>
-									<Form.Group controlId="formBasicEmail">
+								<form onSubmit={e => this.handleSubmit()}>
+									<Form.Group controlId="formBasicUsername">
 										<Form.Label>Enter Username</Form.Label>
-										<Form.Control type="username" placeholder="Username" />
+										<Form.Control
+											type="username"
+											placeholder="Username"
+											value={this.state.value}
+											onChange={this.handleChange}
+										/>
 										<ForgotUsername />
 									</Form.Group>
 
 									<Form.Group controlId="formBasicPassword">
 										<Form.Label>Password</Form.Label>
-										<Form.Control type="password" placeholder="Password" />
+										<Form.Control
+											type="password"
+											placeholder="Password"
+											value={this.state.value}
+											onChange={this.handleChange}
+										/>
 										<ForgotPassword />
 									</Form.Group>
-									<Button
-										onClick={this.showButtons}
-										variant="dark"
+									<button
+										//onClick={this.showButtons}
+										class="btn btn-dark"
 										type="submit"
-										href="/"
 									>
 										Submit
-									</Button>
-								</Form>
+									</button>
+								</form>
 							</Col>
 							<Col md={{ offset: 1 }}>
 								<br></br>
