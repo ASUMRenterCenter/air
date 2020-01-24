@@ -112,10 +112,10 @@ const routing = (
 					)}
 				/>
 				<Route
-					path="/Organization_Home/:id"
+					path="/Organization_Home/:org_name/:org_acc_id"
 					component={props => (
 						<div>
-							<Homepage />
+							<Homepage database={base} />
 							<ExitButton />
 						</div>
 					)}

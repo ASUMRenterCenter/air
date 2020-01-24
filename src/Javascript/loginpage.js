@@ -10,6 +10,7 @@ import {
 	ButtonToolbar
 } from "../../node_modules/react-bootstrap";
 import "../CSS/loginpage.css";
+import history from "./history";
 
 class Loginpage extends React.Component {
 	constructor(props) {
@@ -17,7 +18,7 @@ class Loginpage extends React.Component {
 		this.state = {
 			organization_accounts: [],
 			username: "",
-			password: ""
+			password: "",
 		};
 
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -63,13 +64,29 @@ class Loginpage extends React.Component {
 	}
 
 	handleSubmit(e) {
-		if (this.state.organization_accounts) e.preventDefault();
+		/* this.state.organization_accounts.length > 0 ? (
+			this.state.organization_accounts.map(function(org, index) {
+				if (org.fields['username'] === this.state.username){
+					if (org.fields['password'] === this.state.password){
+						return history.push('/Organization_Home/' + org.fields['org_name'] + '/' + org.fields['org_acc_id']);
+					}
+				}
+			}
+			)
+		):("") */
+		e.preventDefault();
+		if ((this.state.organization_accounts[0].fields['username'] === this.state.username) && (this.state.organization_accounts[0].fields['password'] === this.state.password)) {
+			history.push('/Organization_Home/' + this.state.organization_accounts[0].fields['org_name'] + '/' + this.state.organization_accounts[0].fields['org_acc_id']);
+		}
+
+		
 	}
 
 	handleChange(e) {
 		this.setState({
 			[e.target.name]: e.target.value
 		});
+		console.log(this.state.organization_accounts[0].fields['password']);
 	}
 
 	render() {
@@ -97,7 +114,7 @@ class Loginpage extends React.Component {
 					<Container id="login-container" class="centered">
 						<Row>
 							<Col md={{ span: 4, offset: 1 }}>
-								<form onSubmit={e => this.handleSubmit()}>
+								<form method="POST" action="">
 									<Form.Group controlId="formBasicUsername">
 										<label class="form-label" for="formBasicUsername">
 											Enter Username
@@ -126,7 +143,7 @@ class Loginpage extends React.Component {
 										<ForgotPassword />
 									</Form.Group>
 									<button
-										//onClick={this.showButtons}
+										onClick={e => this.handleSubmit()}
 										class="btn btn-dark"
 										type="submit"
 									>
