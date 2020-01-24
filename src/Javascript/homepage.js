@@ -19,7 +19,6 @@ export default class Homepage extends Component {
 	componentDidMount() {
 		base('taxonomy').select({
 			filterByFormula: '{parent_id} = ""',
-			filterByFormula: '{image} != ""',
 			view: "Grid view",
 		}).eachPage((taxonomies, fetchNextPage) => {
 			this.setState({
@@ -46,7 +45,7 @@ export default class Homepage extends Component {
 							<div className="col">
 								<div className="card-deck">
 									<div className="card btn">
-										<button onClick={(e) => this.handleClick(taxonomy.id, e)} type="button" className="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title={taxonomy.fields['description']}>
+										<button onClick={(e) => this.handleClick(taxonomy.fields['id'], e)} type="button" className="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title={taxonomy.fields['x-description']}>
 											<TaxonomyCard {...taxonomy.fields} />
 										</button>		
 									</div>
@@ -55,7 +54,7 @@ export default class Homepage extends Component {
 						</div>
 						</div>
 					)
-				):(<p>Loading...</p>)
+				):("")
 				}
 			</div>
 		)
@@ -282,7 +281,7 @@ export default class Homepage extends Component {
 
 const TaxonomyCard = ({id, name, description, image}) => (
 	<div>
-		<img className="card-img-top" src={typeof image !== 'undefined'? image[0].url : null} alt={name} />
+		{typeof image !== 'undefined'? <img className="card-img-top" src={image[0].url} alt={name} /> : null}
 		<div className="card-body">
 			<h5 className="card-title">{name}</h5>
 		</div>
