@@ -2,7 +2,7 @@ import React from "react"
 import SurveyResult from "./SurveyResult"
 import Card from "react-bootstrap/Card"
 import Button from "react-bootstrap/Button"
-import "../CSS/ComponentStyle.css"
+import "../../CSS/ComponentStyle.css"
 
 
 class SurveyResultSection extends React.Component{

@@ -11,12 +11,14 @@ import LoginPage from "./Javascript/loginpage";
 import AddAgency from "./Javascript/addagency";
 import EditAgency from "./components/AgencyEditPage";
 import Survey from "./Javascript/survey";
-import SurveyResults from "./components/SurveyResultsPage";
-import CategoryResults from "./components/CategoryResultsPage";
+import SurveyResults from "./Javascript/CategoryResults/SurveyResultsPage";
+import CategoryResults from "./Javascript/CategoryResults/CategoryResultsPage";
 import AgencyInfoPage from "./components/AgencyInfoPage";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Airtable from 'airtable';
 
 const Notfound = () => <h1>Not found</h1>;
+const base = new Airtable({ apiKey: 'key68OVjXXeLKQuEl' }).base('app6JuPyfzqD3RZiA');
 
 const routing = (
 	<Router history={history}>
@@ -36,7 +38,7 @@ const routing = (
 					path="/"
 					component={() => (
 						<div>
-							<Homepage />
+							<Homepage database={base}/>
 							<ExitButton />
 						</div>
 					)}
@@ -50,11 +52,11 @@ const routing = (
 					)}
 				/>
 				<Route
-					path="/ButtonResults/:id"
+					path="/ButtonResults/:parent_name/:parent_id"
 					component={(props) => (
 						<div>
-							<ButtonResults {...props} />
-							<ExitButton />
+							<ButtonResults {...props} database={base}/>
+							{/* <ExitButton /> */}
 						</div>
 					)}
 				/>
@@ -76,10 +78,10 @@ const routing = (
 					)}
 				/>
 				<Route
-					path="/CategoryResults"
-					component={() => (
+					path="/CategoryResults/:name"
+					component={props => (
 						<div>
-							<CategoryResults />
+							<CategoryResults {...props} database={base}/>
 						</div>
 					)}
 				/>

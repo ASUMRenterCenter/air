@@ -1,47 +1,22 @@
 import React from "react";
-import Airtable from 'airtable';
 import history from './history';
-import { Button, Image, Container, Row, Col} from '../../node_modules/react-bootstrap';
 import "../CSS/buttonresults.css";
-import community_garden from "../Images/ButtonImages/community_garden.png";
-import food from "../Images/ButtonImages/food.png";
-import emergency_food from "../Images/ButtonImages/emergency_food.png";
-import food_delivery from "../Images/ButtonImages/food_delivery.png";
-import benefit from "../Images/ButtonImages/benefit.png";
-import nutrition from "../Images/ButtonImages/nutrition.png";
-import money from "../Images/ButtonImages/money.png";
-import see_all from "../Images/ButtonImages/see_all.png";
-import phone from "../Images/ButtonImages/phone.png";
 
-const base = new Airtable({ apiKey: 'key68OVjXXeLKQuEl' }).base('app6JuPyfzqD3RZiA');
 
 export default class buttonresults extends React.Component{
    constructor(props) {
       super(props);
-      console.log("These are the props id: " + this.props.match.params.id)
 		this.state = {
-         parent_id: "string",
          taxonomies: [],
-         id: this.props.match.params.id,
+         parent_id: this.props.match.params.parent_id,
+         parent_name: this.props.match.params.parent_name,
 		}
    }
 
-   // find_ids(){
-   //    console.log()
-   //    base('taxonomy').find(this.state.id, function(err, record) {
-   //       if (err) { console.error(err); return; }
-   //       console.log('Retrieved', record.id);
-   //       this.state.parent_id = record.parent_id;
-   //   });
-
-   // }
-
    componentDidMount() {
-      //this.find_ids()
-      console.log("This id: " + this.state.id)
-		base('taxonomy').select({
-         // filterByFormula: '{parent_id} != ""',
-         filterByFormula: '{parent_id} = "${this.state.id}"',
+      var filter = "({parent_id} = '" + this.state.parent_id + "')";
+		this.props.database('taxonomy').select({
+         filterByFormula: filter,
          view : "Grid view",
 		}).eachPage((taxonomies, fetchNextPage) => {
 			this.setState({
@@ -52,36 +27,39 @@ export default class buttonresults extends React.Component{
 		}, function done(error) {
 			console.log(error);
 		});
-	}
+   }
 
-	handleClick(id, e){
-		{history.push('/ButtonResults/' + id)}
+   componentDidUpdate(){
+      console.log("Taxonomy Length: " + this.state.taxonomies.length)
+      if(this.state.taxonomies.length == 0){
+         history.push('/CategoryResults/' + this.state.parent_name)
+      }
+   }
+	handleClick(name, id, e){
+		{history.push('/ButtonResults/' + name + '/' + id)}
 	}
 
    render (){
       return (
 			<div className="outermost">
+            <h1>You chose {this.state.parent_name}. Can we narrow the resources down further for you?</h1>
 				{this.state.taxonomies.length > 0 ? (
                this.state.taxonomies.map((taxonomy, index) =>
-               <div>
-               <h1>Name: {taxonomy.fields['name']}</h1>
-               <h1>This is the parent: {taxonomy.fields['parent_id']}</h1>
-               </div>
-					// <div className ="container mt-3" key={taxonomy['id']}>
-					// 	<div className="row">
-					// 		<div className="col">
-					// 			<div className="card-deck">
-					// 				<div className="card btn">
-					// 					<button onClick={(e) => this.handleClick(taxonomy.fields['id'], e)} type="button" className="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title={taxonomy.fields['description']}>
-					// 						<TaxonomyCard {...taxonomy.fields} />
-					// 					</button>
-					// 				</div>
-					// 			</div>
-					// 		</div>
-					// 	</div>
-					// 	</div>
+					<div className ="container mt-3" key={taxonomy.fields['id']}>
+						<div className="row">
+							<div className="col">
+								<div className="card-deck">
+									<div className="card btn">
+										<button onClick={(e) => this.handleClick(taxonomy.fields['name'], taxonomy.fields['id'], e)} type="button" className="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title={taxonomy.fields['x-description']}>
+											<TaxonomyCard {...taxonomy.fields} />
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 					)
-				):(<p>Loading...</p>)
+				):(<p>Please Wait While We Search For Results.</p>)
 				}
 			</div>
 		)
@@ -138,7 +116,7 @@ export default class buttonresults extends React.Component{
 
 const TaxonomyCard = ({id, name, description, image}) => (
 	<div>
-		<img className="card-img-top" src={typeof image !== 'undefined'? image[0].url : null} alt={name} />
+      {typeof image !== 'undefined'? <img className="card-img-top" src={image[0].url} alt={name} /> : null}
 		<div className="card-body">
 			<h5 className="card-title">{name}</h5>
 		</div>
