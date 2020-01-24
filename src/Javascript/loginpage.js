@@ -17,11 +17,12 @@ import Airtable from "airtable";
 const base = new Airtable({ apiKey: "key68OVjXXeLKQuEl" }).base(
 	"app6JuPyfzqD3RZiA"
 );
-const table = base("ogranization_accounts");
+//const table = base("ogranization_accounts");
 class Loginpage extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			ogranization_accounts: [],
 			username: "",
 			password: ""
 		};
@@ -31,9 +32,22 @@ class Loginpage extends React.Component {
 	}
 
 	componentDidMount() {
-		table.select({
-			fields: ["username", "password"]
-		});
+		base("organization_accounts")
+			.select({
+				filterByFormula: "{org_acc_id}"
+			})
+			.eachPage(
+				(ogranization_accounts, fetchNextPage) => {
+					this.setState({
+						ogranization_accounts
+					});
+					console.log(ogranization_accounts);
+					fetchNextPage();
+				},
+				function done(error) {
+					console.log(error);
+				}
+			);
 	}
 
 	showButtons() {
@@ -43,8 +57,10 @@ class Loginpage extends React.Component {
 		//document.getElementById("add-agency-button").setAttribute("active", "true");
 	}
 
-	handleSubmit(e) {
-		//alert("Proceed?");
+	handleSubmit(id, e) {
+		/* {
+			history.push("/ButtonResults/" + id);
+		} */
 		e.preventDefault();
 	}
 
@@ -85,7 +101,7 @@ class Loginpage extends React.Component {
 										<Form.Control
 											type="username"
 											placeholder="Username"
-											value={this.state.value}
+											value={this.state.username}
 											onChange={this.handleChange}
 										/>
 										<ForgotUsername />
@@ -96,7 +112,7 @@ class Loginpage extends React.Component {
 										<Form.Control
 											type="password"
 											placeholder="Password"
-											value={this.state.value}
+											value={this.state.password}
 											onChange={this.handleChange}
 										/>
 										<ForgotPassword />

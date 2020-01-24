@@ -50,7 +50,7 @@ const routing = (
 					)}
 				/>
 				<Route
-					path="/ButtonResults/:id"
+					path="/ButtonResults/:parent_id"
 					component={props => (
 						<div>
 							<ButtonResults {...props} />
