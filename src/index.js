@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
-import history from './Javascript/history';
 import "./CSS/styles.css";
 import Navbar from "./Javascript/navbar";
 import ExitButton from "./Javascript/exitbutton";
@@ -19,112 +18,126 @@ import Airtable from 'airtable';
 
 const Notfound = () => <h1>Not found</h1>;
 const base = new Airtable({ apiKey: 'key68OVjXXeLKQuEl' }).base('app6JuPyfzqD3RZiA');
+class Index extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			loggedin : false,
+		}
+	}
 
-const routing = (
-	<Router history={history}>
-		<div>
-			<Route
-				exact
-				path="*"
-				component={() => (
-					<div>
-						<Navbar />
-					</div>
-				)}
-			/>
-			<Switch>
+	routing = (
+		<Router>
+			<div>
 				<Route
-					exact
-					path="/"
-					component={() => (
-						<div>
-							<Homepage database={base}/>
-							<ExitButton />
-						</div>
-					)}
-				/>
-				<Route
-					path="/login"
-					component={() => (
-						<div>
-							<LoginPage />
-						</div>
-					)}
-				/>
-				<Route
-					path="/ButtonResults/:parent_name/:parent_id"
-					component={(props) => (
-						<div>
-							<ButtonResults {...props} database={base}/>
-							{/* <ExitButton /> */}
-						</div>
-					)}
-				/>
-				<Route
-					path="/Survey"
-					component={() => (
-						<div>
-							<Survey />
-							<ExitButton />
-						</div>
-					)}
-				/>
-				<Route
-					path="/SurveyResults"
-					component={() => (
-						<div>
-							<SurveyResults />
-						</div>
-					)}
-				/>
-				<Route
-					path="/CategoryResults/:name"
-					component={props => (
-						<div>
-							<CategoryResults {...props} database={base}/>
-						</div>
-					)}
-				/>
-				<Route
-					path="/AddAgency"
-					component={() => (
-						<div>
-							<AddAgency />
-						</div>
-					)}
-				/>
-				<Route
-					path="/EditAgency"
-					component={() => (
-						<div>
-							<EditAgency />
-						</div>
-					)}
-				/>
-				<Route
-					path="/AgencyInfoPage"
-					component={() => (
-						<div>
-							<AgencyInfoPage />
-						</div>
-					)}
-				/>
-				{/* <Route
 					exact
 					path="*"
 					component={() => (
 						<div>
-							<Homepage />
-							<ExitButton />
+							<Navbar />
 						</div>
 					)}
-				/> */}
+				/>
+				<Switch>
+					<Route
+						exact
+						path="/"
+						component={() => (
+							<div>
+								<Homepage database={base}/>
+								<ExitButton />
+							</div>
+						)}
+					/>
+					<Route
+						path="/login"
+						component={() => (
+							<div>
+								<LoginPage />
+							</div>
+						)}
+					/>
+					<Route
+						path="/ButtonResults/:parent_name/:parent_id"
+						component={(props) => (
+							<div>
+								<ButtonResults {...props} database={base}/>
+								{/* <ExitButton /> */}
+							</div>
+						)}
+					/>
+					<Route
+						path="/Survey"
+						component={() => (
+							<div>
+								<Survey />
+								<ExitButton />
+							</div>
+						)}
+					/>
+					<Route
+						path="/SurveyResults"
+						component={() => (
+							<div>
+								<SurveyResults />
+							</div>
+						)}
+					/>
+					<Route
+						path="/CategoryResults/:taxonomy_name"
+						component={props => (
+							<div>
+								<CategoryResults {...props} database={base}/>
+							</div>
+						)}
+					/>
+					<Route
+						path="/AddAgency"
+						component={() => (
+							<div>
+								<AddAgency />
+							</div>
+						)}
+					/>
+					<Route
+						path="/EditAgency"
+						component={() => (
+							<div>
+								<EditAgency />
+							</div>
+						)}
+					/>
+					<Route
+						path="/AgencyInfoPage"
+						component={() => (
+							<div>
+								<AgencyInfoPage />
+							</div>
+						)}
+					/>
+					{/* <Route
+						exact
+						path="*"
+						component={() => (
+							<div>
+								<Homepage />
+								<ExitButton />
+							</div>
+						)}
+					/> */}
+	
+					<Route component={Notfound} />
+				</Switch>
+			</div>
+		</Router>
+	);
 
-				<Route component={Notfound} />
-			</Switch>
-		</div>
-	</Router>
-);
 
-ReactDOM.render(routing, document.getElementById("root"));
+	render(){
+		return (this.routing);
+	}	
+}
+
+
+ReactDOM.render(<Index />, document.getElementById("root"));
 // ReactDOM.render(<div><Navbar /><Homepage /><ExitButton /> </div>, document.getElementById('root'));
