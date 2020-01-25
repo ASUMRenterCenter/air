@@ -30,7 +30,7 @@ const routing = (
 				path="*"
 				component={props => (
 					<div>
-						<Navbar {...props} />
+						<Navbar {...props} database={base} history={history} />
 					</div>
 				)}
 			/>
@@ -38,7 +38,7 @@ const routing = (
 				<Route
 					exact
 					path="/"
-					component={() => (
+					component={props => (
 						<div>
 							<Homepage database={base} />
 							<ExitButton />
@@ -115,7 +115,7 @@ const routing = (
 					path="/Organization_Home/:org_name/:org_acc_id"
 					component={props => (
 						<div>
-							<Homepage database={base} />
+							<Homepage {...props} database={base} />
 							<ExitButton />
 						</div>
 					)}

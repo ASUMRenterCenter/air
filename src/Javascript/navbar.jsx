@@ -8,14 +8,34 @@ import * as BJS from "bootstrap/dist/js/bootstrap.js";
 import logo from "../Images/Logo.png";
 import { toggleClass } from "dom-helpers";
 
-export default class nav extends React.PureComponent { // 1/19/20 Added this pure component. It may make it only render once??
+export default class nav extends React.PureComponent {
+	// 1/19/20 Added this pure component. It may make it only render once??
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			active: false
+			active: false,
+			organization_accounts: []
 		};
 	}
+
+	componentDidMount() {
+		this.props
+			.database("organization_accounts")
+			.select({
+				fields: ["org_acc_id", "org_name", "username", "password"],
+				sort: [{ field: "org_acc_id", direction: "asc" }]
+			})
+			.eachPage((organization_accounts, fetchNextPage) => {
+				this.setState({
+					organization_accounts
+				});
+				//console.log(organization_accounts);
+				fetchNextPage();
+			});
+	}
+
+	handleSubmit(e) {}
 
 	showButtons() {
 		if (document.getElementById("add-agency-button").hasAttribute("disabled")) {
@@ -33,23 +53,34 @@ export default class nav extends React.PureComponent { // 1/19/20 Added this pur
 		return (
 			<Navbar expand="lg" id="navbackground">
 				<script></script>
-				<Navbar.Brand href="/" id="logo" bsPrefix="Logo">
-					<Image src={logo} href="/" alt="AIR ASUM Information and Referral" />
-				</Navbar.Brand>
+				<a
+					//href="javascript:window.location.href=window.location.href"
+					href="/"
+					id="logo"
+					className="Logo"
+				>
+					<button
+						//onClick={e => this.handleSubmit()}
+						className="btn"
+						type="button"
+					>
+						<Image src={logo} alt="AIR ASUM Information and Referral" />
+					</button>
+				</a>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav" height="20px">
 					<Nav id="login-info" className="right">
 						<Row>
 							<div display="hidden">
-								<Button
+								<button
 									id="add-agency-button"
 									href="./AddAgency"
-									variant="outline-light"
-									size="sm"
-									//disabled
+									className="btn btn-outline-light btn-sm"
+									type="button"
+									disabled
 								>
 									Add Agency
-								</Button>
+								</button>
 							</div>
 							<div>
 								<Button
@@ -57,12 +88,12 @@ export default class nav extends React.PureComponent { // 1/19/20 Added this pur
 									href="./EditAgency"
 									variant="outline-light"
 									size="sm"
-									//disabled
+									disabled
 								>
 									Edit Agency
 								</Button>
 							</div>
-						{/* 	<div>
+							{/* 	<div>
 								<Button
 									id="login-button"
 									variant="outline-light"

@@ -18,7 +18,7 @@ class Loginpage extends React.Component {
 		this.state = {
 			organization_accounts: [],
 			username: "",
-			password: "",
+			password: ""
 		};
 
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,7 +37,7 @@ class Loginpage extends React.Component {
 					this.setState({
 						organization_accounts
 					});
-					console.log(organization_accounts);
+					//console.log(organization_accounts);
 					fetchNextPage();
 				}
 				/* function page(records, fetchNextPage) {
@@ -64,6 +64,7 @@ class Loginpage extends React.Component {
 	}
 
 	handleSubmit(e) {
+		var i;
 		/* this.state.organization_accounts.length > 0 ? (
 			this.state.organization_accounts.map(function(org, index) {
 				if (org.fields['username'] === this.state.username){
@@ -74,32 +75,48 @@ class Loginpage extends React.Component {
 			}
 			)
 		):("") */
-		e.preventDefault();
-		if ((this.state.organization_accounts[0].fields['username'] === this.state.username) && (this.state.organization_accounts[0].fields['password'] === this.state.password)) {
-			history.push('/Organization_Home/' + this.state.organization_accounts[0].fields['org_name'] + '/' + this.state.organization_accounts[0].fields['org_acc_id']);
+		//e.preventDefault();
+		for (i = 0; i <= this.state.organization_accounts.length; i++) {
+			if (i >= this.state.organization_accounts.length) {
+				history.push("/");
+			} else if (
+				this.state.organization_accounts[i].fields["username"] ===
+					this.state.username &&
+				this.state.organization_accounts[i].fields["password"] ===
+					this.state.password
+			) {
+				history.push(
+					"/Organization_Home/" +
+						this.state.organization_accounts[i].fields["org_name"] +
+						"/" +
+						this.state.organization_accounts[i].fields["org_acc_id"]
+				);
+				this.showButtons();
+				break;
+			}
+			//console.log(i);
+			//console.log(this.state.organization_accounts.length);
 		}
-
-		
 	}
 
 	handleChange(e) {
 		this.setState({
 			[e.target.name]: e.target.value
 		});
-		console.log(this.state.organization_accounts[0].fields['password']);
+		//console.log(this.state.organization_accounts[0].fields["password"]);
 	}
 
 	render() {
 		return (
 			<div id="login-page">
 				<div id="main-component-login">
-					<Container id="organization-login" class="centered">
+					<Container id="organization-login" className="centered">
 						<Row>
 							<Col>
-								<h1 class="aligncenter">Organization Login</h1>
+								<h1 className="aligncenter">Organization Login</h1>
 							</Col>
 							<Col>
-								<p class="alignright">
+								<p className="alignright">
 									Here by mistake?
 									<br></br>
 									<Button href="/" size="sm" variant="dark">
@@ -111,12 +128,12 @@ class Loginpage extends React.Component {
 					</Container>
 				</div>
 				<div id="login-form">
-					<Container id="login-container" class="centered">
+					<Container id="login-container" className="centered">
 						<Row>
 							<Col md={{ span: 4, offset: 1 }}>
-								<form method="POST" action="">
+								<form>
 									<Form.Group controlId="formBasicUsername">
-										<label class="form-label" for="formBasicUsername">
+										<label className="form-label" form="formBasicUsername">
 											Enter Username
 										</label>
 										<input
@@ -144,8 +161,8 @@ class Loginpage extends React.Component {
 									</Form.Group>
 									<button
 										onClick={e => this.handleSubmit()}
-										class="btn btn-dark"
-										type="submit"
+										className="btn btn-dark"
+										type="button"
 									>
 										Submit
 									</button>
