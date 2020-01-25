@@ -2,7 +2,7 @@ import React from 'react';
 import { Jumbotron } from 'react-bootstrap'
 import SurveyResultSection from './SurveyResultSection.js'
 import '../../CSS/ComponentStyle.css'
-import PrintSaveShare from './PrintSaveShare'
+import PrintButton from '../../components/PrintButton'
 
 
 
@@ -13,7 +13,7 @@ function SurveyResultsPage() {
         <h4>Need Assesment Survey Results: </h4>
         <h5>You may qualify for:</h5>
         <div id="printSaveShare">
-          <PrintSaveShare></PrintSaveShare>
+          <PrintButton></PrintButton>
         </div>
       </Jumbotron>
       <SurveyResultSection />
