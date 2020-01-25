@@ -37,7 +37,7 @@ export default class Homepage extends Component {
 			<div className="outermost">
 				{this.state.taxonomies.length > 0 ? (
 					this.state.taxonomies.map((taxonomy, index) =>
-					<div className ="container mt-3" key={taxonomy.fields['id']}>
+					<div className ="container mt-3" key={taxonomy.id}>
 						<div className="row">
 							<div className="col">
 								<div className="card-deck">
@@ -49,7 +49,7 @@ export default class Homepage extends Component {
 								</div>
 							</div>
 						</div>
-						</div>
+					</div>
 					)
 				):("")
 				}
