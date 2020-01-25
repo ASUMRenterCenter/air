@@ -10,26 +10,9 @@ function SavePageButton() {
   const handleShow = () => setShow(true);
 
   return (
-    <>
-      <Button variant="dark" onClick={handleShow}>
-        Save
-      </Button>
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>How would you like to save the file?</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <SaveDropdown id="saveDropdownLoc" />
-          <p>Copy link to share: https://FakeLinkIMadeUp.url.umt.mt.edu.gov.com</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="dark" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+    <Pdf targetRef={ref} filename="code-example.pdf">
+    {({ toPdf }) => <button onClick={toPdf}>Generate Pdf</button>}
+  </Pdf>
   );
 }
 

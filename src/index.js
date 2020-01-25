@@ -126,5 +126,5 @@ const routing = (
 	</Router>
 );
 
-ReactDOM.render(<AgencyInfoPage/>, document.getElementById("root"));
+ReactDOM.render(routing, document.getElementById("root"));
 // ReactDOM.render(<div><Navbar /><Homepage /><ExitButton /> </div>, document.getElementById('root'));

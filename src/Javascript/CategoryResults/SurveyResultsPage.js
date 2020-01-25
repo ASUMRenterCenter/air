@@ -2,7 +2,7 @@ import React from 'react';
 import { Jumbotron } from 'react-bootstrap'
 import SurveyResultSection from './SurveyResultSection.js'
 import '../../CSS/ComponentStyle.css'
-import PrintSaveShare from './PrintSaveShare'
+import PrintButton from '../../components/PrintButton'
 
 
 

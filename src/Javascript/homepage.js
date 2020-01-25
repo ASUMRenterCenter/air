@@ -29,7 +29,7 @@ export default class Homepage extends Component {
 	}
 
 	handleClick(name, id, e){
-		{history.push('/ButtonResults/' + name + '/' + id)} 
+		{history.push('/ButtonResults/' + name + '/' + id)}
 	}
 
 	render() {
@@ -44,7 +44,7 @@ export default class Homepage extends Component {
 									<div className="card btn">
 										<button onClick={(e) => this.handleClick(taxonomy.fields['name'], taxonomy.fields['id'], e)} type="button" className="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title={taxonomy.fields['x-description']}>
 											<TaxonomyCard {...taxonomy.fields} />
-										</button>		
+										</button>
 									</div>
 								</div>
 							</div>
@@ -57,8 +57,8 @@ export default class Homepage extends Component {
 		)
 
 	}
-			
-			
+
+
 	// 		{taxonomy.fields['description']}
 	// 	</div>
 	// 	)
@@ -282,8 +282,6 @@ const TaxonomyCard = ({id, name, description, image}) => (
 		<div className="card-body">
 			<h5 className="card-title">{name}</h5>
 		</div>
-	</div>				
+	</div>
 
 );
-
-
