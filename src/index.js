@@ -30,7 +30,7 @@ const routing = (
 				path="*"
 				component={props => (
 					<div>
-						<Navbar {...props} database={base} history={history} />
+						<Navbar {...props} database={base} />
 					</div>
 				)}
 			/>
