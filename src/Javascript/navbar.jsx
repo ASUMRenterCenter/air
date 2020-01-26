@@ -51,6 +51,7 @@ export default class nav extends React.PureComponent {
 
 	render() {
 		return (
+			<div>
 			<Navbar expand="lg" id="navbackground">
 				<script></script>
 				<a
@@ -128,6 +129,8 @@ export default class nav extends React.PureComponent {
 					</Nav>
 				</Navbar.Collapse>
 			</Navbar>
+			{this.props.children}
+			</div>
 		);
 	}
 }

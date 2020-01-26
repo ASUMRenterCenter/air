@@ -31,22 +31,22 @@ class Index extends React.Component {
 	routing = (
 		<Router>
 			<div>
-				<Route
+				{/* <Route
 					exact
 					path="*"
 					component={(props) => (
 						<div>
-							<Navbar database={base} />
+							<Navbar database={base} children={<Homepage database={base}/>}/>
 						</div>
 					)}
-				/>
+				/> */}
 				<Switch>
 					<Route
 						exact
 						path="/"
 						component={() => (
 							<div>
-								<Homepage database={base}/>
+								<Navbar database={base} children={<Homepage database={base}/>}/>
 								<ExitButton />
 							</div>
 						)}
@@ -55,7 +55,8 @@ class Index extends React.Component {
 						path="/login"
 						component={(props) => (
 							<div>
-								<LoginPage {...props} database={base} />
+								<Navbar database={base} children={<LoginPage {...props} database={base} />}/>
+								{/* <LoginPage {...props} database={base} /> */}
 							</div>
 						)}
 					/>
@@ -121,7 +122,7 @@ class Index extends React.Component {
 					path="/Organization_Home/:org_name/:org_acc_id"
 					component={props => (
 						<div>
-							<Homepage {...props} database={base} />
+							<Navbar loggedIn = {true} database={base} children={<Homepage {...props} database={base}/>}/>
 							<ExitButton />
 						</div>
 					)}
