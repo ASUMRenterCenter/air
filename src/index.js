@@ -19,12 +19,55 @@ import Airtable from "airtable";
 
 const Notfound = () => <h1>Not found</h1>;
 
-const base = new Airtable({ apiKey: 'key68OVjXXeLKQuEl' }).base('app6JuPyfzqD3RZiA');
+const base = new Airtable({ apiKey: "key68OVjXXeLKQuEl" }).base(
+	"app6JuPyfzqD3RZiA"
+);
+
 class Index extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			loggedin : false,
+			loggedIn: false,
+			org_name: "",
+			org_acc_id: ""
+		};
+		this.setLoggedIn = this.setLoggedIn.bind(this);
+		this.setLoggedOut = this.setLoggedOut.bind(this);
+		this.setOrgName = this.setOrgName.bind(this);
+		this.setOrgAccId = this.setOrgAccId.bind(this);
+	}
+
+	setOrgName = name => {
+		this.setState({ org_name: name });
+		console.log(this.state.org_name);
+	};
+
+	setOrgAccId = id => {
+		this.setState({ org_acc_id: id });
+		console.log(this.state.org_acc_id);
+	};
+
+	setLoggedIn() {
+		this.setState({ loggedIn: true });
+	}
+
+	setLoggedOut() {
+		this.setState({ loggedIn: false });
+	}
+
+	componentDidMount() {}
+
+	/* 	componentDidUpdate(prevProps, prevState) {
+		if (prevState.loggedIn === this.state.loggedIn) {
+			this.fetchData(this.state.loggedIn);
+			alert("cont?");
+			console.log("Logged in");
+		}
+	} */
+
+	shouldComponentUpdate(nextProps, nextState) {
+		if (this.state.loggedIn == nextState.loggedIn) {
+			return false;
 		}
 	}
 
@@ -34,9 +77,17 @@ class Index extends React.Component {
 				{/* <Route
 					exact
 					path="*"
-					component={(props) => (
+					component={props => (
 						<div>
 							<Navbar database={base} children={<Homepage database={base}/>}/>
+							<Navbar
+								{...props}
+								triggerLogOut={this.setLoggedOut}
+								loggedIn={this.state.loggedIn}
+								orgName={this.state.org_name}
+								orgId={this.state.org_acc_id}
+								database={base}
+							/>
 						</div>
 					)}
 				/> */}
@@ -53,18 +104,26 @@ class Index extends React.Component {
 					/>
 					<Route
 						path="/login"
-						component={(props) => (
+						component={props => (
 							<div>
-								<Navbar database={base} children={<LoginPage {...props} database={base} />}/>
+								<Navbar database={base} children={<LoginPage {...props} database={base}
+									rerender={this.rerenderCallback}
+									setLogIn={this.setLoggedIn}
+									setOrg={this.setOrgName}
+									setOrgId={this.setOrgAccId}
+									loggedIn={this.state.loggedIn}
+									org={this.state.org_name}
+									id={this.state.org_acc_id}
+									/>}/>
 								{/* <LoginPage {...props} database={base} /> */}
 							</div>
 						)}
 					/>
 					<Route
 						path="/ButtonResults/:parent_name/:parent_id"
-						component={(props) => (
+						component={props => (
 							<div>
-								<ButtonResults {...props} database={base}/>
+								<ButtonResults {...props} database={base} />
 								<ExitButton />
 							</div>
 						)}
@@ -90,7 +149,7 @@ class Index extends React.Component {
 						path="/CategoryResults/:taxonomy_name"
 						component={props => (
 							<div>
-								<CategoryResults {...props} database={base}/>
+								<CategoryResults {...props} database={base} />
 							</div>
 						)}
 					/>
@@ -137,19 +196,17 @@ class Index extends React.Component {
 							</div>
 						)}
 					/> */}
-	
+
 					<Route component={Notfound} />
 				</Switch>
 			</div>
 		</Router>
 	);
 
-
-	render(){
-		return (this.routing);
-	}	
+	render() {
+		return this.routing;
+	}
 }
-
 
 ReactDOM.render(<Index />, document.getElementById("root"));
 // ReactDOM.render(<div><Navbar /><Homepage /><ExitButton /> </div>, document.getElementById('root'));

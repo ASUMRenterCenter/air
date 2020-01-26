@@ -65,17 +65,9 @@ class Loginpage extends React.Component {
 
 	handleSubmit(e) {
 		var i;
-		/* this.state.organization_accounts.length > 0 ? (
-			this.state.organization_accounts.map(function(org, index) {
-				if (org.fields['username'] === this.state.username){
-					if (org.fields['password'] === this.state.password){
-						return history.push('/Organization_Home/' + org.fields['org_name'] + '/' + org.fields['org_acc_id']);
-					}
-				}
-			}
-			)
-		):("") */
+
 		//e.preventDefault();
+
 		for (i = 0; i <= this.state.organization_accounts.length; i++) {
 			if (i >= this.state.organization_accounts.length) {
 				history.push("/");
@@ -85,13 +77,34 @@ class Loginpage extends React.Component {
 				this.state.organization_accounts[i].fields["password"] ===
 					this.state.password
 			) {
+				this.props.setLogIn();
+				this.props.setOrg(
+					this.state.organization_accounts[i].fields["org_name"]
+				);
+				this.props.setOrgId(
+					this.state.organization_accounts[i].fields["org_acc_id"]
+				);
+
+				this.props.setOrg(
+					this.state.organization_accounts[i].fields["org_name"]
+				);
+				this.props.setOrgId(
+					this.state.organization_accounts[i].fields["org_acc_id"]
+				);
+				console.log(this.props.loggedIn);
+				console.log(this.props.id);
+				console.log(this.props.org);
+				console.log(this.state.organization_accounts[i].fields["org_acc_id"]);
+				console.log(this.state.organization_accounts[i].fields["org_name"]);
+
 				history.push(
 					"/Organization_Home/" +
 						this.state.organization_accounts[i].fields["org_name"] +
 						"/" +
 						this.state.organization_accounts[i].fields["org_acc_id"]
 				);
-				this.showButtons();
+				//console.log(this.props.getLogIn);
+				alert("hi");
 				break;
 			}
 			//console.log(i);
@@ -159,13 +172,7 @@ class Loginpage extends React.Component {
 										/>
 										<ForgotPassword />
 									</Form.Group>
-									<button
-										onClick={e => this.handleSubmit()}
-										className="btn btn-dark"
-										type="button"
-									>
-										Submit
-									</button>
+									<SubmitBtn buttonHandler={this.handleSubmit.bind(this)} />
 								</form>
 							</Col>
 							<Col md={{ offset: 1 }}>
@@ -183,6 +190,12 @@ class Loginpage extends React.Component {
 		);
 	}
 }
+
+const SubmitBtn = ({ buttonHandler }) => (
+	<button onClick={buttonHandler} className="btn btn-dark" type="button">
+		Submit
+	</button>
+);
 
 function UsernameModal(props) {
 	return (

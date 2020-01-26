@@ -7,6 +7,7 @@ import * as BCSS from "bootstrap/dist/css/bootstrap.css";
 import * as BJS from "bootstrap/dist/js/bootstrap.js";
 import logo from "../Images/Logo.png";
 import { toggleClass } from "dom-helpers";
+import history from "./history";
 
 export default class nav extends React.PureComponent {
 	// 1/19/20 Added this pure component. It may make it only render once??
@@ -15,8 +16,10 @@ export default class nav extends React.PureComponent {
 
 		this.state = {
 			active: false,
-			organization_accounts: []
+			organization_accounts: [],
+			loggedIn: false
 		};
+		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	componentDidMount() {
@@ -35,7 +38,17 @@ export default class nav extends React.PureComponent {
 			});
 	}
 
-	handleSubmit(e) {}
+	handleSubmit(e) {
+		if (!this.state.loggedIn) {
+			history.push("/");
+			console.log(this.state.loggedIn);
+			alert("hi");
+		} else if (this.state.loggedIn) {
+			history.push(
+				"/" + "Organization_Home/" + this.props.orgName + "/" + this.props.orgId
+			);
+		}
+	}
 
 	showButtons() {
 		if (document.getElementById("add-agency-button").hasAttribute("disabled")) {
@@ -49,6 +62,12 @@ export default class nav extends React.PureComponent {
 		//document.getElementById("add-agency-button").setAttribute("active", "true");
 	}
 
+	componentDidMount() {
+		if (this.props.loggedIn) {
+			this.setState({ loggedIn: true });
+		}
+	}
+
 	render() {
 		return (
 			<div>
@@ -56,15 +75,11 @@ export default class nav extends React.PureComponent {
 				<script></script>
 				<a
 					//href="javascript:window.location.href=window.location.href"
-					href="/"
+					//href="/"
 					id="logo"
 					className="Logo"
 				>
-					<button
-						//onClick={e => this.handleSubmit()}
-						className="btn"
-						type="button"
-					>
+					<button onClick={this.handleSubmit} className="btn" type="button">
 						<Image src={logo} alt="AIR ASUM Information and Referral" />
 					</button>
 				</a>
