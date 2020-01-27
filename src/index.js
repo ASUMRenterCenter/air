@@ -24,10 +24,11 @@ const base = new Airtable({ apiKey: "key68OVjXXeLKQuEl" }).base(
 );
 
 class Index extends React.Component {
+	static loggedIn = false;
 	constructor(props) {
 		super(props);
 		this.state = {
-			loggedIn: false,
+			// loggedIn: false,
 			org_name: "",
 			org_acc_id: ""
 		};
