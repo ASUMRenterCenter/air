@@ -64,11 +64,11 @@ class Loginpage extends React.Component {
 	}
 
 	handleSubmit(e) {
-		var i;
+		//var i;
 
 		//e.preventDefault();
 
-		for (i = 0; i <= this.state.organization_accounts.length; i++) {
+		for (let i = 0; i <= this.state.organization_accounts.length; i++) {
 			if (i >= this.state.organization_accounts.length) {
 				history.push("/");
 			} else if (
@@ -105,7 +105,7 @@ class Loginpage extends React.Component {
 				);
 				//console.log(this.props.getLogIn);
 				alert("hi");
-				break;
+				//break;
 			}
 			//console.log(i);
 			//console.log(this.state.organization_accounts.length);
