@@ -15,39 +15,71 @@ export default class CategoryResultsPage extends React.Component{
         taxonomy_name: this.props.match.params.taxonomy_name,
         services: [],
         organizations: [],
+        addresses: [],
+        
     }
   }
+
     componentDidMount() {
-      var services_array = []
-      console.log(this.state.taxonomy_name)
-      this.state.taxonomy_name = "Work"
-      console.log(this.state.taxonomy_name)
       var filter = "({taxonomy} = '" + this.state.taxonomy_name + "')"
-      console.log(filter)
       this.props.database('services').select({
-        fields: ["Organization", "address"],
+        fields: ["id", "Organization", "address"],
         filterByFormula: filter,
         view: "Grid view",
       }).eachPage((services, fetchNextPage) => {
-        // console.log(services.fields['Organization'])
         this.setState({
           services
         });
-        console.log(services)
-        // services.forEach(function(service) {
-        //   console.log('Retrieved', service.get('id'));
-        // });
+        this.forceUpdate()
+        for (let i = 0; i < services.length; i++){
+          this.props.database('organizations').find(services[i].fields["Organization"], (err, organization) => {
+            if (err) { 
+              console.error(err); 
+              return; 
+            }
+            else if (!err){
+              
+              this.setState(previousState => ({
+                  organizations: [...previousState.organizations, organization],
+              }));
+              if(services[i].fields["address"] !== undefined){ 
+                if (err) { 
+                  return; 
+                }
+                else {
+                  this.props.database('address').find(services[i].fields["address"], (err, address) => {
+                    var address_dict = {
+                      address: address.fields["address"],
+                      city: address.fields["city"],
+                      state: address.fields["state"],
+                      zip_code: address.fields["zip_code"],
+                    };
+                    this.setState(previousState => ({
+                      addresses: [...previousState.addresses, address_dict],
+                    }));
+                  });
+                }
+              }
+              else {
+                var address = {
+                    address: "Not Available",
+                    city: "Not Available",
+                    state: "Not Available",
+                    zip_code: "Not Available",
+                };
+                this.setState(previousState => ({
+                  addresses: [...previousState.addresses, address],
+                }));
+
+              }
+            }
+          });
+          
+        }
+
         fetchNextPage();
       }, function done(error) {
-        console.log(error);
       });
-      // console.log(this.state.services)
-      // services_array.map((service, index) =>
-      //   this.props.database("organizations").select({
-
-      //   })
-
-      // )
   }
   render(){
     return (
@@ -60,18 +92,16 @@ export default class CategoryResultsPage extends React.Component{
         </div>
         {this.state.organizations.length > 0 ? (
           this.state.organizations.map((organization, index) =>
-            <div>
+            <div key={organization.fields['id']}>
               <SurveyResult 
-                agency_name = {organization.fields['name']} 
-                agency_website = {organization.fields['url']}
-                phone_number={organization.fields['phones']} 
-                email={organization.fields['email']} 
-                temp={""/*---------------------------------------------------------------------*/}
-                address={organization.fields['locations']} 
-                city={this.props.city} 
-                state={this.props.state} 
-                zip_code={this.props.zip_code}
-                temp2={""/*--------Will need to query the location table for the address-------*/}
+                agency_name = {organization.fields['name'] === undefined ? "Not available" : organization.fields['name']} 
+                agency_website = {organization.fields['url'] === undefined ? "Website Not Available" : organization.fields['url']}
+                phone_number={organization.fields['phones'] === undefined ? "Phone Number Not Available" : organization.fields['phones']} 
+                email={organization.fields['email'] === undefined ? "Email Not Available" : organization.fields['email']} 
+                address={this.state.addresses[index] === undefined ? "Street Not Available" :this.state.addresses[index]['address']} 
+                city={this.state.addresses[index] === undefined ? "City Not Available" :this.state.addresses[index]['city']} 
+                state={this.state.addresses[index] === undefined ? "State Not Available" :this.state.addresses[index]['state']} 
+                zip_code={this.state.addresses[index] === undefined ? "Zip Code Not Available" :this.state.addresses[index]['zip_code']}
               />
               <br />
             </div>

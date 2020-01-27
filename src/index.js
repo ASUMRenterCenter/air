@@ -24,10 +24,11 @@ const base = new Airtable({ apiKey: "key68OVjXXeLKQuEl" }).base(
 );
 
 class Index extends React.Component {
+	static loggedIn = false;
 	constructor(props) {
 		super(props);
 		this.state = {
-			loggedIn: false,
+			// loggedIn: false,
 			org_name: "",
 			org_acc_id: ""
 		};
@@ -74,11 +75,12 @@ class Index extends React.Component {
 	routing = (
 		<Router>
 			<div>
-				<Route
+				{/* <Route
 					exact
 					path="*"
 					component={props => (
 						<div>
+							<Navbar database={base} children={<Homepage database={base}/>}/>
 							<Navbar
 								{...props}
 								triggerLogOut={this.setLoggedOut}
@@ -89,14 +91,14 @@ class Index extends React.Component {
 							/>
 						</div>
 					)}
-				/>
+				/> */}
 				<Switch>
 					<Route
 						exact
 						path="/"
 						component={() => (
 							<div>
-								<Homepage database={base} />
+								<Navbar database={base} children={<Homepage database={base}/>}/>
 								<ExitButton />
 							</div>
 						)}
@@ -105,8 +107,7 @@ class Index extends React.Component {
 						path="/login"
 						component={props => (
 							<div>
-								<LoginPage
-									{...props}
+								<Navbar database={base} children={<LoginPage {...props} database={base}
 									rerender={this.rerenderCallback}
 									setLogIn={this.setLoggedIn}
 									setOrg={this.setOrgName}
@@ -114,8 +115,8 @@ class Index extends React.Component {
 									loggedIn={this.state.loggedIn}
 									org={this.state.org_name}
 									id={this.state.org_acc_id}
-									database={base}
-								/>
+									/>}/>
+								{/* <LoginPage {...props} database={base} /> */}
 							</div>
 						)}
 					/>
@@ -178,14 +179,14 @@ class Index extends React.Component {
 						)}
 					/>
 					<Route
-						path="/Organization_Home/:org_name/:org_acc_id"
-						component={props => (
-							<div>
-								<Homepage {...props} database={base} />
-								<ExitButton />
-							</div>
-						)}
-					/>
+					path="/Organization_Home/:org_name/:org_acc_id"
+					component={props => (
+						<div>
+							<Navbar loggedIn = {true} database={base} children={<Homepage {...props} database={base}/>}/>
+							<ExitButton />
+						</div>
+					)}
+				/>
 					{/* <Route
 						exact
 						path="*"
