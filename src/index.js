@@ -28,7 +28,7 @@ class Index extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// loggedIn: false,
+			loggedIn: false,
 			org_name: "",
 			org_acc_id: ""
 		};
@@ -98,7 +98,10 @@ class Index extends React.Component {
 						path="/"
 						component={() => (
 							<div>
-								<Navbar database={base} children={<Homepage database={base}/>}/>
+								<Navbar
+									database={base}
+									children={<Homepage database={base} />}
+								/>
 								<ExitButton />
 							</div>
 						)}
@@ -107,15 +110,22 @@ class Index extends React.Component {
 						path="/login"
 						component={props => (
 							<div>
-								<Navbar database={base} children={<LoginPage {...props} database={base}
-									rerender={this.rerenderCallback}
-									setLogIn={this.setLoggedIn}
-									setOrg={this.setOrgName}
-									setOrgId={this.setOrgAccId}
-									loggedIn={this.state.loggedIn}
-									org={this.state.org_name}
-									id={this.state.org_acc_id}
-									/>}/>
+								<Navbar
+									database={base}
+									children={
+										<LoginPage
+											{...props}
+											database={base}
+											rerender={this.rerenderCallback}
+											setLogIn={this.setLoggedIn}
+											setOrg={this.setOrgName}
+											setOrgId={this.setOrgAccId}
+											loggedIn={this.state.loggedIn}
+											org={this.state.org_name}
+											id={this.state.org_acc_id}
+										/>
+									}
+								/>
 								{/* <LoginPage {...props} database={base} /> */}
 							</div>
 						)}
@@ -179,14 +189,19 @@ class Index extends React.Component {
 						)}
 					/>
 					<Route
-					path="/Organization_Home/:org_name/:org_acc_id"
-					component={props => (
-						<div>
-							<Navbar loggedIn = {true} database={base} children={<Homepage {...props} database={base}/>}/>
-							<ExitButton />
-						</div>
-					)}
-				/>
+						path="/Organization_Home/:org_name/:org_acc_id"
+						component={props => (
+							<div>
+								<Navbar
+									{...props}
+									loggedIn={true}
+									database={base}
+									children={<Homepage {...props} database={base} />}
+								/>
+								<ExitButton />
+							</div>
+						)}
+					/>
 					{/* <Route
 						exact
 						path="*"
