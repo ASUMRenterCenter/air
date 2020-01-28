@@ -88,7 +88,7 @@ export default class nav extends React.PureComponent {
 									href="./EditAgency"
 									variant="outline-light"
 									size="sm"
-									disabled
+									enabled
 								>
 									Edit Agency
 								</Button>

@@ -14,6 +14,7 @@ import Survey from "./Javascript/survey";
 import SurveyResults from "./Javascript/CategoryResults/SurveyResultsPage";
 import CategoryResults from "./Javascript/CategoryResults/CategoryResultsPage";
 import AgencyInfoPage from "./components/AgencyInfoPage";
+import AgencyEditPage from "./components/AgencyEditPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Airtable from "airtable";
 
@@ -103,9 +104,9 @@ class Index extends React.Component {
 					/>
 					<Route
 						path="/EditAgency"
-						component={() => (
+						component={props => (
 							<div>
-								<EditAgency />
+								<EditAgency {...props} database={base}/>
 							</div>
 						)}
 					/>
@@ -136,7 +137,7 @@ class Index extends React.Component {
 							</div>
 						)}
 					/> */}
-	
+
 					<Route component={Notfound} />
 				</Switch>
 			</div>
@@ -146,7 +147,7 @@ class Index extends React.Component {
 
 	render(){
 		return (this.routing);
-	}	
+	}
 }
 
 
