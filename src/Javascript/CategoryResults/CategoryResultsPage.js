@@ -42,17 +42,17 @@ export default class CategoryResultsPage extends React.Component{
               this.setState(previousState => ({
                   organizations: [...previousState.organizations, organization],
               }));
-              if(services[i].fields["address"] !== undefined){ 
+              if(typeof services[i].fields["address"] !== "undefined"){ 
                 if (err) { 
                   return; 
                 }
                 else {
                   this.props.database('address').find(services[i].fields["address"], (err, address) => {
                     var address_dict = {
-                      address: address.fields["address"],
+                      address: address.fields["address_1"],
                       city: address.fields["city"],
-                      state: address.fields["state"],
-                      zip_code: address.fields["zip_code"],
+                      state: address.fields["State"],
+                      zip_code: address.fields["Zip Code"],
                     };
                     this.setState(previousState => ({
                       addresses: [...previousState.addresses, address_dict],
@@ -60,7 +60,7 @@ export default class CategoryResultsPage extends React.Component{
                   });
                 }
               }
-              else {
+              else if(typeof services[i].fields["address"] !== "undefined") {
                 var address = {
                     address: "Not Available",
                     city: "Not Available",
@@ -94,14 +94,15 @@ export default class CategoryResultsPage extends React.Component{
           this.state.organizations.map((organization, index) =>
             <div key={organization.fields['id']}>
               <SurveyResult 
+                database = {this.props.database}
                 agency_name = {organization.fields['name'] === undefined ? "Not available" : organization.fields['name']} 
                 agency_website = {organization.fields['url'] === undefined ? "Website Not Available" : organization.fields['url']}
                 phone_number={organization.fields['phones'] === undefined ? "Phone Number Not Available" : organization.fields['phones']} 
                 email={organization.fields['email'] === undefined ? "Email Not Available" : organization.fields['email']} 
-                address={this.state.addresses[index] === undefined ? "Street Not Available" :this.state.addresses[index]['address']} 
-                city={this.state.addresses[index] === undefined ? "City Not Available" :this.state.addresses[index]['city']} 
-                state={this.state.addresses[index] === undefined ? "State Not Available" :this.state.addresses[index]['state']} 
-                zip_code={this.state.addresses[index] === undefined ? "Zip Code Not Available" :this.state.addresses[index]['zip_code']}
+                address={typeof this.state.addresses[index] === "undefined" ? "Street Not Available" :this.state.addresses[index]['address']} 
+                city={typeof this.state.addresses[index] === "undefined" ? "City Not Available" :this.state.addresses[index]['city']} 
+                state={typeof this.state.addresses[index] === "undefined" ? "State Not Available" :this.state.addresses[index]['state']} 
+                zip_code={typeof this.state.addresses[index] === "undefined" ? "Zip Code Not Available" :this.state.addresses[index]['zip_code']}
               />
               <br />
             </div>

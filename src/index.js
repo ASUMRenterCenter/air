@@ -160,7 +160,7 @@ class Index extends React.Component {
 						path="/CategoryResults/:taxonomy_name"
 						component={props => (
 							<div>
-								<CategoryResults {...props} database={base} />
+								<Navbar database={base} children={<CategoryResults {...props} database={base}/>}/>
 							</div>
 						)}
 					/>
