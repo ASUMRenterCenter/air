@@ -126,7 +126,7 @@ class OrgEditFields extends Component{
     return(
       <div>
         <Form>
-          <div class="ServiceEditingChunk1">
+          <div className="ServiceEditingChunk1">
             <Form.Group controlId="organizationNameId">
               <Form.Label>Organization Name</Form.Label>
               <input
