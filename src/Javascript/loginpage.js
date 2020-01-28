@@ -11,6 +11,7 @@ import {
 } from "../../node_modules/react-bootstrap";
 import "../CSS/loginpage.css";
 import history from "./history";
+import axios from "axios";
 
 class Loginpage extends React.Component {
 	constructor(props) {
@@ -32,28 +33,13 @@ class Loginpage extends React.Component {
 				fields: ["org_acc_id", "org_name", "username", "password"],
 				sort: [{ field: "org_acc_id", direction: "asc" }]
 			})
-			.eachPage(
-				(organization_accounts, fetchNextPage) => {
-					this.setState({
-						organization_accounts
-					});
-					//console.log(organization_accounts);
-					fetchNextPage();
-				}
-				/* function page(records, fetchNextPage) {
-					records.forEach(function(record) {
-						console.log("Retrieved", record.get("org_acc_id"));
-					});
-					fetchNextPage();
-				},
-				function done(err) {
-					if (err) {
-						console.error(err);
-					} else {
-						return;
-					}
-				} */
-			);
+			.eachPage((organization_accounts, fetchNextPage) => {
+				this.setState({
+					organization_accounts
+				});
+				//console.log(organization_accounts);
+				fetchNextPage();
+			});
 	}
 
 	showButtons() {
@@ -64,11 +50,11 @@ class Loginpage extends React.Component {
 	}
 
 	handleSubmit(e) {
-		var i;
+		//var i;
 
 		//e.preventDefault();
 
-		for (i = 0; i <= this.state.organization_accounts.length; i++) {
+		for (let i = 0; i <= this.state.organization_accounts.length; i++) {
 			if (i >= this.state.organization_accounts.length) {
 				history.push("/");
 			} else if (
@@ -91,11 +77,6 @@ class Loginpage extends React.Component {
 				this.props.setOrgId(
 					this.state.organization_accounts[i].fields["org_acc_id"]
 				);
-				console.log(this.props.loggedIn);
-				console.log(this.props.id);
-				console.log(this.props.org);
-				console.log(this.state.organization_accounts[i].fields["org_acc_id"]);
-				console.log(this.state.organization_accounts[i].fields["org_name"]);
 
 				history.push(
 					"/Organization_Home/" +
@@ -104,7 +85,6 @@ class Loginpage extends React.Component {
 						this.state.organization_accounts[i].fields["org_acc_id"]
 				);
 				//console.log(this.props.getLogIn);
-				alert("hi");
 				break;
 			}
 			//console.log(i);
@@ -192,7 +172,12 @@ class Loginpage extends React.Component {
 }
 
 const SubmitBtn = ({ buttonHandler }) => (
-	<button onClick={buttonHandler} className="btn btn-dark" type="button">
+	<button
+		//type="submit"
+		onClick={buttonHandler}
+		className="btn btn-dark"
+		type="button"
+	>
 		Submit
 	</button>
 );
