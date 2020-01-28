@@ -23,6 +23,7 @@ export default class nav extends React.PureComponent {
 			orgId: ""
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.editAgency = this.editAgency.bind(this);
 	}
 
 	componentDidMount() {
@@ -85,6 +86,8 @@ export default class nav extends React.PureComponent {
 				}
 			}
 		}
+		/*==============================*/
+
 		console.log(this.state.active);
 		console.log(this.state.loggedIn);
 	}
@@ -95,6 +98,16 @@ export default class nav extends React.PureComponent {
 		} else if (this.state.loggedIn) {
 			history.push(
 				"/" + "Organization_Home/" + this.state.orgName + "/" + this.state.orgId
+			);
+		}
+	}
+
+	editAgency(e) {
+		if (!this.state.loggedIn) {
+			history.replace("/");
+		} else if (this.state.loggedIn && this.state.active) {
+			history.push(
+				"/" + "EditAgency/" + this.state.orgName + "/" + this.state.orgId
 			);
 		}
 	}
@@ -142,15 +155,14 @@ export default class nav extends React.PureComponent {
 									</button>
 								</div>
 								<div>
-									<Button
+									<button
 										id="edit-agency-button"
-										href="./EditAgency"
-										variant="outline-light"
-										size="sm"
-										disabled
+										className="btn-outline-light btn btn-sm"
+										onClick={this.editAgency}
+										//disabled
 									>
 										Edit Agency
-									</Button>
+									</button>
 								</div>
 								{/* 	<div>
 								<Button
