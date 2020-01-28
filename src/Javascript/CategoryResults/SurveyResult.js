@@ -8,7 +8,7 @@ import ResultMoreInfoBody from './ResultMoreInfoBody'
 
 function CustomToggle({ children, eventKey, agency_name, agency_website}) {
   const decoratedOnClick = useAccordionToggle(eventKey, () =>
-    console.log('totally custom!'),
+    null,
   );
 
   return (
@@ -32,20 +32,8 @@ function CustomToggle({ children, eventKey, agency_name, agency_website}) {
 
 export default class SurveyResult extends React.Component{
   constructor(props) {
-    super(props);
-    this.state = {
-      phone_number: this.props.phone_number,
-    }
-  }
-  
-  componentDidMount() {
-    this.props.database('phones').find(this.state.phone_number, (err, phone) => {
-      this.setState(previousState => ({
-        phone_number: phone.fields['number'],
-      }));
-    });
-  }
-
+		super(props);
+	}
   render () {
       return (
         <div>
@@ -56,13 +44,9 @@ export default class SurveyResult extends React.Component{
               </Card.Header>
               <Accordion.Collapse eventKey="0">
                 <Card.Body>
-                  <ResultMoreInfoBody 
-                    phone_number={this.state.phone_number} 
-                    email={this.props.email} 
-                    address={this.props.address} 
-                    city={this.props.city} 
-                    state={this.props.state} 
-                    zip_code={this.props.zip_code}
+                  <ResultMoreInfoBody phone_number={this.props.phone_number} 
+                    email={this.props.email} address={this.props.address} city={this.props.city} 
+                    state={this.props.state} zip_code={this.props.zip_code}
                   />
                 </Card.Body>
               </Accordion.Collapse>
