@@ -11,6 +11,7 @@ import {
 } from "../../node_modules/react-bootstrap";
 import "../CSS/loginpage.css";
 import history from "./history";
+import axios from "axios";
 
 class Loginpage extends React.Component {
 	constructor(props) {
@@ -32,28 +33,13 @@ class Loginpage extends React.Component {
 				fields: ["org_acc_id", "org_name", "username", "password"],
 				sort: [{ field: "org_acc_id", direction: "asc" }]
 			})
-			.eachPage(
-				(organization_accounts, fetchNextPage) => {
-					this.setState({
-						organization_accounts
-					});
-					//console.log(organization_accounts);
-					fetchNextPage();
-				}
-				/* function page(records, fetchNextPage) {
-					records.forEach(function(record) {
-						console.log("Retrieved", record.get("org_acc_id"));
-					});
-					fetchNextPage();
-				},
-				function done(err) {
-					if (err) {
-						console.error(err);
-					} else {
-						return;
-					}
-				} */
-			);
+			.eachPage((organization_accounts, fetchNextPage) => {
+				this.setState({
+					organization_accounts
+				});
+				//console.log(organization_accounts);
+				fetchNextPage();
+			});
 	}
 
 	showButtons() {
@@ -64,19 +50,11 @@ class Loginpage extends React.Component {
 	}
 
 	handleSubmit(e) {
-		var i;
-		/* this.state.organization_accounts.length > 0 ? (
-			this.state.organization_accounts.map(function(org, index) {
-				if (org.fields['username'] === this.state.username){
-					if (org.fields['password'] === this.state.password){
-						return history.push('/Organization_Home/' + org.fields['org_name'] + '/' + org.fields['org_acc_id']);
-					}
-				}
-			}
-			)
-		):("") */
+		//var i;
+
 		//e.preventDefault();
-		for (i = 0; i <= this.state.organization_accounts.length; i++) {
+
+		for (let i = 0; i <= this.state.organization_accounts.length; i++) {
 			if (i >= this.state.organization_accounts.length) {
 				history.push("/");
 			} else if (
@@ -85,13 +63,28 @@ class Loginpage extends React.Component {
 				this.state.organization_accounts[i].fields["password"] ===
 					this.state.password
 			) {
+				this.props.setLogIn();
+				this.props.setOrg(
+					this.state.organization_accounts[i].fields["org_name"]
+				);
+				this.props.setOrgId(
+					this.state.organization_accounts[i].fields["org_acc_id"]
+				);
+
+				this.props.setOrg(
+					this.state.organization_accounts[i].fields["org_name"]
+				);
+				this.props.setOrgId(
+					this.state.organization_accounts[i].fields["org_acc_id"]
+				);
+
 				history.push(
 					"/Organization_Home/" +
 						this.state.organization_accounts[i].fields["org_name"] +
 						"/" +
 						this.state.organization_accounts[i].fields["org_acc_id"]
 				);
-				this.showButtons();
+				//console.log(this.props.getLogIn);
 				break;
 			}
 			//console.log(i);
@@ -159,13 +152,7 @@ class Loginpage extends React.Component {
 										/>
 										<ForgotPassword />
 									</Form.Group>
-									<button
-										onClick={e => this.handleSubmit()}
-										className="btn btn-dark"
-										type="button"
-									>
-										Submit
-									</button>
+									<SubmitBtn buttonHandler={this.handleSubmit.bind(this)} />
 								</form>
 							</Col>
 							<Col md={{ offset: 1 }}>
@@ -183,6 +170,17 @@ class Loginpage extends React.Component {
 		);
 	}
 }
+
+const SubmitBtn = ({ buttonHandler }) => (
+	<button
+		//type="submit"
+		onClick={buttonHandler}
+		className="btn btn-dark"
+		type="button"
+	>
+		Submit
+	</button>
+);
 
 function UsernameModal(props) {
 	return (

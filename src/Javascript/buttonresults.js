@@ -31,7 +31,7 @@ export default class buttonresults extends React.Component{
 
    componentDidUpdate(){
       console.log("Taxonomy Length: " + this.state.taxonomies.length)
-      if(this.state.taxonomies.length == 0){
+      if(this.state.taxonomies.length === 0){
          history.push('/CategoryResults/' + this.state.parent_name)
       }
    }

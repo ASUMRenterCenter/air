@@ -7,6 +7,8 @@ import * as BCSS from "bootstrap/dist/css/bootstrap.css";
 import * as BJS from "bootstrap/dist/js/bootstrap.js";
 import logo from "../Images/Logo.png";
 import { toggleClass } from "dom-helpers";
+import history from "./history";
+import PrintSaveShare from "./CategoryResults/PrintSaveShare";
 
 export default class nav extends React.PureComponent {
 	// 1/19/20 Added this pure component. It may make it only render once??
@@ -15,8 +17,13 @@ export default class nav extends React.PureComponent {
 
 		this.state = {
 			active: false,
-			organization_accounts: []
+			organization_accounts: [],
+			loggedIn: false,
+			orgName: "",
+			orgId: ""
 		};
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.editAgency = this.editAgency.bind(this);
 	}
 
 	componentDidMount() {
@@ -30,12 +37,80 @@ export default class nav extends React.PureComponent {
 				this.setState({
 					organization_accounts
 				});
-				//console.log(organization_accounts);
 				fetchNextPage();
 			});
+		if (this.props.loggedIn) {
+			this.setState({
+				loggedIn: true,
+				orgName: this.props.match.params.org_name,
+				orgId: this.props.match.params.org_acc_id
+			});
+		}
 	}
 
-	handleSubmit(e) {}
+	componentDidUpdate() {
+		/*===============================
+		Checks the url with information in database
+		to decide if user is an authorized user. If not
+		kicks them back to homepage and logs out.
+		================================*/
+		if (
+			this.state.loggedIn &&
+			!this.state.active &&
+			this.state.organization_accounts.length > 0
+		) {
+			for (let i = 0; i <= this.state.organization_accounts.length; i++) {
+				if (
+					typeof this.state.organization_accounts[i] === "undefined" ||
+					typeof this.state.organization_accounts[i].fields["org_name"] ===
+						"undefined" ||
+					typeof this.state.organization_accounts[i].fields === "undefined"
+				) {
+					if (i >= this.state.organization_accounts.length) {
+						history.push("/");
+						this.setState({
+							active: false
+						});
+					}
+					continue;
+				} else if (
+					this.state.organization_accounts[i].fields["org_name"][0] ===
+						this.state.orgName &&
+					this.state.organization_accounts[i].fields["org_acc_id"] ===
+						this.state.orgId
+				) {
+					this.setState({
+						active: true
+					});
+					break;
+				}
+			}
+		}
+		/*==============================*/
+
+		console.log(this.state.active);
+		console.log(this.state.loggedIn);
+	}
+
+	handleSubmit(e) {
+		if (!this.state.loggedIn) {
+			history.replace("/");
+		} else if (this.state.loggedIn) {
+			history.push(
+				"/" + "Organization_Home/" + this.state.orgName + "/" + this.state.orgId
+			);
+		}
+	}
+
+	editAgency(e) {
+		if (!this.state.loggedIn) {
+			history.replace("/");
+		} else if (this.state.loggedIn && this.state.active) {
+			history.push(
+				"/" + "EditAgency/" + this.state.orgName + "/" + this.state.orgId
+			);
+		}
+	}
 
 	showButtons() {
 		if (document.getElementById("add-agency-button").hasAttribute("disabled")) {
@@ -51,49 +126,45 @@ export default class nav extends React.PureComponent {
 
 	render() {
 		return (
-			<Navbar expand="lg" id="navbackground">
-				<script></script>
-				<a
-					//href="javascript:window.location.href=window.location.href"
-					href="/"
-					id="logo"
-					className="Logo"
-				>
-					<button
-						//onClick={e => this.handleSubmit()}
-						className="btn"
-						type="button"
+			<div>
+				<Navbar expand="lg" id="navbackground">
+					<script></script>
+					<a
+						//href="javascript:window.location.href=window.location.href"
+						//href="/"
+						id="logo"
+						className="Logo"
 					>
-						<Image src={logo} alt="AIR ASUM Information and Referral" />
-					</button>
-				</a>
-				<Navbar.Toggle aria-controls="basic-navbar-nav" />
-				<Navbar.Collapse id="basic-navbar-nav" height="20px">
-					<Nav id="login-info" className="right">
-						<Row>
-							<div display="hidden">
-								<button
-									id="add-agency-button"
-									href="./AddAgency"
-									className="btn btn-outline-light btn-sm"
-									type="button"
-									disabled
-								>
-									Add Agency
-								</button>
-							</div>
-							<div>
-								<Button
-									id="edit-agency-button"
-									href="./EditAgency"
-									variant="outline-light"
-									size="sm"
-									enabled
-								>
-									Edit Agency
-								</Button>
-							</div>
-							{/* 	<div>
+						<button onClick={this.handleSubmit} className="btn" type="button">
+							<Image src={logo} alt="AIR ASUM Information and Referral" />
+						</button>
+					</a>
+					<Navbar.Toggle aria-controls="basic-navbar-nav" />
+					<Navbar.Collapse id="basic-navbar-nav" height="20px">
+						<Nav id="login-info" className="right">
+							<Row>
+								<div display="hidden">
+									<button
+										id="add-agency-button"
+										href="./AddAgency"
+										className="btn btn-outline-light btn-sm"
+										type="button"
+										disabled
+									>
+										Add Agency
+									</button>
+								</div>
+								<div>
+									<button
+										id="edit-agency-button"
+										className="btn-outline-light btn btn-sm"
+										onClick={this.editAgency}
+										//disabled
+									>
+										Edit Agency
+									</button>
+								</div>
+								{/* 	<div>
 								<Button
 									id="login-button"
 									variant="outline-light"
@@ -103,31 +174,33 @@ export default class nav extends React.PureComponent {
 									Click to enable buttons
 								</Button>
 							</div> */}
-							<div>
-								<Button
-									id="login-button"
-									href="./login"
-									variant="outline-light"
-									size="sm"
-								>
-									Organization Login
-								</Button>
-							</div>
-							<div>
-								<Button
-									id="logout-button"
-									href="./login"
-									variant="outline-light"
-									size="sm"
-									disabled="true"
-								>
-									Logout
-								</Button>
-							</div>
-						</Row>
-					</Nav>
-				</Navbar.Collapse>
-			</Navbar>
+								<div>
+									<Button
+										id="login-button"
+										href="./login"
+										variant="outline-light"
+										size="sm"
+									>
+										Organization Login
+									</Button>
+								</div>
+								<div>
+									<Button
+										id="logout-button"
+										href="./login"
+										variant="outline-light"
+										size="sm"
+										disabled="true"
+									>
+										Logout
+									</Button>
+								</div>
+							</Row>
+						</Nav>
+					</Navbar.Collapse>
+				</Navbar>
+				{this.props.children}
+			</div>
 		);
 	}
 }
