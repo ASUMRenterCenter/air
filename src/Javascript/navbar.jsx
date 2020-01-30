@@ -3,6 +3,7 @@ import $ from "jquery";
 
 import { Navbar, Nav, Button, Image, Row } from "react-bootstrap";
 import "../CSS/styles.css";
+import "../CSS/nonmobile.css";
 import * as BCSS from "bootstrap/dist/css/bootstrap.css";
 import * as BJS from "bootstrap/dist/js/bootstrap.js";
 import logo from "../Images/Logo.png";
@@ -123,6 +124,7 @@ export default class nav extends React.PureComponent {
 		//document.getElementById("add-agency-button").removeAttribute("disabled");
 		//document.getElementById("add-agency-button").setAttribute("active", "true");
 	}
+	
 
 	render() {
 		return (
@@ -136,7 +138,7 @@ export default class nav extends React.PureComponent {
 						className="Logo"
 					>
 						<button onClick={this.handleSubmit} className="btn" type="button">
-							<Image src={logo} alt="AIR ASUM Information and Referral" />
+							<img src={logo} alt="AIR ASUM Information and Referral" />
 						</button>
 					</a>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -199,7 +201,10 @@ export default class nav extends React.PureComponent {
 						</Nav>
 					</Navbar.Collapse>
 				</Navbar>
-				{this.props.children}
+				<div className="buttonpagesrow">
+					{this.props.children}
+					{this.props.Sidebar}
+				</div>
 			</div>
 		);
 	}

@@ -1,6 +1,6 @@
 import React from "react";
 import history from './history';
-import "../CSS/buttonresults.css";
+import "../CSS/styles.css";
 
 
 export default class buttonresults extends React.Component{

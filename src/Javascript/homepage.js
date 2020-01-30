@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import history from './history';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.js';
+import '../CSS/styles.css'
+import './hotlinebar.js'
 
 
 export default class Homepage extends Component {
@@ -31,10 +31,15 @@ export default class Homepage extends Component {
 	handleClick(name, id, e){
 		{history.push('/ButtonResults/' + name + '/' + id)}
 	}
+	// openNav() {
+    //     document.getElementById("mySidebar").style.width = "250px";
+    //     document.getElementById("main").style.marginRight = "250px";
+    // }
 
 	render() {
 		return (
-			<div className="outermost">
+			<div class="buttonpagescolumn width85">
+				<h1>What resources can we help you find?</h1>
 				{this.state.taxonomies.length > 0 ? (
 					this.state.taxonomies.map((taxonomy, index) =>
 					<div className ="container mt-3" key={taxonomy.id}>

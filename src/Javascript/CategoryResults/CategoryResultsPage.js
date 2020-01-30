@@ -107,7 +107,7 @@ export default class CategoryResultsPage extends React.Component{
               <br />
             </div>
           )
-          ):("")
+          ):(null)
         }
       </div>
     );
