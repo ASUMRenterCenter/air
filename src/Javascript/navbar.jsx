@@ -24,6 +24,7 @@ export default class nav extends React.PureComponent {
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.editAgency = this.editAgency.bind(this);
+		this.addAgency = this.addAgency.bind(this);
 	}
 
 	componentDidMount() {
@@ -112,6 +113,16 @@ export default class nav extends React.PureComponent {
 		}
 	}
 
+	addAgency(e) {
+		if (!this.state.loggedIn) {
+			history.replace("/");
+		} else if (this.state.loggedIn && this.state.active && (this.state.orgId === "1")) {
+			history.push(
+				"/" + "AddAgency/" + this.state.orgName + "/" + this.state.orgId
+			);
+		}
+	}
+
 	showButtons() {
 		if (document.getElementById("add-agency-button").hasAttribute("disabled")) {
 			$("#add-agency-button").addClass("disabled");
@@ -143,13 +154,14 @@ export default class nav extends React.PureComponent {
 					<Navbar.Collapse id="basic-navbar-nav" height="20px">
 						<Nav id="login-info" className="right">
 							<Row>
-								<div display="hidden">
+								<div>
 									<button
 										id="add-agency-button"
-										href="./AddAgency"
+										//href="./AddAgency"
+										onClick={this.addAgency}
 										className="btn btn-outline-light btn-sm"
 										type="button"
-										disabled
+										//disabled
 									>
 										Add Agency
 									</button>
@@ -159,6 +171,7 @@ export default class nav extends React.PureComponent {
 										id="edit-agency-button"
 										className="btn-outline-light btn btn-sm"
 										onClick={this.editAgency}
+										type="button"
 										//disabled
 									>
 										Edit Agency
