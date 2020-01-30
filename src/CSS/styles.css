@@ -40,7 +40,6 @@ div {
 	right: 0px;
 	border: 3px hidden;
 	padding: 10px;
-	width: 23%;
 }
 
 .scrollable-vert {
@@ -50,14 +49,15 @@ div {
 	text-align: left;
  }
 
- .width85 {
-	 width: 100%;
-	 transition: width .5s;
+.Fixed {
+	position:fixed;
+	top:30%;
+}
+
+ .whitespace {
+	 padding: 10%;
  }
 
- .width85.is-nav-open {
-	width: 85%;
- }
 
   /*______________________
   		  Navbar
@@ -79,21 +79,21 @@ div {
 	width: 15%;
 	height: 100%;
 	transition: margin .5s;
-	margin: 0 0 0 100%;
+	margin: 0 0 0 85%;
 }
 
 .wrapper.is-nav-open {
-	margin-left: 85%;
+	margin-left: 100%;
 }
 
 .side {
 	position: relative;
 	width: 100%;
-	height: 100%;
+	height: 300%;
 	padding: 20px;
 	z-index: 1;
 	border-left: 1px solid #cccccc;
-	background-color: #c4c4c4;
+	background-color: #cfcdcc;
 }
 
 .nav__icon {
@@ -124,11 +124,72 @@ div {
 	float: left;
 }
 
+.width85 {
+	width: 100%;
+	/* transition: width .5s; */
+}
+
+.width85.is-nav-open {
+   width: 85%;
+}
+
+  /*______________________
+  	Taxonomy Buttons
+  ________________________*/
+
+.taxonomy-button {
+	width: 100%;
+	height: 100%;
+}
+
+.card-div {
+	width: 100%;
+	height: 100%;
+}
+
+.card-container {
+	width: 200px;
+	height: 150px;
+	padding-bottom: 100px;
+}
+.card-img-top {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+
 /***************************
 ****************************
 		 ID CSS 
 ****************************
 ****************************/
+
+/*______________________
+	  Survey Button
+________________________*/
+#gotosurveybutton {
+	z-index: 2;
+	top: 75%;
+	width: 175px;
+	height: 150px;
+	margin-right: 2%;
+	background-color: #98bada;
+	overflow: hidden;
+	display: block;
+}
+
+#surveyimg {
+	width: 20%;
+	height: 30%;
+}
+
+#gotosurveybutton:hover {
+	background-color: #79beff;
+}
+
+#btn-text {
+	font-size: 100%;
+}
 
 /*______________________
 		 Navbar
@@ -191,11 +252,7 @@ ________________________*/
 	display: flex;
 	
  }
- 
- #btn-text{
-	font-size: 30px;
- }
- 
+
  .centered {
 	text-align: center;
 	float: center;

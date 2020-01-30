@@ -37,12 +37,12 @@ export default class HotlineBar extends Component {
                     <button 
                         className="nav__icon"
                         onClick={() => this.handleClick()}
-                    >&#9776;</button>
+                    >&#9776; Hotlines</button>
                     <div className="nav__body">
                         <ul className="sidebarcontent">
                             {this.state.hotlines.length > 0 ? (
                                 this.state.hotlines.map((hotline, index) =>
-                                    <li>
+                                    <li key={hotline.id}>
                                         <h1 className="hotlinetitles">
                                             <img src={phoneimg} height="30px" width="30px" />
                                             {hotline.fields['name']} Hotline

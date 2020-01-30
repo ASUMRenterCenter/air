@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import history from './history';
 import '../CSS/styles.css'
 import './hotlinebar.js'
+import survey from '../Images/ButtonImages/survey.png';
 
 
 export default class Homepage extends Component {
@@ -38,16 +39,25 @@ export default class Homepage extends Component {
 
 	render() {
 		return (
-			<div class="buttonpagescolumn width85">
+			<div className="buttonpagescolumn width85">
 				<h1>What resources can we help you find?</h1>
+					<a
+						role="button"
+						className="btn btn-light Fixed right"
+						href="./Survey"
+						id="gotosurveybutton"
+					>
+						<img src={survey} id="surveyimg"/>
+						<h1 id="btn-text">Need Help Choosing a Resource? Click here to take a quick survey.</h1>
+					</a>
 				{this.state.taxonomies.length > 0 ? (
 					this.state.taxonomies.map((taxonomy, index) =>
 					<div className ="container mt-3" key={taxonomy.id}>
-						<div className="row">
+						<div className="row card-container">
 							<div className="col">
 								<div className="card-deck">
 									<div className="card btn">
-										<button onClick={(e) => this.handleClick(taxonomy.fields['name'], taxonomy.fields['id'], e)} type="button" className="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title={taxonomy.fields['x-description']}>
+										<button onClick={(e) => this.handleClick(taxonomy.fields['name'], taxonomy.fields['id'], e)} type="button" className="btn btn-secondary taxonomy-button" data-toggle="tooltip" data-placement="bottom" title={taxonomy.fields['x-description']}>
 											<TaxonomyCard {...taxonomy.fields} />
 										</button>
 									</div>
@@ -58,6 +68,7 @@ export default class Homepage extends Component {
 					)
 				):("")
 				}
+				<div className="whitespace"></div>
 			</div>
 		)
 
@@ -282,7 +293,7 @@ export default class Homepage extends Component {
 // }
 
 const TaxonomyCard = ({id, name, description, image}) => (
-	<div>
+	<div className="card-div">
 		{typeof image !== 'undefined'? <img className="card-img-top" src={image[0].url} alt={name} /> : null}
 		<div className="card-body">
 			<h5 className="card-title">{name}</h5>

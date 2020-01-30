@@ -105,7 +105,7 @@ class Index extends React.Component {
 									children={<Homepage database={base} />}
 									Sidebar={<Sidebar database={base} />}
 								/>
-								{/* <ExitButton /> */}
+								<ExitButton />
 							</div>
 						)}
 					/>
