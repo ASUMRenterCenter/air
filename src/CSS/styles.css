@@ -92,7 +92,7 @@ div {
 	height: 300%;
 	padding: 20px;
 	z-index: 1;
-	border-left: 1px solid #cccccc;
+	border-left: 5px solid #000000;
 	background-color: #cfcdcc;
 }
 
@@ -103,7 +103,7 @@ div {
 	padding: 8px;
 	font-size: 25px;
 	cursor: pointer;
-	transition: color .3s;
+	/* transition: color .3s; */
 }
 
 .nav__icon:hover {
@@ -137,26 +137,42 @@ div {
   	Taxonomy Buttons
   ________________________*/
 
-.taxonomy-button {
-	width: 100%;
-	height: 100%;
-}
+  @media (min-width: 760px){
+	#taxonomy-btn-card {
+		width: 200px;
+		height: 200px;
+		background-color: #000000;
+	}
 
-.card-div {
-	width: 100%;
-	height: 100%;
-}
+	#taxonomy-button {
+		width: 100%;
+		height: 100%;
+		background-color: #cfcdcc;
+	}
 
-.card-container {
-	width: 200px;
-	height: 150px;
-	padding-bottom: 100px;
-}
-.card-img-top {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-}
+	.card-div {
+		/* width: 100%;
+		height: 100%; */
+	}
+
+	#card-img{
+		width:30%;
+		width:30%;
+	}
+
+	#card-title{
+		color: black;
+	}
+
+	#img-rep {
+		width:20px;
+		height:70px;
+	}
+
+	.taxonomy-btn-outline {
+		padding-bottom: 20px;
+	}
+  }
 
 /***************************
 ****************************
@@ -170,7 +186,7 @@ ________________________*/
 #gotosurveybutton {
 	z-index: 2;
 	top: 75%;
-	width: 175px;
+	width: 200px;
 	height: 150px;
 	margin-right: 2%;
 	background-color: #98bada;
