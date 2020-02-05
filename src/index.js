@@ -10,7 +10,7 @@ import ButtonResults from "./Javascript/buttonresults";
 import LoginPage from "./Javascript/loginpage";
 import AddAgency from "./Javascript/addagency";
 import EditAgency from "./components/AgencyEditPage";
-import Survey from "./Javascript/survey";
+import Survey from "./Javascript/Survey/survey";
 import SurveyResults from "./Javascript/CategoryResults/SurveyResultsPage";
 import CategoryResults from "./Javascript/CategoryResults/CategoryResultsPage";
 import AgencyInfoPage from "./components/AgencyInfoPage";
@@ -147,7 +147,7 @@ class Index extends React.Component {
 						path="/Survey"
 						component={() => (
 							<div className="indexdivinner">
-								<Survey />
+								<Survey database={base}/>
 								<ExitButton />
 							</div>
 						)}
@@ -190,10 +190,10 @@ class Index extends React.Component {
 						)}
 					/>
 					<Route
-						path="/AgencyInfoPage"
-						component={() => (
+						path="/AgencyInfoPage/:agency_id"
+						component={(props) => (
 							<div className="indexdivinner">
-								<AgencyInfoPage />
+								<AgencyInfoPage {...props}/>
 							</div>
 						)}
 					/>

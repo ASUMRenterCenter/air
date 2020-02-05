@@ -61,7 +61,7 @@ export default class Homepage extends Component {
 				for(let i = 0; i < taxonomies.length; i++){
 					var row = (
 						<div className="row" key={i}>
-							<div className="col" key={taxonomies[i].id}>>
+							<div className="col" key={taxonomies[i].id}>
 								<div className="card-deck taxonomy-btn-outline">
 									<div className="card btn" id="taxonomy-btn-card">
 										<button onClick={(e) => this.handleClick(taxonomies[i].fields['name'], taxonomies[i].fields['id'], e)} type="button" className="btn btn-secondary" id="taxonomy-button" data-toggle="tooltip" data-placement="bottom" title={taxonomies[i].fields['x-description']}>

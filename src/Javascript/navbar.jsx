@@ -3,7 +3,6 @@ import $ from "jquery";
 
 import { Navbar, Nav, Button, Image, Row } from "react-bootstrap";
 import "../CSS/styles.css";
-import "../CSS/nonmobile.css";
 import * as BCSS from "bootstrap/dist/css/bootstrap.css";
 import * as BJS from "bootstrap/dist/js/bootstrap.js";
 import logo from "../Images/Logo.png";

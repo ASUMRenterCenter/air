@@ -1,8 +1,0 @@
-/* This is a query to check the screen width. If it is greater than 629 then display 3 columns on the homepage.
- See this guide for more info: https://www.thesitewizard.com/css/mobile-friendly-responsive-design.shtml
- */
-
-@media only screen and (max-width: 629) {
-
-
-}
