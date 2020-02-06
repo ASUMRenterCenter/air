@@ -27,7 +27,7 @@ export default class AddAgency extends React.Component {
 								<h1>Edit Organization</h1>
 							</Col>
 							<Col sm={4}>
-								<Button href="/EditAgency" variant="info" size="sm">
+								<Button href="/createOrganization" variant="info" size="sm">
 									Create New Organization
 								</Button>
 							</Col>
