@@ -129,7 +129,7 @@ class Index extends React.Component {
 											id={this.state.org_acc_id}
 										/>
 									}
-									Sidebar={<Sidebar database={base} />}
+									//Sidebar={<Sidebar database={base} />}
 								/>
 								{/* <LoginPage {...props} database={base} /> */}
 							</div>
@@ -148,7 +148,7 @@ class Index extends React.Component {
 						path="/Survey"
 						component={() => (
 							<div className="indexdivinner">
-								<Survey database={base}/>
+								<Survey database={base} />
 								<ExitButton />
 							</div>
 						)}
@@ -165,13 +165,16 @@ class Index extends React.Component {
 						path="/CategoryResults/:taxonomy_name"
 						component={props => (
 							<div className="indexdivinner">
-								<Navbar database={base} children={<CategoryResults {...props} database={base}/>}/>
+								<Navbar
+									database={base}
+									children={<CategoryResults {...props} database={base} />}
+								/>
 							</div>
 						)}
 					/>
 					<Route
 						path="/AddAgency/:org_name/:org_acc_id"
-						component={(props) => (
+						component={props => (
 							<div>
 								<Navbar
 									{...props}
@@ -184,20 +187,20 @@ class Index extends React.Component {
 					/>
 					<Route
 						path="/createOrganization"
-						component={(props) => (
+						component={props => (
 							<div>
-							<Navbar
-								{...props}
-								loggedIn={true}
-								database={base}
-								children={<CreateOrganization {...props} database={base} />}
-							/>
+								<Navbar
+									{...props}
+									loggedIn={true}
+									database={base}
+									children={<CreateOrganization {...props} database={base} />}
+								/>
 							</div>
 						)}
 					/>
 					<Route
 						path="/EditAgency/:org_name/:org_acc_id"
-						component={(props) => (
+						component={props => (
 							<div className="indexdivinner">
 								<Navbar
 									{...props}
@@ -210,9 +213,9 @@ class Index extends React.Component {
 					/>
 					<Route
 						path="/AgencyInfoPage/:agency_id"
-						component={(props) => (
+						component={props => (
 							<div className="indexdivinner">
-								<AgencyInfoPage {...props}/>
+								<AgencyInfoPage {...props} />
 							</div>
 						)}
 					/>

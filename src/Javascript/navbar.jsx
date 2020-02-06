@@ -25,6 +25,8 @@ export default class nav extends React.PureComponent {
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.editAgency = this.editAgency.bind(this);
 		this.addAgency = this.addAgency.bind(this);
+		this.orgLogin = this.orgLogin.bind(this);
+		this.logOut = this.logOut.bind(this);
 	}
 
 	componentDidMount() {
@@ -103,6 +105,22 @@ export default class nav extends React.PureComponent {
 		}
 	}
 
+	orgLogin(e) {
+		if (this.state.loggedIn && this.state.active) {
+			alert("You're already logged in");
+		} else {
+			history.push("/login");
+		}
+	}
+
+	logOut(e) {
+		if (!this.state.loggedIn && !this.state.active) {
+			alert("Can't log out if you're not logged in");
+		} else {
+			history.replace("/");
+		}
+	}
+
 	editAgency(e) {
 		if (!this.state.loggedIn) {
 			history.replace("/");
@@ -116,25 +134,16 @@ export default class nav extends React.PureComponent {
 	addAgency(e) {
 		if (!this.state.loggedIn) {
 			history.replace("/");
-		} else if (this.state.loggedIn && this.state.active && (this.state.orgId === "1")) {
+		} else if (
+			this.state.loggedIn &&
+			this.state.active &&
+			this.state.orgId === "1"
+		) {
 			history.push(
 				"/" + "AddAgency/" + this.state.orgName + "/" + this.state.orgId
 			);
 		}
 	}
-
-	showButtons() {
-		if (document.getElementById("add-agency-button").hasAttribute("disabled")) {
-			$("#add-agency-button").addClass("disabled");
-			$("#edit-agency-button").addClass("disabled");
-		} else {
-			$("#add-agency-button").removeClass("disabled");
-			$("#edit-agency-button").removeClass("disabled");
-		}
-		//document.getElementById("add-agency-button").removeAttribute("disabled");
-		//document.getElementById("add-agency-button").setAttribute("active", "true");
-	}
-	
 
 	render() {
 		return (
@@ -155,29 +164,30 @@ export default class nav extends React.PureComponent {
 					<Navbar.Collapse id="basic-navbar-nav" height="20px">
 						<Nav id="login-info" className="right">
 							<Row>
-								<div>
-									<button
-										id="add-agency-button"
-										//href="./AddAgency"
-										onClick={this.addAgency}
-										className="btn btn-outline-light btn-sm"
-										type="button"
-										//disabled
-									>
-										Add Agency
-									</button>
-								</div>
-								<div>
-									<button
-										id="edit-agency-button"
-										className="btn-outline-light btn btn-sm"
-										onClick={this.editAgency}
-										type="button"
-										//disabled
-									>
-										Edit Agency
-									</button>
-								</div>
+								{this.state.loggedIn && this.state.active ? (
+									<div>
+										<button
+											id="add-agency-button"
+											onClick={this.addAgency}
+											className="btn btn-outline-light btn-sm"
+											type="button"
+										>
+											Add Agency
+										</button>
+									</div>
+								) : null}
+								{this.state.loggedIn && this.state.active ? (
+									<div>
+										<button
+											id="edit-agency-button"
+											className="btn-outline-light btn btn-sm"
+											onClick={this.editAgency}
+											type="button"
+										>
+											Edit Agency
+										</button>
+									</div>
+								) : null}
 								{/* 	<div>
 								<Button
 									id="login-button"
@@ -188,27 +198,30 @@ export default class nav extends React.PureComponent {
 									Click to enable buttons
 								</Button>
 							</div> */}
-								<div>
-									<Button
-										id="login-button"
-										href="./login"
-										variant="outline-light"
-										size="sm"
-									>
-										Organization Login
-									</Button>
-								</div>
-								<div>
-									<Button
-										id="logout-button"
-										href="./login"
-										variant="outline-light"
-										size="sm"
-										disabled="true"
-									>
-										Logout
-									</Button>
-								</div>
+								{!this.state.loggedIn && !this.state.active ? (
+									<div>
+										<button
+											id="login-button"
+											onClick={this.orgLogin}
+											className="btn btn-outline-light btn-sm"
+											type="button"
+										>
+											Organization Login
+										</button>
+									</div>
+								) : null}
+								{this.state.loggedIn && this.state.active ? (
+									<div>
+										<button
+											id="logout-button"
+											onClick={this.logOut}
+											className="btn btn-outline-light btn-sm"
+											type="button"
+										>
+											Logout
+										</button>
+									</div>
+								) : null}
 							</Row>
 						</Nav>
 					</Navbar.Collapse>
