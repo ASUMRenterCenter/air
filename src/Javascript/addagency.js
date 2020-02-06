@@ -10,10 +10,97 @@ import {
 	Card
 } from "../../node_modules/react-bootstrap";
 import "../CSS/addagency.css";
+import history from "./history";
 
 export default class AddAgency extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			organization_accounts: [],
+			loggedIn: false,
+			orgName: "",
+			orgId: "",
+			active: false
+		};
+		this.createNewOrg = this.createNewOrg.bind(this);
+	}
+
+	componentDidMount() {
+		this.props
+			.database("organization_accounts")
+			.select({
+				fields: ["org_acc_id", "org_name", "username", "password"],
+				sort: [{ field: "org_acc_id", direction: "asc" }]
+			})
+			.eachPage((organization_accounts, fetchNextPage) => {
+				this.setState({
+					organization_accounts
+				});
+				fetchNextPage();
+			});
+		if (this.props.loggedIn) {
+			this.setState({
+				loggedIn: true,
+				orgName: this.props.match.params.org_name,
+				orgId: this.props.match.params.org_acc_id
+			});
+		}
+	}
+
+	componentDidUpdate() {
+		/*===============================
+		Checks the url with information in database
+		to decide if user is an authorized user. If not
+		kicks them back to homepage and logs out.
+		================================*/
+		if (
+			this.state.loggedIn &&
+			!this.state.active &&
+			this.state.organization_accounts.length > 0
+		) {
+			for (let i = 0; i <= this.state.organization_accounts.length; i++) {
+				if (
+					typeof this.state.organization_accounts[i] === "undefined" ||
+					typeof this.state.organization_accounts[i].fields["org_name"] ===
+						"undefined" ||
+					typeof this.state.organization_accounts[i].fields === "undefined"
+				) {
+					if (i >= this.state.organization_accounts.length) {
+						history.push("/");
+						this.setState({
+							active: false
+						});
+					}
+					continue;
+				} else if (
+					this.state.organization_accounts[i].fields["org_name"][0] ===
+						this.state.orgName &&
+					this.state.organization_accounts[i].fields["org_acc_id"] ===
+						this.state.orgId
+				) {
+					this.setState({
+						active: true
+					});
+					break;
+				}
+			}
+		}
+		/*==============================*/
+	}
+
+	createNewOrg(e) {
+		if (!this.state.loggedIn && !this.state.active) {
+			history.replace("/");
+		} else if (this.state.loggedIn && this.state.active) {
+			history.push(
+				"/" +
+					"CreateOrganization/" +
+					this.state.orgName +
+					"/" +
+					this.state.orgId
+			);
+		}
 	}
 
 	render() {
@@ -27,9 +114,13 @@ export default class AddAgency extends React.Component {
 								<h1>Edit Organization</h1>
 							</Col>
 							<Col sm={4}>
-								<Button href="/createOrganization" variant="info" size="sm">
+								<button
+									onClick={this.createNewOrg}
+									className="btn btn-info btn-sm"
+									type="button"
+								>
 									Create New Organization
-								</Button>
+								</button>
 							</Col>
 						</Row>
 					</Container>
