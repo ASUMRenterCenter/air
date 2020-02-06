@@ -25,7 +25,7 @@ function AgencyInfoPage() {
 
           </div>
         </Jumbotron>
-        <div class = "agencyInfoText" ref={ref}>
+        <div className = "agencyInfoText" ref={ref}>
           <h3>Name: Example Name</h3>
           <h3>Website: Organization@website.com</h3>
           <h3>Phone: 406 - XXX - XXXX</h3>

@@ -9,7 +9,8 @@ export default class Survey extends React.Component {
 		this.state = {
 			initial: true,
 			questions: [],
-			questions2: []
+			taxonomies: [],
+			taxonomies2: []
 		}
 		this.handleContinue = this.handleContinue.bind(this);
 		this.handlePrevious = this.handlePrevious.bind(this);
@@ -25,14 +26,43 @@ export default class Survey extends React.Component {
 				}));
 			});
 		}
-		else {
+	}
 
+	componentDidUpdate (){
+		console.log(this.state.taxonomies.length);
+		console.log(this.state.taxonomies[0]);
+		if(this.state.taxonomies.length > 0){
+
+			let list = [];
+			for(let i = 0; i < this.state.taxonomies.length; i++){
+				var filter = '({parent_id} = ' + this.state.taxonomies[i] + ')';
+				console.log(filter)
+				this.props.database('survey_questions').select({
+					filterByFormula: filter
+				}).eachPage((questions, fetchNextPage) => {
+					console.log(questions[0].fields['parent_id'])
+					for(let i = 0; i < questions.length; i++){
+						if(typeof questions[i].id !== "undefined"){
+							list.push(questions[i])
+						}
+					}
+				})
+			}
 		}
 	}
 
 	handleContinue () {
+		var list = []
+		var checks = document.forms['form-check'];
+		for(let i = 0; i < checks.length; i++){
+			if(checks[i].checked === true){
+				list.push(checks[i].name);
+			}
+		}
+
 		this.setState(previousState => ({
-			initial: false
+			initial: false,
+			taxonomies: list
 		}));
 	}
 
@@ -45,7 +75,7 @@ export default class Survey extends React.Component {
 	render(){
 		return (<div id="table_parent">
 					<form name='form-check'>
-						<table class='table'>
+						<table className='table'>
 						<thead>
 							<tr>
 								<th>Questions</th>
@@ -55,17 +85,20 @@ export default class Survey extends React.Component {
 						</thead>
 						<tbody>
 							{this.state.questions.map((question, index) => (
-								<tr>
+								<tr key={question.id}>
 									<td>{question.fields['question']}</td>
-									<td><label class='form-check-label' for={question.id}>If Yes: </label><input class='form-check-input' type="checkbox" name={question.id} value={question.fields['taxonomy']}/></td>
+									<td><label className='form-check-label'>If Yes: </label><input className='form-check-input' type="checkbox" name={question.fields["id"]} value={question.fields['taxonomy']}/></td>
 								</tr>
 							))
 							}
-							{this.state.initial? (
+							
+						</tbody>
+						</table>
+						{this.state.initial? (
 								<button
-									type='submit'
-									// onClick={this.handleContinue}
-									class="btn btn-dark"
+									type='button'
+									onClick={this.handleContinue}
+									className="btn btn-dark"
 									id="survey_button"
 									id="continue_button"
 								>
@@ -76,7 +109,7 @@ export default class Survey extends React.Component {
 									<button
 										onClick={this.handlePrevious}
 										type='button'
-										class="btn btn-dark"
+										className="btn btn-dark"
 										id="survey_button"
 										id="previous_button"
 									>
@@ -86,7 +119,7 @@ export default class Survey extends React.Component {
 										type="submit"
 										// role='button'
 										// href="/CategoryResultsPage"
-										class="btn btn-dark"
+										className="btn btn-dark"
 										id="survey_button"
 										id="see_results_button"
 									>
@@ -94,9 +127,7 @@ export default class Survey extends React.Component {
 									</button>
 								</div>
 							)}
-						</tbody>
-						</table>
-
+							{console.log(this.state.taxonomies)}
 					</form>
 				</div>);
 	}

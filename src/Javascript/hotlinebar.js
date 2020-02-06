@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import phoneimg from '../Images/ButtonImages/phone.png';
 import '../CSS/styles.css'
-//import {Icon} from 'antd';
 
 export default class HotlineBar extends Component {
 	constructor(props) {

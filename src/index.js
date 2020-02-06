@@ -129,7 +129,6 @@ class Index extends React.Component {
 											id={this.state.org_acc_id}
 										/>
 									}
-									//Sidebar={<Sidebar database={base} />}
 								/>
 								{/* <LoginPage {...props} database={base} /> */}
 							</div>
@@ -139,7 +138,7 @@ class Index extends React.Component {
 						path="/ButtonResults/:parent_name/:parent_id"
 						component={props => (
 							<div className="indexdivinner">
-								<ButtonResults {...props} database={base} />
+								<Navbar database={base} children={<ButtonResults {...props} database={base} />} />
 								<ExitButton />
 							</div>
 						)}
@@ -148,19 +147,19 @@ class Index extends React.Component {
 						path="/Survey"
 						component={() => (
 							<div className="indexdivinner">
-								<Survey database={base} />
+								<Navbar database={base} children={<Survey database={base}/>} />
 								<ExitButton />
 							</div>
 						)}
 					/>
-					<Route
+					{/* <Route
 						path="/SurveyResults"
 						component={() => (
 							<div className="indexdivinner">
 								<SurveyResults />
 							</div>
 						)}
-					/>
+					/> */}
 					<Route
 						path="/CategoryResults/:taxonomy_name"
 						component={props => (
@@ -215,7 +214,7 @@ class Index extends React.Component {
 						path="/AgencyInfoPage/:agency_id"
 						component={props => (
 							<div className="indexdivinner">
-								<AgencyInfoPage {...props} />
+								<Navbar database={base} children={<AgencyInfoPage {...props}/>} />
 							</div>
 						)}
 					/>
