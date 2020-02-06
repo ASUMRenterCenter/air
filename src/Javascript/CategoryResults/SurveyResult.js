@@ -57,6 +57,7 @@ export default class SurveyResult extends React.Component{
               <Accordion.Collapse eventKey="0">
                 <Card.Body>
                   <ResultMoreInfoBody 
+                    agency_id={this.props.agency_id}
                     phone_number={this.state.phone_number} 
                     email={this.props.email} 
                     address={this.props.address} 

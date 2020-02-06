@@ -13,7 +13,8 @@ export default class ResultMoreInfoBody extends React.Component{
         <p>Phone: {this.props.phone_number}</p>
         <p>Email: {this.props.email}</p>
         <p>Address: {this.props.address}, {this.props.city} {this.props.state} {this.props.zip_code}</p>
-        <MapAccordion />
+        <MapAccordion 
+         agency_id={this.props.agency_id}/>
       </div>
     )
   }

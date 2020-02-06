@@ -2,7 +2,7 @@ import React from 'react';
 // import { Jumbotron } from 'react-bootstrap';
 import SurveyResult from './SurveyResult';
 import PrintSaveShare from "./PrintSaveShare";
-import '../../CSS/ComponentStyle.css';
+import '../../CSS/styles.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 
@@ -95,6 +95,7 @@ export default class CategoryResultsPage extends React.Component{
             <div key={organization.fields['id']}>
               <SurveyResult 
                 database = {this.props.database}
+                agency_id = {organization.id}
                 agency_name = {organization.fields['name'] === undefined ? "Not available" : organization.fields['name']} 
                 agency_website = {organization.fields['url'] === undefined ? "Website Not Available" : organization.fields['url']}
                 phone_number={organization.fields['phones'] === undefined ? "Phone Number Not Available" : organization.fields['phones']} 
@@ -107,7 +108,7 @@ export default class CategoryResultsPage extends React.Component{
               <br />
             </div>
           )
-          ):("")
+          ):(null)
         }
       </div>
     );

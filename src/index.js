@@ -10,7 +10,7 @@ import ButtonResults from "./Javascript/buttonresults";
 import LoginPage from "./Javascript/loginpage";
 import AddAgency from "./Javascript/addagency";
 import EditAgency from "./components/AgencyEditPage";
-import Survey from "./Javascript/survey";
+import Survey from "./Javascript/Survey/survey";
 import SurveyResults from "./Javascript/CategoryResults/SurveyResultsPage";
 import CategoryResults from "./Javascript/CategoryResults/CategoryResultsPage";
 import AgencyInfoPage from "./components/AgencyInfoPage";
@@ -18,6 +18,7 @@ import AgencyEditPage from "./components/AgencyEditPage";
 import createOrganization from "./Javascript/createOrganization";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Airtable from "airtable";
+import Sidebar from "./Javascript/hotlinebar";
 
 const Notfound = () => <h1>Not found</h1>;
 
@@ -76,12 +77,12 @@ class Index extends React.Component {
 
 	routing = (
 		<Router>
-			<div>
+			<div id="indexdiv">
 				{/* <Route
 					exact
 					path="*"
 					component={props => (
-						<div>
+						<div className="indexdivinner">
 							<Navbar database={base} children={<Homepage database={base}/>}/>
 							<Navbar
 								{...props}
@@ -99,10 +100,11 @@ class Index extends React.Component {
 						exact
 						path="/"
 						component={() => (
-							<div>
+							<div className="indexdivinner">
 								<Navbar
 									database={base}
 									children={<Homepage database={base} />}
+									Sidebar={<Sidebar database={base} />}
 								/>
 								<ExitButton />
 							</div>
@@ -111,7 +113,7 @@ class Index extends React.Component {
 					<Route
 						path="/login"
 						component={props => (
-							<div>
+							<div className="indexdivinner">
 								<Navbar
 									database={base}
 									children={
@@ -127,6 +129,7 @@ class Index extends React.Component {
 											id={this.state.org_acc_id}
 										/>
 									}
+									Sidebar={<Sidebar database={base} />}
 								/>
 								{/* <LoginPage {...props} database={base} /> */}
 							</div>
@@ -135,7 +138,7 @@ class Index extends React.Component {
 					<Route
 						path="/ButtonResults/:parent_name/:parent_id"
 						component={props => (
-							<div>
+							<div className="indexdivinner">
 								<ButtonResults {...props} database={base} />
 								<ExitButton />
 							</div>
@@ -144,8 +147,8 @@ class Index extends React.Component {
 					<Route
 						path="/Survey"
 						component={() => (
-							<div>
-								<Survey />
+							<div className="indexdivinner">
+								<Survey database={base}/>
 								<ExitButton />
 							</div>
 						)}
@@ -153,7 +156,7 @@ class Index extends React.Component {
 					<Route
 						path="/SurveyResults"
 						component={() => (
-							<div>
+							<div className="indexdivinner">
 								<SurveyResults />
 							</div>
 						)}
@@ -161,16 +164,21 @@ class Index extends React.Component {
 					<Route
 						path="/CategoryResults/:taxonomy_name"
 						component={props => (
-							<div>
+							<div className="indexdivinner">
 								<Navbar database={base} children={<CategoryResults {...props} database={base}/>}/>
 							</div>
 						)}
 					/>
 					<Route
-						path="/AddAgency"
-						component={() => (
+						path="/AddAgency/:org_name/:org_acc_id"
+						component={(props) => (
 							<div>
-								<AddAgency />
+								<Navbar
+									{...props}
+									loggedIn={true}
+									database={base}
+									children={<AddAgency {...props} database={base} />}
+								/>
 							</div>
 						)}
 					/>
@@ -185,7 +193,7 @@ class Index extends React.Component {
 					<Route
 						path="/EditAgency/:org_name/:org_acc_id"
 						component={(props) => (
-							<div>
+							<div className="indexdivinner">
 								<Navbar
 									{...props}
 									loggedIn={true}
@@ -196,17 +204,17 @@ class Index extends React.Component {
 						)}
 					/>
 					<Route
-						path="/AgencyInfoPage"
-						component={() => (
-							<div>
-								<AgencyInfoPage />
+						path="/AgencyInfoPage/:agency_id"
+						component={(props) => (
+							<div className="indexdivinner">
+								<AgencyInfoPage {...props}/>
 							</div>
 						)}
 					/>
 					<Route
 						path="/Organization_Home/:org_name/:org_acc_id"
 						component={props => (
-							<div>
+							<div className="indexdivinner">
 								<Navbar
 									{...props}
 									loggedIn={true}
