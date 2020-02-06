@@ -10,7 +10,7 @@ import {Col} from "react-bootstrap"
 
 
 
-export default class AgencyEditPage extends Component { //FIXME should be agency creation
+export default class CreateOrganization extends Component { //FIXME should be agency creation
 	constructor(props) {
 		super(props);
 		this.state = {

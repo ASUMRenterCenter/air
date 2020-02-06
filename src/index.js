@@ -15,7 +15,7 @@ import SurveyResults from "./Javascript/CategoryResults/SurveyResultsPage";
 import CategoryResults from "./Javascript/CategoryResults/CategoryResultsPage";
 import AgencyInfoPage from "./components/AgencyInfoPage";
 import AgencyEditPage from "./components/AgencyEditPage";
-import createOrganization from "./Javascript/createOrganization";
+import CreateOrganization from "./Javascript/createOrganization";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Airtable from "airtable";
 import Sidebar from "./Javascript/hotlinebar";
@@ -184,9 +184,14 @@ class Index extends React.Component {
 					/>
 					<Route
 						path="/createOrganization"
-						component={() => (
+						component={(props) => (
 							<div>
-								<createOrganization />
+							<Navbar
+								{...props}
+								loggedIn={true}
+								database={base}
+								children={<CreateOrganization {...props} database={base} />}
+							/>
 							</div>
 						)}
 					/>
