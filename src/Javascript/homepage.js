@@ -21,7 +21,6 @@ export default class Homepage extends Component {
 			filterByFormula: '{parent_id} = ""',
 			view: "Grid view",
 		}).eachPage((taxonomies, fetchNextPage) => {
-			console.log(this.state.mobile);
 			if(!this.state.mobile){
 				for(let i = 0; i < taxonomies.length -2; i+=3){
 					var row = (<div className="row" key={i}>
@@ -81,10 +80,8 @@ export default class Homepage extends Component {
 			// this.setState({
 			// 	taxonomies
 			// });
-			console.log(taxonomies)
 			fetchNextPage();
 		}, function done(error) {
-			console.log("Will Return An Error:" + error);
 		});
 	}
 
@@ -99,7 +96,6 @@ export default class Homepage extends Component {
 	render() {
 		return (
 			<div className="buttonpagescolumn width85">
-				{console.log(this.state.taxonomies[0])}
 				<h1>What resources can we help you find?</h1>
 				<a
 					role="button"

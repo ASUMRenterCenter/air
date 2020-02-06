@@ -91,8 +91,6 @@ export default class nav extends React.PureComponent {
 		}
 		/*==============================*/
 
-		console.log(this.state.active);
-		console.log(this.state.loggedIn);
 	}
 
 	handleSubmit(e) {

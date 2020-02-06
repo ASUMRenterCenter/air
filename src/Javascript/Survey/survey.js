@@ -8,16 +8,17 @@ export default class Survey extends React.Component {
 		// this.state = { mode: "survey1" };
 		this.state = {
 			initial: true,
+			second: true,
+			third: false,
 			questions: [],
+			questions2: [],
 			taxonomies: [],
-			taxonomies2: []
 		}
 		this.handleContinue = this.handleContinue.bind(this);
 		this.handlePrevious = this.handlePrevious.bind(this);
 	}
 
 	componentDidMount (){
-		if(this.state.initial){
 			this.props.database('survey_questions').select({
 				filterByFormula: '{parent_id} = ""',
 			}).eachPage((questions, fetchNextPage) => {
@@ -25,30 +26,42 @@ export default class Survey extends React.Component {
 					questions: questions,
 				}));
 			});
-		}
 	}
-
+	list_length = 0;
 	componentDidUpdate (){
-		console.log(this.state.taxonomies.length);
-		console.log(this.state.taxonomies[0]);
-		if(this.state.taxonomies.length > 0){
-
+		console.log("Initial: " +this.state.initial);
+		console.log("Second: " + this.state.second);
+		if(this.state.taxonomies.length > 0 && this.state.second){
 			let list = [];
 			for(let i = 0; i < this.state.taxonomies.length; i++){
 				var filter = '({parent_id} = ' + this.state.taxonomies[i] + ')';
-				console.log(filter)
 				this.props.database('survey_questions').select({
 					filterByFormula: filter
 				}).eachPage((questions, fetchNextPage) => {
-					console.log(questions[0].fields['parent_id'])
 					for(let i = 0; i < questions.length; i++){
 						if(typeof questions[i].id !== "undefined"){
 							list.push(questions[i])
+							this.list_length ++;
 						}
 					}
 				})
 			}
+			this.setState(previousState => ({
+				second: false,
+				questions2: list,
+			}));
 		}
+		// else if (!this.state.third){
+		// 	console.log("Questions2: " + this.state.questions2)
+		// 	this.setState(previousState => ({
+		// 		third:true
+		// 	}));
+		// }
+		if(this.list_length === 0 && typeof this.state.questions2 === "undefined"){
+			console.log(this.list_length)
+			this.forceUpdate();
+		}
+
 	}
 
 	handleContinue () {
@@ -74,37 +87,66 @@ export default class Survey extends React.Component {
 
 	render(){
 		return (<div id="table_parent">
-					<form name='form-check'>
-						<table className='table'>
-						<thead>
-							<tr>
-								<th>Questions</th>
-								<th>Please check the box if the question applies to you.</th>
-							</tr>
-
-						</thead>
-						<tbody>
-							{this.state.questions.map((question, index) => (
-								<tr key={question.id}>
-									<td>{question.fields['question']}</td>
-									<td><label className='form-check-label'>If Yes: </label><input className='form-check-input' type="checkbox" name={question.fields["id"]} value={question.fields['taxonomy']}/></td>
+					{this.state.initial? 
+						(<form name='form-check'>
+							<table className='table'>
+							<thead>
+								<tr>
+									<th>Questions</th>
+									<th>Please check the box if the question applies to you.</th>
 								</tr>
-							))
-							}
-							
-						</tbody>
-						</table>
-						{this.state.initial? (
-								<button
-									type='button'
-									onClick={this.handleContinue}
-									className="btn btn-dark"
-									id="survey_button"
-									id="continue_button"
-								>
-									Continue
-								</button>
-							):(
+
+							</thead>
+							<tbody>
+								{this.state.questions.map((question, index) => (
+									<tr key={question.id}>
+										<td>{question.fields['question']}</td>
+										<td><label className='form-check-label'>If Yes: </label><input className='form-check-input' type="checkbox" name={question.fields["id"]} value={question.fields['taxonomy']}/></td>
+									</tr>
+								))
+								}
+								
+							</tbody>
+							</table>
+							<button
+								type='button'
+								onClick={this.handleContinue}
+								className="btn btn-dark"
+								id="survey_button"
+								id="continue_button"
+							>
+								Continue
+							</button>
+						
+						{console.log(this.state.taxonomies)}
+						</form>):
+						(<form name='form-check'>
+							{typeof this.state.questions2[0] !== "undefined"?(
+								
+								<div>
+									{console.log("Got Here")}
+									{console.log("Questions2: " + this.state.questions2)}
+								<table className='table'>
+								<thead>
+									<tr>
+										<th>Questions</th>
+										<th>Please check the box if the question applies to you.</th>
+									</tr>
+		
+								</thead>
+								<tbody>
+									{this.state.questions2.map((question, index) => (
+										<tr key={question.id}>
+											{console.log(question.id)}
+											<td>{question.fields['question']}</td>
+											<td><label className='form-check-label'>If Yes: </label><input className='form-check-input' type="checkbox" name={question.fields["id"]} value={question.fields['taxonomy']}/></td>
+										</tr>
+									))
+									}
+									
+								</tbody>
+								</table>
+		
 								<div>
 									<button
 										onClick={this.handlePrevious}
@@ -126,9 +168,10 @@ export default class Survey extends React.Component {
 										See Results
 									</button>
 								</div>
-							)}
-							{console.log(this.state.taxonomies)}
-					</form>
+								</div>
+							):(null)}
+					</form>)
+					}
 				</div>);
 	}
 
