@@ -169,10 +169,15 @@ class Index extends React.Component {
 						)}
 					/>
 					<Route
-						path="/AddAgency"
-						component={() => (
-							<div className="indexdivinner">
-								<AddAgency />
+						path="/AddAgency/:org_name/:org_acc_id"
+						component={(props) => (
+							<div>
+								<Navbar
+									{...props}
+									loggedIn={true}
+									database={base}
+									children={<AddAgency {...props} database={base} />}
+								/>
 							</div>
 						)}
 					/>
