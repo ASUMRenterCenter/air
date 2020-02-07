@@ -52,7 +52,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
       serviceID: "90",
 
 			locationRecord: [],
-			locationName: "Automotive",
+			locationName: "",
 			locationID: "9999",
 			locationAltName: "",
 			locationDescription: "",
@@ -61,17 +61,44 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 			locationLongitude: "",
 
 
-
-
+			taxonomyRecords: [[], []],
+			narrowing: [],
+			testList: [1, 2, 3, 4, 5],
+			taxonomyNames: [],
 
 
 		}
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleServiceTaxonomy = this.handleServiceTaxonomy.bind(this);
 	}
 
 
   componentDidMount() {
+		var taxonomyArray = [];
+		this.props.database('taxonomy').select({
+				filterByFormula: '{parent_id} = ""',
+		    view: 'Grid view',
+		}).firstPage((err, records) => {
+		    if (err) { console.error(err); return; }
+		    records.forEach((record) => {
+		        console.log('Retrieved', record.get('name'));
+						taxonomyArray.push(record);
+		    });
+		});
+		var recordHolder = [[]];
+		recordHolder[0] = taxonomyArray;
+		//recordHolder[1] = taxonomyArray;
+
+		setTimeout(() => {
+
+			this.setState({
+				taxonomyRecords: recordHolder,
+			})
+		}, 1000);
+		setTimeout(() => {
+			console.log(this.state.taxonomyRecords);
+		}, 1500);
 	}
 
 
@@ -84,9 +111,50 @@ export default class CreateOrganization extends Component { //FIXME should be ag
     this.setState({
       [e.target.name]: e.target.value
     });
-    ///console.log("name " + this.state.locationName);
+    console.log("taxonomy layer 1" + this.state.serviceTaxonomyName);
   }
 
+
+	handleServiceTaxonomy(e){
+		this.setState({
+			[e.target.name]: e.target.value
+		});
+		console.log("taxonomy layer 1" + this.state.serviceTaxonomyName);
+
+		setTimeout(() =>{
+			var newTaxonomyArray = [];
+			this.props.database('taxonomy').select({
+					filterByFormula: "({parent_id} = '" + this.state.serviceTaxonomyName + "')",
+					view: 'Grid view',
+			}).firstPage((err, records) => {
+					if (err) { console.error(err); return; }
+					records.forEach((record) => {
+							console.log('Retrieved layer 2 ', record.get('name'));
+							newTaxonomyArray.push(record);
+					});
+			});
+
+			setTimeout(() => {
+				var recordHolder = this.state.taxonomyRecords;
+				console.log("Pre push the recordHolder =  " + recordHolder);
+				recordHolder.push(newTaxonomyArray);
+				console.log("post push the recordHolder =  " + recordHolder);
+				console.log("Service Taxonomy ID: " + this.state.serviceTaxonomyName);
+
+				this.setState({
+					taxonomyRecords: recordHolder,
+				})
+				console.log(this.state.taxonomyRecords);
+				console.log(recordHolder);
+			}, 500);
+
+		}, 100);
+
+		setTimeout(() => {
+			console.log(this.state.serviceTaxonomyName);
+		}, 7000);
+
+	}
 //WARNING: ALWAYS USE ARROW => FUNCTIONS, or 'this' changes to UNDEFINED & STATE CANNOT BE ACCESSED
   handleSubmit(e) {
 
@@ -496,39 +564,25 @@ export default class CreateOrganization extends Component { //FIXME should be ag
             />
           </Form.Group>
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Service Taxonomy Name(must be exact match, "Health" if left blank)</Form.Label>
-            <textarea
-              type="serviceTaxonomyName"
-              name="serviceTaxonomyName"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
+            <Form.Label>Please narrow down the taxonomy of the service</Form.Label>
+						{(this.state.taxonomyRecords || []).map((recordSet, id) =>{
+							return(
+								<Form.Control key={id} as="select" name="serviceTaxonomyName" onChange={event => this.handleServiceTaxonomy(event)}>
+									{(recordSet || []).map((record, key) => {
+										return <option key={key} value={record.fields.id}>{record.fields.name}</option>;
+									})}
+								</Form.Control>
+							)
+						})}
           </Form.Group>
 					<Form.Group controlId="exampleForm.ControlSelect1">
 						<Form.Label>Select Location "Name"</Form.Label>
-						<Form.Control as="select" name="locationName" onChange={event => this.handleChange(event)}>
-							<option>Automotive</option>
-							<option>Baby</option>
-							<option>Beauty</option>
-							<option>Books</option>
-							<option>Clothing</option>
-							<option>Computers</option>
-							<option>Electronics</option>
-							<option>Games</option>
-							<option>Garden</option>
-							<option>Grocery</option>
-							<option>Health</option>
-							<option>Home</option>
-							<option>Industrial</option>
-							<option>Jewelry</option>
-							<option>Kids</option>
-							<option>Movies</option>
-							<option>Music</option>
-							<option>Outdoors</option>
-							<option>Sports</option>
-							<option>Tools</option>
-							<option>Toys</option>
-						</Form.Control>
+						<textarea
+							type="locationName"
+							name="locationName"
+							className="form-control"
+							onChange={event => this.handleChange(event)}
+						/>
 					</Form.Group>
 					<Form.Group controlId="formBasicEmail">
 						<Form.Label>Location Alternate Name</Form.Label>

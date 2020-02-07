@@ -179,7 +179,7 @@ class Index extends React.Component {
 									{...props}
 									loggedIn={true}
 									database={base}
-									children={<AddAgency {...props} database={base} />}
+									children={<AddAgency {...props} database={base} />} //FIXME should be AddAgency
 								/>
 							</div>
 						)}
@@ -198,7 +198,7 @@ class Index extends React.Component {
 						)}
 					/>
 					<Route
-						path="/EditAgency/:org_name/:org_acc_id"
+						path="/EditAgency/:org_name/:org_acc_id" //
 						component={props => (
 							<div className="indexdivinner">
 								<Navbar
