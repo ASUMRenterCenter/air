@@ -27,6 +27,7 @@ export default class AddAgency extends React.Component {
 		};
 		this.createNewOrg = this.createNewOrg.bind(this);
 		this.renderTableData = this.renderTableData.bind(this);
+		this.editOrg = this.editOrg.bind(this);
 	}
 
 	componentDidMount() {
@@ -126,6 +127,25 @@ export default class AddAgency extends React.Component {
 		}
 	}
 
+	editOrg(orgID, orgName) {
+		if (!this.state.isJordan) {
+			alert("You don't have permission to edit.");
+			history.replace("/");
+		} else {
+			history.push(
+				"/" +
+					"EditAgency/" +
+					this.state.orgName +
+					"/" +
+					this.state.orgId +
+					"/" +
+					orgName +
+					"/" +
+					orgID
+			);
+		}
+	}
+
 	renderTableData() {
 		return this.state.organizations.map((organization, index) => {
 			// const { name, email, id } = organization;
@@ -139,18 +159,26 @@ export default class AddAgency extends React.Component {
 							<Col>
 								<Form id="edit-unlist-org">
 									{["checkbox"].map(type => (
-										<div key={`default-${type}`} className="mb-3">
+										<div key={"default-${type}"} className="mb-3">
 											<Form.Check
 												type={type}
-												id={`default-${type}`}
-												label={`Unlist`}
+												id={"default-${type}"}
+												label={"Unlist"}
 											/>
 										</div>
 									))}
 								</Form>
 							</Col>
 							<Col>
-								<a href="/editagency">
+								<a
+									onClick={() =>
+										this.editOrg(
+											organization.fields["id"],
+											organization.fields["name"]
+										)
+									}
+									href="#"
+								>
 									<h6>Edit</h6>
 								</a>
 							</Col>
@@ -166,7 +194,7 @@ export default class AddAgency extends React.Component {
 			<div id="add-agency-page" class="scrollable">
 				<div id="main-component-add-agency">
 					<br></br>
-					<Container id="add-agency" class="centered">
+					<Container id="add-agency" className="centered">
 						<Row>
 							<Col sm={8}>
 								<h1>Edit Organization</h1>
@@ -182,7 +210,7 @@ export default class AddAgency extends React.Component {
 							</Col>
 						</Row>
 					</Container>
-					<Container id="edit-org-table" class="centered">
+					<Container id="edit-org-table" className="centered">
 						<div className="table-wrapper-scroll-y custom-scrollbar">
 							<table className="table table-striped table-bordered table-hover table-dark">
 								<thead>
@@ -193,91 +221,7 @@ export default class AddAgency extends React.Component {
 										<th>Edit/Unlist</th>
 									</tr>
 								</thead>
-								<tbody>
-									{this.renderTableData()}
-									{/* <tr>
-									<td>1</td>
-									<td>Organization</td>
-									<td>Organization Username</td>
-									<td>
-										<Row>
-											<Col>
-												<Form id="edit-unlist-org">
-													{["checkbox"].map(type => (
-														<div key={`default-${type}`} className="mb-3">
-															<Form.Check
-																type={type}
-																id={`default-${type}`}
-																label={`Unlist`}
-															/>
-														</div>
-													))}
-												</Form>
-											</Col>
-											<Col>
-												<a href="/editagency">
-													<h6>Edit</h6>
-												</a>
-											</Col>
-										</Row>
-									</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>Organization</td>
-									<td>Organization Username</td>
-									<td>
-										<Row>
-											<Col>
-												<Form id="edit-unlist-org">
-													{["checkbox"].map(type => (
-														<div key={`default-${type}`} className="mb-3">
-															<Form.Check
-																type={type}
-																id={`default-${type}`}
-																label={`Unlist`}
-															/>
-														</div>
-													))}
-												</Form>
-											</Col>
-											<Col>
-												<a href="/editagency">
-													<h6>Edit</h6>
-												</a>
-											</Col>
-										</Row>
-									</td>
-								</tr>
-
-								<tr>
-									<td>3</td>
-									<td>Organization</td>
-									<td>Organization Username</td>
-									<td>
-										<Row>
-											<Col>
-												<Form id="edit-unlist-org">
-													{["checkbox"].map(type => (
-														<div key={`default-${type}`} className="mb-3">
-															<Form.Check
-																type={type}
-																id={`default-${type}`}
-																label={`Unlist`}
-															/>
-														</div>
-													))}
-												</Form>
-											</Col>
-											<Col>
-												<a href="/editagency">
-													<h6>Edit</h6>
-												</a>
-											</Col>
-										</Row>
-									</td>
-								</tr> */}
-								</tbody>
+								<tbody>{this.renderTableData()}</tbody>
 							</table>
 						</div>
 					</Container>
@@ -294,7 +238,7 @@ export default class AddAgency extends React.Component {
 						</Row>
 					</Container>
 					<Container id="pending-comments">
-						<Table striped bordered hover variant="dark" class="scrollable">
+						<Table striped bordered hover variant="dark" className="scrollable">
 							<thead>
 								<tr>
 									<th>#</th>
@@ -318,7 +262,7 @@ export default class AddAgency extends React.Component {
 										</Accordion>
 									</td>
 									<td>Organization</td>
-									<td class="centered">
+									<td className="centered">
 										<Col>
 											<Button variant="success">Approve</Button>
 										</Col>
@@ -343,7 +287,7 @@ export default class AddAgency extends React.Component {
 										</Accordion>
 									</td>
 									<td>Organization</td>
-									<td class="centered">
+									<td className="centered">
 										<Col>
 											<Button variant="success">Approve</Button>
 										</Col>
@@ -353,7 +297,6 @@ export default class AddAgency extends React.Component {
 										</Col>
 									</td>
 								</tr>
-
 								<tr>
 									<td>3</td>
 									<td>
@@ -369,7 +312,7 @@ export default class AddAgency extends React.Component {
 										</Accordion>
 									</td>
 									<td>Organization</td>
-									<td class="centered">
+									<td className="centered">
 										<Col>
 											<Button variant="success">Approve</Button>
 										</Col>
