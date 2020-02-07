@@ -203,6 +203,21 @@ class Index extends React.Component {
 						)}
 					/>
 					<Route
+						path="/EditAgency/:org_name/:org_acc_id/:org_edit_name/:org_edit_id"
+						component={props => (
+							<div className="indexdivinner">
+								<Navbar
+									{...props}
+									loggedIn={true}
+									database={base}
+									children={
+										<EditAgency {...props} isJordan={true} database={base} />
+									}
+								/>
+							</div>
+						)}
+					/>
+					<Route
 						path="/EditAgency/:org_name/:org_acc_id"
 						component={props => (
 							<div className="indexdivinner">
@@ -210,7 +225,9 @@ class Index extends React.Component {
 									{...props}
 									loggedIn={true}
 									database={base}
-									children={<EditAgency {...props} database={base} />}
+									children={
+										<EditAgency {...props} isJordan={false} database={base} />
+									}
 								/>
 							</div>
 						)}

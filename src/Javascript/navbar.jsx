@@ -20,7 +20,8 @@ export default class nav extends React.PureComponent {
 			organization_accounts: [],
 			loggedIn: false,
 			orgName: "",
-			orgId: ""
+			orgId: "",
+			isJordan: false
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.editAgency = this.editAgency.bind(this);
@@ -85,12 +86,18 @@ export default class nav extends React.PureComponent {
 					this.setState({
 						active: true
 					});
+					if (
+						this.state.organization_accounts[i].fields["org_acc_id"] === "1"
+					) {
+						this.setState({
+							isJordan: true
+						});
+					}
 					break;
 				}
 			}
 		}
 		/*==============================*/
-
 	}
 
 	handleSubmit(e) {
@@ -162,7 +169,9 @@ export default class nav extends React.PureComponent {
 					<Navbar.Collapse id="basic-navbar-nav" height="20px">
 						<Nav id="login-info" className="right">
 							<Row>
-								{this.state.loggedIn && this.state.active ? (
+								{this.state.loggedIn &&
+								this.state.active &&
+								this.state.isJordan ? (
 									<div>
 										<button
 											id="add-agency-button"

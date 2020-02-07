@@ -21,9 +21,13 @@ export default class AddAgency extends React.Component {
 			loggedIn: false,
 			orgName: "",
 			orgId: "",
-			active: false
+			active: false,
+			isJordan: false,
+			organizations: []
 		};
 		this.createNewOrg = this.createNewOrg.bind(this);
+		this.renderTableData = this.renderTableData.bind(this);
+		this.editOrg = this.editOrg.bind(this);
 	}
 
 	componentDidMount() {
@@ -46,6 +50,19 @@ export default class AddAgency extends React.Component {
 				orgId: this.props.match.params.org_acc_id
 			});
 		}
+		this.props
+			.database("organizations")
+			.select({
+				fields: ["name", "email", "id"],
+				sort: [{ field: "id", direction: "asc" }],
+				maxRecords: 100
+			})
+			.eachPage((organizations, fetchNextPage) => {
+				this.setState({
+					organizations
+				});
+				fetchNextPage();
+			});
 	}
 
 	componentDidUpdate() {
@@ -82,6 +99,13 @@ export default class AddAgency extends React.Component {
 					this.setState({
 						active: true
 					});
+					if (
+						this.state.organization_accounts[i].fields["org_acc_id"] === "1"
+					) {
+						this.setState({
+							isJordan: true
+						});
+					}
 					break;
 				}
 			}
@@ -103,12 +127,74 @@ export default class AddAgency extends React.Component {
 		}
 	}
 
+	editOrg(orgID, orgName) {
+		if (!this.state.isJordan) {
+			alert("You don't have permission to edit.");
+			history.replace("/");
+		} else {
+			history.push(
+				"/" +
+					"EditAgency/" +
+					this.state.orgName +
+					"/" +
+					this.state.orgId +
+					"/" +
+					orgName +
+					"/" +
+					orgID
+			);
+		}
+	}
+
+	renderTableData() {
+		return this.state.organizations.map((organization, index) => {
+			// const { name, email, id } = organization;
+			return (
+				<tr key={organization.id}>
+					<td>{organization.fields["id"]}</td>
+					<td>{organization.fields["name"]}</td>
+					<td>{organization.fields["email"]}</td>
+					<td>
+						<Row>
+							<Col>
+								<Form id="edit-unlist-org">
+									{["checkbox"].map(type => (
+										<div key={"default-${type}"} className="mb-3">
+											<Form.Check
+												type={type}
+												id={"default-${type}"}
+												label={"Unlist"}
+											/>
+										</div>
+									))}
+								</Form>
+							</Col>
+							<Col>
+								<a
+									onClick={() =>
+										this.editOrg(
+											organization.fields["id"],
+											organization.fields["name"]
+										)
+									}
+									href="#"
+								>
+									<h6>Edit</h6>
+								</a>
+							</Col>
+						</Row>
+					</td>
+				</tr>
+			);
+		});
+	}
+
 	render() {
 		return (
 			<div id="add-agency-page" class="scrollable">
 				<div id="main-component-add-agency">
 					<br></br>
-					<Container id="add-agency" class="centered">
+					<Container id="add-agency" className="centered">
 						<Row>
 							<Col sm={8}>
 								<h1>Edit Organization</h1>
@@ -124,101 +210,20 @@ export default class AddAgency extends React.Component {
 							</Col>
 						</Row>
 					</Container>
-					<Container id="edit-org-table" class="centered">
-						<Table striped bordered hover variant="dark" class="scrollable">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>Organization</th>
-									<th>Username</th>
-									<th>Edit/Unlist</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>1</td>
-									<td>Organization</td>
-									<td>Organization Username</td>
-									<td>
-										<Row>
-											<Col>
-												<Form id="edit-unlist-org">
-													{["checkbox"].map(type => (
-														<div key={`default-${type}`} className="mb-3">
-															<Form.Check
-																type={type}
-																id={`default-${type}`}
-																label={`Unlist`}
-															/>
-														</div>
-													))}
-												</Form>
-											</Col>
-											<Col>
-												<a href="/editagency">
-													<h6>Edit</h6>
-												</a>
-											</Col>
-										</Row>
-									</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>Organization</td>
-									<td>Organization Username</td>
-									<td>
-										<Row>
-											<Col>
-												<Form id="edit-unlist-org">
-													{["checkbox"].map(type => (
-														<div key={`default-${type}`} className="mb-3">
-															<Form.Check
-																type={type}
-																id={`default-${type}`}
-																label={`Unlist`}
-															/>
-														</div>
-													))}
-												</Form>
-											</Col>
-											<Col>
-												<a href="/editagency">
-													<h6>Edit</h6>
-												</a>
-											</Col>
-										</Row>
-									</td>
-								</tr>
-
-								<tr>
-									<td>3</td>
-									<td>Organization</td>
-									<td>Organization Username</td>
-									<td>
-										<Row>
-											<Col>
-												<Form id="edit-unlist-org">
-													{["checkbox"].map(type => (
-														<div key={`default-${type}`} className="mb-3">
-															<Form.Check
-																type={type}
-																id={`default-${type}`}
-																label={`Unlist`}
-															/>
-														</div>
-													))}
-												</Form>
-											</Col>
-											<Col>
-												<a href="/editagency">
-													<h6>Edit</h6>
-												</a>
-											</Col>
-										</Row>
-									</td>
-								</tr>
-							</tbody>
-						</Table>
+					<Container id="edit-org-table" className="centered">
+						<div className="table-wrapper-scroll-y custom-scrollbar">
+							<table className="table table-striped table-bordered table-hover table-dark">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Organization</th>
+										<th>Email</th>
+										<th>Edit/Unlist</th>
+									</tr>
+								</thead>
+								<tbody>{this.renderTableData()}</tbody>
+							</table>
+						</div>
 					</Container>
 					<br></br>
 					<br></br>
@@ -233,7 +238,7 @@ export default class AddAgency extends React.Component {
 						</Row>
 					</Container>
 					<Container id="pending-comments">
-						<Table striped bordered hover variant="dark" class="scrollable">
+						<Table striped bordered hover variant="dark" className="scrollable">
 							<thead>
 								<tr>
 									<th>#</th>
@@ -257,7 +262,7 @@ export default class AddAgency extends React.Component {
 										</Accordion>
 									</td>
 									<td>Organization</td>
-									<td class="centered">
+									<td className="centered">
 										<Col>
 											<Button variant="success">Approve</Button>
 										</Col>
@@ -282,7 +287,7 @@ export default class AddAgency extends React.Component {
 										</Accordion>
 									</td>
 									<td>Organization</td>
-									<td class="centered">
+									<td className="centered">
 										<Col>
 											<Button variant="success">Approve</Button>
 										</Col>
@@ -292,7 +297,6 @@ export default class AddAgency extends React.Component {
 										</Col>
 									</td>
 								</tr>
-
 								<tr>
 									<td>3</td>
 									<td>
@@ -308,7 +312,7 @@ export default class AddAgency extends React.Component {
 										</Accordion>
 									</td>
 									<td>Organization</td>
-									<td class="centered">
+									<td className="centered">
 										<Col>
 											<Button variant="success">Approve</Button>
 										</Col>
