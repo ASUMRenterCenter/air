@@ -1,100 +1,168 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import history from './history';
-import '../CSS/styles.css'
-import './hotlinebar.js'
-import survey from '../Images/ButtonImages/survey.png';
-
+import history from "./history";
+import "../CSS/styles.css";
+import "./hotlinebar.js";
+import survey from "../Images/ButtonImages/survey.png";
 
 export default class Homepage extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			taxonomies: [],
-			mobile: window.innerWidth <= 760,
-		}
+			mobile: window.innerWidth <= 760
+		};
+		this.surveyClick = this.surveyClick.bind(this);
 	}
 
 	componentDidMount() {
-		var taxonomy_array = []
-		this.props.database('taxonomy').select({
-			filterByFormula: '{parent_id} = ""',
-			view: "Grid view",
-		}).eachPage((taxonomies, fetchNextPage) => {
-			console.log(this.state.mobile);
-			if(!this.state.mobile){
-				for(let i = 0; i < taxonomies.length -2; i+=3){
-					var row = (<div className="row" key={i}>
+		var taxonomy_array = [];
+		this.props
+			.database("taxonomy")
+			.select({
+				filterByFormula: '{parent_id} = ""',
+				view: "Grid view"
+			})
+			.eachPage(
+				(taxonomies, fetchNextPage) => {
+					console.log(this.state.mobile);
+					if (!this.state.mobile) {
+						for (let i = 0; i < taxonomies.length - 2; i += 3) {
+							var row = (
+								<div className="row" key={i}>
 									<div className="col" key={taxonomies[i].id}>
 										<div className="card-deck taxonomy-btn-outline">
 											<div className="card btn" id="taxonomy-btn-card">
-												<button onClick={(e) => this.handleClick(taxonomies[i].fields['name'], taxonomies[i].fields['id'], e)} type="button" className="btn btn-secondary" id="taxonomy-button" data-toggle="tooltip" data-placement="bottom" title={taxonomies[i].fields['x-description']}>
+												<button
+													onClick={e =>
+														this.handleClick(
+															taxonomies[i].fields["name"],
+															taxonomies[i].fields["id"],
+															e
+														)
+													}
+													type="button"
+													className="btn btn-secondary"
+													id="taxonomy-button"
+													data-toggle="tooltip"
+													data-placement="bottom"
+													title={taxonomies[i].fields["x-description"]}
+												>
 													<TaxonomyCard {...taxonomies[i].fields} />
 												</button>
 											</div>
 										</div>
 									</div>
-									<div className="col" key={taxonomies[i+1].id}>
+									<div className="col" key={taxonomies[i + 1].id}>
 										<div className="card-deck taxonomy-btn-outline">
 											<div className="card btn" id="taxonomy-btn-card">
-												<button onClick={(e) => this.handleClick(taxonomies[i+1].fields['name'], taxonomies[i+1].fields['id'], e)} type="button" className="btn btn-secondary" id="taxonomy-button" data-toggle="tooltip" data-placement="bottom" title={taxonomies[i+1].fields['x-description']}>
-													<TaxonomyCard {...taxonomies[i+1].fields} />
+												<button
+													onClick={e =>
+														this.handleClick(
+															taxonomies[i + 1].fields["name"],
+															taxonomies[i + 1].fields["id"],
+															e
+														)
+													}
+													type="button"
+													className="btn btn-secondary"
+													id="taxonomy-button"
+													data-toggle="tooltip"
+													data-placement="bottom"
+													title={taxonomies[i + 1].fields["x-description"]}
+												>
+													<TaxonomyCard {...taxonomies[i + 1].fields} />
 												</button>
 											</div>
 										</div>
 									</div>
-									<div className="col" key={taxonomies[i+2].id}>
+									<div className="col" key={taxonomies[i + 2].id}>
 										<div className="card-deck taxonomy-btn-outline">
 											<div className="card btn" id="taxonomy-btn-card">
-												<button onClick={(e) => this.handleClick(taxonomies[i+2].fields['name'], taxonomies[i+2].fields['id'], e)} type="button" className="btn btn-secondary" id="taxonomy-button" data-toggle="tooltip" data-placement="bottom" title={taxonomies[i+2].fields['x-description']}>
-													<TaxonomyCard {...taxonomies[i+2].fields} />
+												<button
+													onClick={e =>
+														this.handleClick(
+															taxonomies[i + 2].fields["name"],
+															taxonomies[i + 2].fields["id"],
+															e
+														)
+													}
+													type="button"
+													className="btn btn-secondary"
+													id="taxonomy-button"
+													data-toggle="tooltip"
+													data-placement="bottom"
+													title={taxonomies[i + 2].fields["x-description"]}
+												>
+													<TaxonomyCard {...taxonomies[i + 2].fields} />
 												</button>
 											</div>
 										</div>
-									</div>
-								</div>);
-					taxonomy_array.push(row)
-				}
-
-			}
-			else{
-				for(let i = 0; i < taxonomies.length; i++){
-					var row = (
-						<div className="row" key={i}>
-							<div className="col" key={taxonomies[i].id}>
-								<div className="card-deck taxonomy-btn-outline">
-									<div className="card btn" id="taxonomy-btn-card">
-										<button onClick={(e) => this.handleClick(taxonomies[i].fields['name'], taxonomies[i].fields['id'], e)} type="button" className="btn btn-secondary" id="taxonomy-button" data-toggle="tooltip" data-placement="bottom" title={taxonomies[i].fields['x-description']}>
-											<TaxonomyCard {...taxonomies[i].fields} />
-										</button>
 									</div>
 								</div>
-							</div>
-						</div>);
-					taxonomy_array.push(row)
+							);
+							taxonomy_array.push(row);
+						}
+					} else {
+						for (let i = 0; i < taxonomies.length; i++) {
+							var row = (
+								<div className="row" key={i}>
+									<div className="col" key={taxonomies[i].id}>
+										<div className="card-deck taxonomy-btn-outline">
+											<div className="card btn" id="taxonomy-btn-card">
+												<button
+													onClick={e =>
+														this.handleClick(
+															taxonomies[i].fields["name"],
+															taxonomies[i].fields["id"],
+															e
+														)
+													}
+													type="button"
+													className="btn btn-secondary"
+													id="taxonomy-button"
+													data-toggle="tooltip"
+													data-placement="bottom"
+													title={taxonomies[i].fields["x-description"]}
+												>
+													<TaxonomyCard {...taxonomies[i].fields} />
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							);
+							taxonomy_array.push(row);
+						}
+					}
+					this.setState(previousState => ({
+						taxonomies: taxonomy_array
+					}));
+					// this.setState({
+					// 	taxonomies
+					// });
+					console.log(taxonomies);
+					fetchNextPage();
+				},
+				function done(error) {
+					console.log("Will Return An Error:" + error);
 				}
-				
-			}
-			this.setState(previousState => ({
-				taxonomies: taxonomy_array
-			}));
-			// this.setState({
-			// 	taxonomies
-			// });
-			console.log(taxonomies)
-			fetchNextPage();
-		}, function done(error) {
-			console.log("Will Return An Error:" + error);
-		});
+			);
 	}
 
-	handleClick(name, id, e){
-		{history.push('/ButtonResults/' + name + '/' + id)}
+	handleClick(name, id, e) {
+		{
+			history.push("/ButtonResults/" + name + "/" + id);
+		}
 	}
 	// openNav() {
-    //     document.getElementById("mySidebar").style.width = "250px";
-    //     document.getElementById("main").style.marginRight = "250px";
-    // }
+	//     document.getElementById("mySidebar").style.width = "250px";
+	//     document.getElementById("main").style.marginRight = "250px";
+	// }
+
+	surveyClick(e) {
+		history.replace("/Survey");
+	}
 
 	render() {
 		return (
@@ -104,17 +172,19 @@ export default class Homepage extends Component {
 				<a
 					role="button"
 					className="btn btn-light Fixed right"
-					href="./Survey"
+					href="#"
+					onClick={this.surveyClick}
 					id="gotosurveybutton"
 				>
-					<img src={survey} id="surveyimg"/>
-					<h1 id="btn-text">Need Help Choosing a Resource? Click here to take a quick survey.</h1>
+					<img src={survey} id="surveyimg" />
+					<h1 id="btn-text">
+						Need Help Choosing a Resource? Click here to take a quick survey.
+					</h1>
 				</a>
 				<div className="container mt-3">
-					{this.state.taxonomies.length > 0 ?
-					(this.state.taxonomies.map((row) =>
-						row
-					)):(null)}
+					{this.state.taxonomies.length > 0
+						? this.state.taxonomies.map(row => row)
+						: null}
 				</div>
 
 				{/* <div className ="container mt-3" >
@@ -137,10 +207,8 @@ export default class Homepage extends Component {
 				</div> */}
 				<div className="whitespace"></div>
 			</div>
-		)
-
+		);
 	}
-
 
 	// 		{taxonomy.fields['description']}
 	// 	</div>
@@ -148,7 +216,6 @@ export default class Homepage extends Component {
 	// 	) : (
 	// 	<p>Loading...</p>
 	// 	)}
-
 
 	// render() {
 	// 	return (
@@ -349,7 +416,6 @@ export default class Homepage extends Component {
 	// 		</div>
 	// 	);
 	// }
-
 }
 // function handleClick(id, e) {
 // 	console.log("Clicked")
@@ -359,12 +425,15 @@ export default class Homepage extends Component {
 // 	});
 // }
 
-const TaxonomyCard = ({id, name, description, image}) => (
+const TaxonomyCard = ({ id, name, description, image }) => (
 	<div className="card-div">
-		{typeof image !== 'undefined'? <img id="card-img" src={image[0].url} alt={name} /> : <div id="img-rep"></div>}
+		{typeof image !== "undefined" ? (
+			<img id="card-img" src={image[0].url} alt={name} />
+		) : (
+			<div id="img-rep"></div>
+		)}
 		<div className="card-body">
 			<h5 id="card-title">{name}</h5>
 		</div>
 	</div>
-
 );

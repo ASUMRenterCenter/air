@@ -138,7 +138,10 @@ class Index extends React.Component {
 						path="/ButtonResults/:parent_name/:parent_id"
 						component={props => (
 							<div className="indexdivinner">
-								<Navbar database={base} children={<ButtonResults {...props} database={base} />} />
+								<Navbar
+									database={base}
+									children={<ButtonResults {...props} database={base} />}
+								/>
 								<ExitButton />
 							</div>
 						)}
@@ -147,7 +150,7 @@ class Index extends React.Component {
 						path="/Survey"
 						component={() => (
 							<div className="indexdivinner">
-								<Navbar database={base} children={<Survey database={base}/>} />
+								<Navbar database={base} children={<Survey database={base} />} />
 								<ExitButton />
 							</div>
 						)}
@@ -179,13 +182,15 @@ class Index extends React.Component {
 									{...props}
 									loggedIn={true}
 									database={base}
-									children={<AddAgency {...props} database={base} />} //FIXME should be AddAgency
+									children={
+										<AddAgency {...props} loggedIn={true} database={base} />
+									}
 								/>
 							</div>
 						)}
 					/>
 					<Route
-						path="/createOrganization"
+						path="/CreateOrganization/:org_name/:org_acc_id"
 						component={props => (
 							<div>
 								<Navbar
@@ -198,14 +203,31 @@ class Index extends React.Component {
 						)}
 					/>
 					<Route
-						path="/EditAgency/:org_name/:org_acc_id" //
+						path="/EditAgency/:org_name/:org_acc_id/:org_edit_name/:org_edit_id"
 						component={props => (
 							<div className="indexdivinner">
 								<Navbar
 									{...props}
 									loggedIn={true}
 									database={base}
-									children={<EditAgency {...props} database={base} />}
+									children={
+										<EditAgency {...props} isJordan={true} database={base} />
+									}
+								/>
+							</div>
+						)}
+					/>
+					<Route
+						path="/EditAgency/:org_name/:org_acc_id"
+						component={props => (
+							<div className="indexdivinner">
+								<Navbar
+									{...props}
+									loggedIn={true}
+									database={base}
+									children={
+										<EditAgency {...props} isJordan={false} database={base} />
+									}
 								/>
 							</div>
 						)}
@@ -214,7 +236,10 @@ class Index extends React.Component {
 						path="/AgencyInfoPage/:agency_id"
 						component={props => (
 							<div className="indexdivinner">
-								<Navbar database={base} children={<AgencyInfoPage {...props}/>} />
+								<Navbar
+									database={base}
+									children={<AgencyInfoPage {...props} />}
+								/>
 							</div>
 						)}
 					/>
