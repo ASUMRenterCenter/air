@@ -21,9 +21,12 @@ export default class AddAgency extends React.Component {
 			loggedIn: false,
 			orgName: "",
 			orgId: "",
-			active: false
+			active: false,
+			isJordan: false,
+			organizations: []
 		};
 		this.createNewOrg = this.createNewOrg.bind(this);
+		this.renderTableData = this.renderTableData.bind(this);
 	}
 
 	componentDidMount() {
@@ -46,6 +49,19 @@ export default class AddAgency extends React.Component {
 				orgId: this.props.match.params.org_acc_id
 			});
 		}
+		this.props
+			.database("organizations")
+			.select({
+				fields: ["name", "email", "id"],
+				sort: [{ field: "id", direction: "asc" }],
+				maxRecords: 100
+			})
+			.eachPage((organizations, fetchNextPage) => {
+				this.setState({
+					organizations
+				});
+				fetchNextPage();
+			});
 	}
 
 	componentDidUpdate() {
@@ -82,6 +98,13 @@ export default class AddAgency extends React.Component {
 					this.setState({
 						active: true
 					});
+					if (
+						this.state.organization_accounts[i].fields["org_acc_id"] === "1"
+					) {
+						this.setState({
+							isJordan: true
+						});
+					}
 					break;
 				}
 			}
@@ -101,6 +124,41 @@ export default class AddAgency extends React.Component {
 					this.state.orgId
 			);
 		}
+	}
+
+	renderTableData() {
+		return this.state.organizations.map((organization, index) => {
+			// const { name, email, id } = organization;
+			return (
+				<tr key={organization.id}>
+					<td>{organization.fields["id"]}</td>
+					<td>{organization.fields["name"]}</td>
+					<td>{organization.fields["email"]}</td>
+					<td>
+						<Row>
+							<Col>
+								<Form id="edit-unlist-org">
+									{["checkbox"].map(type => (
+										<div key={`default-${type}`} className="mb-3">
+											<Form.Check
+												type={type}
+												id={`default-${type}`}
+												label={`Unlist`}
+											/>
+										</div>
+									))}
+								</Form>
+							</Col>
+							<Col>
+								<a href="/editagency">
+									<h6>Edit</h6>
+								</a>
+							</Col>
+						</Row>
+					</td>
+				</tr>
+			);
+		});
 	}
 
 	render() {
@@ -125,17 +183,19 @@ export default class AddAgency extends React.Component {
 						</Row>
 					</Container>
 					<Container id="edit-org-table" class="centered">
-						<Table striped bordered hover variant="dark" class="scrollable">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>Organization</th>
-									<th>Username</th>
-									<th>Edit/Unlist</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
+						<div className="table-wrapper-scroll-y custom-scrollbar">
+							<table className="table table-striped table-bordered table-hover table-dark">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Organization</th>
+										<th>Email</th>
+										<th>Edit/Unlist</th>
+									</tr>
+								</thead>
+								<tbody>
+									{this.renderTableData()}
+									{/* <tr>
 									<td>1</td>
 									<td>Organization</td>
 									<td>Organization Username</td>
@@ -216,9 +276,10 @@ export default class AddAgency extends React.Component {
 											</Col>
 										</Row>
 									</td>
-								</tr>
-							</tbody>
-						</Table>
+								</tr> */}
+								</tbody>
+							</table>
+						</div>
 					</Container>
 					<br></br>
 					<br></br>
