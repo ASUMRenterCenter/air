@@ -1,5 +1,6 @@
 import React, {Suspense, Fragment} from "react";
 import { Table, Button } from "react-bootstrap";
+import history from "../history";
 import "../../CSS/styles.css";
 
 export default class Survey extends React.Component {
@@ -13,9 +14,11 @@ export default class Survey extends React.Component {
 			questions: [],
 			questions2: [],
 			taxonomies: [],
+			taxonomy_ids: [],
 		}
 		this.handleContinue = this.handleContinue.bind(this);
 		this.handlePrevious = this.handlePrevious.bind(this);
+		this.handleSeeResults = this.handleSeeResults.bind(this);
 	}
 
 	componentDidMount (){
@@ -27,12 +30,10 @@ export default class Survey extends React.Component {
 				}));
 			});
 	}
-	list_length = 0;
 	componentDidUpdate (){
 
 		if(this.state.taxonomies.length > 0 && this.state.second){
-			console.log("Initial: " +this.state.initial);
-			console.log("Second: " + this.state.second);
+
 			let list = [];
 			for(let i = 0; i < this.state.taxonomies.length; i++){
 				var filter = '({parent_id} = ' + this.state.taxonomies[i] + ')';
@@ -41,128 +42,118 @@ export default class Survey extends React.Component {
 				}).eachPage((questions, fetchNextPage) => {
 					for(let i = 0; i < questions.length; i++){
 						if(typeof questions[i].id !== "undefined"){
-							// console.log("Questions: " + questions[i].id)
-							// var dict = (<tr key={questions[i].id}>
-							// 	<td>{questions[i].fields['question']}</td>
-							// 	<td><label className='form-check-label'>If Yes: </label><input className='form-check-input' type="checkbox" name={questions[i].fields["id"]} value={questions[i].fields['taxonomy']}/></td>
-							// </tr>)
-							// console.log("dict: " + typeof dict)
-							// list.push(<tr key={questions[i].id}>
-							// 	<td>{questions[i].fields['question']}</td>
-							// 	<td><label className='form-check-label'>If Yes: </label><input className='form-check-input' type="checkbox" name={questions[i].fields["id"]} value={questions[i].fields['taxonomy']}/></td>
-							// </tr>)
-							// this.list_length ++;
+							list.push(questions[i])
+							this.setState(previousState => ({
+								questions2: [...previousState.questions2, questions[i]],
+							}));
 						}
 					}
 				})
 			}
-			console.log("My list: " +list)
 			this.setState(previousState => ({
 				second: false,
-				questions2: list,
 			}));
 		}
-		// else if (!this.state.third){
-		// 	console.log("Questions2: " + this.state.questions2)
-		// 	this.setState(previousState => ({
-		// 		third:true
-		// 	}));
-		// }
-		// if(this.list_length === 0 && typeof this.state.questions2 === "undefined"){
-		// 	console.log(this.list_length)
-		// 	this.forceUpdate();
-		// }
-
-		
-
 	}
 
-	// formfunction () {
-	// 	for(let i = 0; i < this.state.questions2; i ++){
-	// 		$(".table_body").append(this.state.questions2[i]);
-	// 	}
-	// }
 
 	renderForm2 () {
-		// console.log(this.state.questions2)
-		// if(typeof this.state.questions2[0] === "undefined"){
-		// 	console.log("Problem with this.state.questions2")
-		// 	this.setState({third:true});
-		// }
-		// else{
-			return (
-				<div>
-						{console.log("Got Here")}
-						{console.log("Questions2: " + this.state.questions2)}
-					<table className='table'>
-					<thead>
-						<tr>
-							<th>Questions</th>
-							<th>Please check the box if the question applies to you.</th>
+		return (
+			<div>
+				<table className='table'>
+				<thead>
+					<tr>
+						<th>Questions</th>
+						<th>Please check the box if the question applies to you.</th>
+					</tr>
+
+				</thead>
+				<tbody className='table_body'>
+					{this.state.questions2.map((question, index) => (
+						<tr key={question.id}>
+							<td>{question.fields['question']}</td>
+							<td><label className='form-check-label'>If Yes: </label><input className='form-check-input' type="checkbox" name={question.fields["id"]} value={question.fields['taxonomy']}/></td>
 						</tr>
-	
-					</thead>
-					<tbody className='table_body'>
-						{/* {this.state.questions2.map((question, index) => (
-							<tr key={question.id}>
-								{console.log(question.id)}
-								<td>{question.fields['question']}</td>
-								<td><label className='form-check-label'>If Yes: </label><input className='form-check-input' type="checkbox" name={question.fields["id"]} value={question.fields['taxonomy']}/></td>
-							</tr>
-						))
-						} */}
-						{console.log("Within html: " +this.state.questions2)}
-						{this.state.questions2}
-						
-					</tbody>
-					</table>
-	
-					<div>
-						<button
-							onClick={this.handlePrevious}
-							type='button'
-							className="btn btn-dark"
-							id="survey_button"
-							id="previous_button"
-						>
-							Previous
-						</button>
-						<button
-							type="submit"
-							// role='button'
-							// href="/CategoryResultsPage"
-							className="btn btn-dark"
-							id="survey_button"
-							id="see_results_button"
-						>
-							See Results
-						</button>
-					</div>
-					</div>
-			);
-		// }
+					))
+					}					
+				</tbody>
+				</table>
+
+				<div>
+					<button
+						onClick={this.handlePrevious}
+						type='button'
+						className="btn btn-dark"
+						id="survey_button"
+						id="previous_button"
+					>
+						Previous
+					</button>
+					<button
+						type="button"
+						onClick={this.handleSeeResults}
+						className="btn btn-dark"
+						id="survey_button"
+						id="see_results_button"
+					>
+						See Results
+					</button>
+				</div>
+				</div>
+		);
 	}
 
 
 	handleContinue () {
-		var list = []
+		var list = [];
+		var taxonomy_list = [];
 		var checks = document.forms['form-check'];
 		for(let i = 0; i < checks.length; i++){
 			if(checks[i].checked === true){
 				list.push(checks[i].name);
+				taxonomy_list.push(checks[i].value);
 			}
 		}
 
 		this.setState(previousState => ({
 			initial: false,
-			taxonomies: list
+			taxonomies: list,
+			taxonomy_ids: taxonomy_list
 		}));
 	}
 
 	handlePrevious () {
-		this.setState(previousState => ({
-			initial: true
-		}));
+		history.push("/Survey/");
+	}
+
+	handleSeeResults (){
+		var checks = document.forms['form-check'];
+		var taxonomy_list = [];
+		var urlstring = "";
+		console.log(this.state.taxonomy_ids);
+		this.state.taxonomy_ids.map((id, index) => (
+			console.log("id: " + id)
+		));
+		for (let i = 0; i < this.state.taxonomy_ids.length; i++){
+			urlstring = urlstring.concat("&taxid=" + this.state.taxonomy_ids[i])
+		}
+		for(let i = 0; i < checks.length; i++){
+			if(checks[i].checked === true){
+				urlstring = urlstring.concat("&taxid=" + checks[i].value)
+				// taxonomy_list.push(checks[i].value);
+				// console.log("Value: " + checks[i].value)
+				
+			}
+		}
+		// console.log(urlstring);
+		history.push("/SurveyResults/" + urlstring);
+
+
+		// console.log("Values: " + taxonomy_list);
+
+		// this.setState(previousState => ({
+		// 	taxonomy_ids: [...previousState.taxonomy_ids, taxonomy_list]
+		// }));
 	}
 
 	render(){
@@ -197,15 +188,9 @@ export default class Survey extends React.Component {
 							>
 								Continue
 							</button>
-						
-						{console.log(this.state.taxonomies)}
 						</form>):
 						(<form name='form-check'>
-							{/* <Fragment>
-								<Suspense fallback={<h1>Loading...</h1>}> */}
 									{this.renderForm2()}
-								{/* </Suspense>
-							</Fragment> */}
 					</form>)
 					}
 				</div>);

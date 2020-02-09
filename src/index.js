@@ -11,7 +11,7 @@ import LoginPage from "./Javascript/loginpage";
 import AddAgency from "./Javascript/addagency";
 import EditAgency from "./components/AgencyEditPage";
 import Survey from "./Javascript/Survey/survey";
-import SurveyResults from "./Javascript/CategoryResults/SurveyResultsPage";
+import SurveyResults from "./Javascript/Survey/SurveyResultsPage";
 import CategoryResults from "./Javascript/CategoryResults/CategoryResultsPage";
 import AgencyInfoPage from "./components/AgencyInfoPage";
 import AgencyEditPage from "./components/AgencyEditPage";
@@ -239,6 +239,17 @@ class Index extends React.Component {
 								<Navbar
 									database={base}
 									children={<AgencyInfoPage {...props} />}
+								/>
+							</div>
+						)}
+					/>
+					<Route
+						path="/SurveyResults/"
+						component={props => (
+							<div className="indexdivinner">
+								<Navbar
+									database={base}
+									children={<SurveyResults {...props} database={base} />}
 								/>
 							</div>
 						)}
