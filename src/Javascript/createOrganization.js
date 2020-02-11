@@ -15,50 +15,50 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 		super(props);
 		this.state = {
       organizationName: "",
-      organizationDescription:"",
-      organizationURL: "",
-      organizationEmail: "",
-      organizationID: "",
+      organizationDescription:"Not listed",
+      organizationURL: "Not listed",
+      organizationEmail: "Not listed",
+      organizationID: "0000",
       organizationPhone: "",
       organizationRecord: [],
 
-      organizationPhoneDescription: "",
+      organizationPhoneDescription: "Not Listed",
       phoneRecord:[],
 
 
-      contactName: "",
-      contactTitle:"",
-      contactDepartment:"",
-      contactEmail: "",
+      contactName: "Not Listed",
+      contactTitle:"Not Listed",
+      contactDepartment:"Not Listed",
+      contactEmail: "Not Listed",
       contactRecord: [],
 
       addressRecord: [],
-      addressCity: "",
-      addressRegion: "",
-      addressState: "",
-      addressZip: "",
-      addressCountry: "",
+      addressCity: "Not Listed",
+      addressRegion: "Not Listed",
+      addressState: "Not Listed",
+      addressZip: "Not Listed",
+      addressCountry: "Not Listed",
       addressType: "Physical Address",
       address_1: "",
       addressLocations: [],
 
-      serviceName:"",
-      serviceAltName: "",
-      serviceDescription: "",
-      serviceAddress: "",
-      serviceURL: "",
-      serviceEmail: "",
+      serviceName:"Not Listed",
+      serviceAltName: "Not Listed",
+      serviceDescription: "Not Listed",
+      serviceAddress: "Not Listed",
+      serviceURL: "Not Listed",
+      serviceEmail: "Not Listed",
       serviceTaxonomyName: "Emergency",
       serviceID: "90",
 
 			locationRecord: [],
 			locationName: "",
 			locationID: "9999",
-			locationAltName: "",
-			locationDescription: "",
-			locationTransportation: "",
-			locationLatitude: "",
-			locationLongitude: "",
+			locationAltName: "Not Listed",
+			locationDescription: "Not Listed",
+			locationTransportation: "Not Listed",
+			locationLatitude: "Not Listed",
+			locationLongitude: "Not Listed",
 
 
 			taxonomyRecords: [[], []],
@@ -66,11 +66,14 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 			testList: [1, 2, 3, 4, 5],
 			taxonomyNames: [],
 
+			submitLabel: "Submit Info (WARNING, cannot be undone)"
+
 
 		}
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleServiceTaxonomy = this.handleServiceTaxonomy.bind(this);
+		this.checkRequired = this.checkRequired.bind(this);
 	}
 
 
@@ -102,12 +105,24 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	}
 
 
-
+	checkRequired(e){
+		if (this.state.organizationName == "" || this.state.organizationPhone == ""|| this.state.address_1 == "" || this.state.locationName == ""){
+			this.setState({
+				submitLabel: "Please fill out ALL required fields then SUBMIT again"
+			})
+		} else {
+			this.handleSubmit(e);
+			this.setState({
+				submitLabel: "Submission Complete: Only resubmit for new Organization"
+			})
+		}
+	}
 
   componentDidUpdate() {
   }
 
   handleChange(e) {
+		e.preventDefault();
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -368,11 +383,12 @@ export default class CreateOrganization extends Component { //FIXME should be ag
       <div className = "ServiceEditingChunk1">
         <Form>
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Organization Name</Form.Label>
+            <Form.Label>Organization Name (REQUIRED)</Form.Label>
             <textarea
               type="organizationName"
               name="organizationName"
               className="form-control"
+							required ={true}
               onChange={event => this.handleChange(event)}
             />
           </Form.Group>
@@ -404,7 +420,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
             />
           </Form.Group>
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Organization Phone</Form.Label>
+            <Form.Label>Organization Phone (REQUIRED)</Form.Label>
             <textarea
               type="organizationPhone"
               name="organizationPhone"
@@ -458,7 +474,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
             />
           </Form.Group>
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Addrss Number and Street</Form.Label>
+            <Form.Label>Address Number and Street (REQUIRED)</Form.Label>
             <textarea
               type="address_1"
               name="address_1"
@@ -576,7 +592,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 						})}
           </Form.Group>
 					<Form.Group controlId="exampleForm.ControlSelect1">
-						<Form.Label>Select Location "Name"</Form.Label>
+						<Form.Label>Location "Name" (REQUIRED)</Form.Label>
 						<textarea
 							type="locationName"
 							name="locationName"
@@ -632,11 +648,11 @@ export default class CreateOrganization extends Component { //FIXME should be ag
         </Form>
 
         <button
-          onClick={event => this.handleSubmit(event)}
+          onClick={event => this.checkRequired(event)}
           className="btn btn-dark"
           type="button"
         >
-          Submit Info (Warning, Cannot be undone)
+          {this.state.submitLabel}
         </button>
       </div>
     )
