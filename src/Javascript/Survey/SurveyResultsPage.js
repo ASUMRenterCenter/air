@@ -17,11 +17,22 @@ export default class SurveyResultsPage extends React.Component{
         services: [],
         organizations: [],
         addresses: [],
+        names_checked: false,
+        taxonomies_html: [],
+        should_update: false,
+        array_length: 0
         
     }
     this.renderTaxonomy = this.renderTaxonomy.bind(this);
   }
 
+    // shouldComponentUpdate(nextProps, nextState){
+    //   if(nextState.should_update){
+    //     return true;
+    //   }
+    //   return false;
+
+    // }
     componentDidMount() {
       var url = window.location.href;
       var index = url.lastIndexOf("/")
@@ -31,11 +42,19 @@ export default class SurveyResultsPage extends React.Component{
         if(tax_ids[i] !== ""){
           this.props.database('taxonomy').find(tax_ids[i], (err, record) => {
             if (err) { console.error(err); return; }
+            console.log(record.id)
             this.setState(previousState => ({
-              names: [...previousState.names, record.fields['name']] 
+              names: [...previousState.names, record.fields['name']],
+              array_length: this.state.array_length + 1 
             }));
         })
         }
+      }
+      console.log("Array Length: " + this.state.array_length)
+      console.log("Names Length: " + this.state.names.length)
+      console.log("Tax_ids.length: " + tax_ids.length)
+      if(this.state.names.length === tax_ids.length){
+        this.setState(previousState => ({should_update:true}))
       }
 
 
@@ -100,17 +119,38 @@ export default class SurveyResultsPage extends React.Component{
       // });
   }
   componentDidUpdate(){
-    for(let i = 0; i < this.state.names.length;i++){
-
+    if(this.state.should_update){
+      console.log("State")
     }
+    console.log(this.state.names)
+    if(!this.state.names_checked){
+      this.renderTaxonomy(this.state.names);
+      this.setState(previousState => ({
+        names_checked: true
+      }))
+    }
+    
   }
 
-  renderTaxonomy() {
-
+  // taxonomies = []
+  renderTaxonomy(names) {
+    console.log(names.length)
+    for (let i = 0; i < names.length; i++){
+      this.state.taxonomies_html.push(<div className="jumbotron" key={names[i]}>
+        <h4>{names[i]} Results: </h4>
+        <div id="printSaveShare">
+          <PrintSaveShare />
+        </div>
+      </div>);
+    }
+    
   };
 
   render(){
     return (
+      <div>
+        {this.state.taxonomies_html}
+      </div>
       // <div>
       //   <div className="jumbotron">
       //     <h4>{this.state.taxonomy_name} Results: </h4>
@@ -139,7 +179,7 @@ export default class SurveyResultsPage extends React.Component{
       //     ):(null)
       //   }
       // </div>
-      null
+
     );
   }
 }
