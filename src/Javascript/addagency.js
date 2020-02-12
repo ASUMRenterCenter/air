@@ -11,7 +11,7 @@ import {
 } from "../../node_modules/react-bootstrap";
 import "../CSS/addagency.css";
 import history from "./history";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 export default class AddAgency extends React.Component {
 	constructor(props) {
@@ -115,7 +115,6 @@ export default class AddAgency extends React.Component {
 			//console.log(this.state.organizations)
 		}
 		/*==============================*/
-
 	}
 
 	createNewOrg(e) {
@@ -152,8 +151,9 @@ export default class AddAgency extends React.Component {
 	}
 
 	isChecked(value, action, id) {
-		if (action === "default"){
-			if (value === 0){
+		if (action === "default") {
+			//console.log("inside default");
+			if (value === 0) {
 				return false;
 			} else if (value === 1) {
 				return true;
@@ -161,21 +161,19 @@ export default class AddAgency extends React.Component {
 				return false;
 			}
 		} else if (action === "update") {
-			//alert("inside update")
+			//console.log("inside update");
 			this.props.database("organizations").update([
 				{
 					id: id,
 					fields: {
-						"isNotListed": value
+						isNotListed: value
 					}
 				}
 			]);
 		}
 	}
 
-	justChecked(value) {
-
-	}
+	justChecked(value) {}
 
 	renderTableData() {
 		return this.state.organizations.map((organization, index) => {
@@ -189,6 +187,7 @@ export default class AddAgency extends React.Component {
 						<Row>
 							<Col>
 								{/* <form id="edit-unlist-org" name="checked"> */}
+								{/* 	<CheckBoxContainer /> */}
 								<label className="form-check-label" type="checkbox">
 									Unlist
 								</label>
@@ -196,8 +195,11 @@ export default class AddAgency extends React.Component {
 									className="form-check-input"
 									type="checkbox"
 									name={this.state.organizations[index].id}
-									checked={this.isChecked(this.state.organizations[index].fields["isNotListed"], "default", "none")}
-									onChange={this.isChecked(this.state.organizations[index].fields["isNotListed"], "update", this.state.organizations[index].id)}
+									defaultChecked={this.isChecked(
+										this.state.organizations[index].fields["isNotListed"],
+										"default",
+										"none"
+									)}
 								></input>
 							</Col>
 							<Col>
@@ -273,7 +275,7 @@ export default class AddAgency extends React.Component {
 						{
 							id: org_id[updates - 1],
 							fields: {
-								"isNotListed": org_value[updates -1]
+								isNotListed: org_value[updates - 1]
 							}
 						}
 					]);
@@ -283,13 +285,13 @@ export default class AddAgency extends React.Component {
 						{
 							id: org_id[updates - 2],
 							fields: {
-								"isNotListed": org_value[updates -2]
+								isNotListed: org_value[updates - 2]
 							}
 						},
 						{
 							id: org_id[updates - 1],
 							fields: {
-								"isNotListed": org_value[updates -1]
+								isNotListed: org_value[updates - 1]
 							}
 						}
 					]);
@@ -299,19 +301,19 @@ export default class AddAgency extends React.Component {
 						{
 							id: org_id[updates - 3],
 							fields: {
-								"isNotListed": org_value[updates -3]
+								isNotListed: org_value[updates - 3]
 							}
 						},
 						{
 							id: org_id[updates - 2],
 							fields: {
-								"isNotListed": org_value[updates -2]
+								isNotListed: org_value[updates - 2]
 							}
 						},
 						{
 							id: org_id[updates - 1],
 							fields: {
-								"isNotListed": org_value[updates -1]
+								isNotListed: org_value[updates - 1]
 							}
 						}
 					]);
@@ -321,25 +323,25 @@ export default class AddAgency extends React.Component {
 						{
 							id: org_id[updates - 4],
 							fields: {
-								"isNotListed": org_value[updates -4]
+								isNotListed: org_value[updates - 4]
 							}
 						},
 						{
 							id: org_id[updates - 3],
 							fields: {
-								"isNotListed": org_value[updates -3]
+								isNotListed: org_value[updates - 3]
 							}
 						},
 						{
 							id: org_id[updates - 2],
 							fields: {
-								"isNotListed": org_value[updates -2]
+								isNotListed: org_value[updates - 2]
 							}
 						},
 						{
 							id: org_id[updates - 1],
 							fields: {
-								"isNotListed": org_value[updates -1]
+								isNotListed: org_value[updates - 1]
 							}
 						}
 					]);
@@ -349,31 +351,31 @@ export default class AddAgency extends React.Component {
 						{
 							id: org_id[updates - 5],
 							fields: {
-								"isNotListed": org_value[updates -5]
+								isNotListed: org_value[updates - 5]
 							}
 						},
 						{
 							id: org_id[updates - 4],
 							fields: {
-								"isNotListed": org_value[updates -4]
+								isNotListed: org_value[updates - 4]
 							}
 						},
 						{
 							id: org_id[updates - 3],
 							fields: {
-								"isNotListed": org_value[updates -3]
+								isNotListed: org_value[updates - 3]
 							}
 						},
 						{
 							id: org_id[updates - 2],
 							fields: {
-								"isNotListed": org_value[updates -2]
+								isNotListed: org_value[updates - 2]
 							}
 						},
 						{
 							id: org_id[updates - 1],
 							fields: {
-								"isNotListed": org_value[updates -1]
+								isNotListed: org_value[updates - 1]
 							}
 						}
 					]);
@@ -383,37 +385,37 @@ export default class AddAgency extends React.Component {
 						{
 							id: org_id[updates - 6],
 							fields: {
-								"isNotListed": org_value[updates -6]
+								isNotListed: org_value[updates - 6]
 							}
 						},
 						{
 							id: org_id[updates - 5],
 							fields: {
-								"isNotListed": org_value[updates -5]
+								isNotListed: org_value[updates - 5]
 							}
 						},
 						{
 							id: org_id[updates - 4],
 							fields: {
-								"isNotListed": org_value[updates -4]
+								isNotListed: org_value[updates - 4]
 							}
 						},
 						{
 							id: org_id[updates - 3],
 							fields: {
-								"isNotListed": org_value[updates -3]
+								isNotListed: org_value[updates - 3]
 							}
 						},
 						{
 							id: org_id[updates - 2],
 							fields: {
-								"isNotListed": org_value[updates -2]
+								isNotListed: org_value[updates - 2]
 							}
 						},
 						{
 							id: org_id[updates - 1],
 							fields: {
-								"isNotListed": org_value[updates -1]
+								isNotListed: org_value[updates - 1]
 							}
 						}
 					]);
@@ -423,43 +425,43 @@ export default class AddAgency extends React.Component {
 						{
 							id: org_id[updates - 7],
 							fields: {
-								"isNotListed": org_value[updates -7]
+								isNotListed: org_value[updates - 7]
 							}
 						},
 						{
 							id: org_id[updates - 6],
 							fields: {
-								"isNotListed": org_value[updates -6]
+								isNotListed: org_value[updates - 6]
 							}
 						},
 						{
 							id: org_id[updates - 5],
 							fields: {
-								"isNotListed": org_value[updates -5]
+								isNotListed: org_value[updates - 5]
 							}
 						},
 						{
 							id: org_id[updates - 4],
 							fields: {
-								"isNotListed": org_value[updates -4]
+								isNotListed: org_value[updates - 4]
 							}
 						},
 						{
 							id: org_id[updates - 3],
 							fields: {
-								"isNotListed": org_value[updates -3]
+								isNotListed: org_value[updates - 3]
 							}
 						},
 						{
 							id: org_id[updates - 2],
 							fields: {
-								"isNotListed": org_value[updates -2]
+								isNotListed: org_value[updates - 2]
 							}
 						},
 						{
 							id: org_id[updates - 1],
 							fields: {
-								"isNotListed": org_value[updates -1]
+								isNotListed: org_value[updates - 1]
 							}
 						}
 					]);
@@ -469,49 +471,49 @@ export default class AddAgency extends React.Component {
 						{
 							id: org_id[updates - 8],
 							fields: {
-								"isNotListed": org_value[updates -8]
+								isNotListed: org_value[updates - 8]
 							}
 						},
 						{
 							id: org_id[updates - 7],
 							fields: {
-								"isNotListed": org_value[updates -7]
+								isNotListed: org_value[updates - 7]
 							}
 						},
 						{
 							id: org_id[updates - 6],
 							fields: {
-								"isNotListed": org_value[updates -6]
+								isNotListed: org_value[updates - 6]
 							}
 						},
 						{
 							id: org_id[updates - 5],
 							fields: {
-								"isNotListed": org_value[updates -5]
+								isNotListed: org_value[updates - 5]
 							}
 						},
 						{
 							id: org_id[updates - 4],
 							fields: {
-								"isNotListed": org_value[updates -4]
+								isNotListed: org_value[updates - 4]
 							}
 						},
 						{
 							id: org_id[updates - 3],
 							fields: {
-								"isNotListed": org_value[updates -3]
+								isNotListed: org_value[updates - 3]
 							}
 						},
 						{
 							id: org_id[updates - 2],
 							fields: {
-								"isNotListed": org_value[updates -2]
+								isNotListed: org_value[updates - 2]
 							}
 						},
 						{
 							id: org_id[updates - 1],
 							fields: {
-								"isNotListed": org_value[updates -1]
+								isNotListed: org_value[updates - 1]
 							}
 						}
 					]);
@@ -521,55 +523,55 @@ export default class AddAgency extends React.Component {
 						{
 							id: org_id[updates - 9],
 							fields: {
-								"isNotListed": org_value[updates -9]
+								isNotListed: org_value[updates - 9]
 							}
 						},
 						{
 							id: org_id[updates - 8],
 							fields: {
-								"isNotListed": org_value[updates -8]
+								isNotListed: org_value[updates - 8]
 							}
 						},
 						{
 							id: org_id[updates - 7],
 							fields: {
-								"isNotListed": org_value[updates -7]
+								isNotListed: org_value[updates - 7]
 							}
 						},
 						{
 							id: org_id[updates - 6],
 							fields: {
-								"isNotListed": org_value[updates -6]
+								isNotListed: org_value[updates - 6]
 							}
 						},
 						{
 							id: org_id[updates - 5],
 							fields: {
-								"isNotListed": org_value[updates -5]
+								isNotListed: org_value[updates - 5]
 							}
 						},
 						{
 							id: org_id[updates - 4],
 							fields: {
-								"isNotListed": org_value[updates -4]
+								isNotListed: org_value[updates - 4]
 							}
 						},
 						{
 							id: org_id[updates - 3],
 							fields: {
-								"isNotListed": org_value[updates -3]
+								isNotListed: org_value[updates - 3]
 							}
 						},
 						{
 							id: org_id[updates - 2],
 							fields: {
-								"isNotListed": org_value[updates -2]
+								isNotListed: org_value[updates - 2]
 							}
 						},
 						{
 							id: org_id[updates - 1],
 							fields: {
-								"isNotListed": org_value[updates -1]
+								isNotListed: org_value[updates - 1]
 							}
 						}
 					]);
@@ -579,61 +581,61 @@ export default class AddAgency extends React.Component {
 						{
 							id: org_id[updates - 10],
 							fields: {
-								"isNotListed": org_value[updates -10]
+								isNotListed: org_value[updates - 10]
 							}
 						},
 						{
 							id: org_id[updates - 9],
 							fields: {
-								"isNotListed": org_value[updates -9]
+								isNotListed: org_value[updates - 9]
 							}
 						},
 						{
 							id: org_id[updates - 8],
 							fields: {
-								"isNotListed": org_value[updates -8]
+								isNotListed: org_value[updates - 8]
 							}
 						},
 						{
 							id: org_id[updates - 7],
 							fields: {
-								"isNotListed": org_value[updates -7]
+								isNotListed: org_value[updates - 7]
 							}
 						},
 						{
 							id: org_id[updates - 6],
 							fields: {
-								"isNotListed": org_value[updates -6]
+								isNotListed: org_value[updates - 6]
 							}
 						},
 						{
 							id: org_id[updates - 5],
 							fields: {
-								"isNotListed": org_value[updates -5]
+								isNotListed: org_value[updates - 5]
 							}
 						},
 						{
 							id: org_id[updates - 4],
 							fields: {
-								"isNotListed": org_value[updates -4]
+								isNotListed: org_value[updates - 4]
 							}
 						},
 						{
 							id: org_id[updates - 3],
 							fields: {
-								"isNotListed": org_value[updates -3]
+								isNotListed: org_value[updates - 3]
 							}
 						},
 						{
 							id: org_id[updates - 2],
 							fields: {
-								"isNotListed": org_value[updates -2]
+								isNotListed: org_value[updates - 2]
 							}
 						},
 						{
 							id: org_id[updates - 1],
 							fields: {
-								"isNotListed": org_value[updates -1]
+								isNotListed: org_value[updates - 1]
 							}
 						}
 					]);
@@ -797,3 +799,35 @@ export default class AddAgency extends React.Component {
 		);
 	}
 }
+
+/* class CheckBoxContainer extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			isChecked: false,
+			org_id: ""
+		};
+	}
+
+	handleChange = e =>
+		this.setState({
+			isChecked: e.target.isChecked
+		});
+
+	render() {
+		return (
+			<div>
+				<label className="form-check-label" type="checkbox">
+					Unlist
+				</label>
+				<Checkbox checked={this.state.isChecked} onChange={this.handleChange} />
+			</div>
+		);
+	}
+}
+
+const CheckBox = props => (
+	<input type="checkbox" className="form-check-input" {...props}></input>
+);
+ */
