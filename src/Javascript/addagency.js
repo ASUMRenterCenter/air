@@ -24,10 +24,12 @@ export default class AddAgency extends React.Component {
 			active: false,
 			isJordan: false,
 			organizations: [],
+			updateOrg: []
 		};
 		this.createNewOrg = this.createNewOrg.bind(this);
 		this.renderTableData = this.renderTableData.bind(this);
 		this.editOrg = this.editOrg.bind(this);
+		this.saveList = this.saveList.bind(this);
 	}
 
 	componentDidMount() {
@@ -59,11 +61,9 @@ export default class AddAgency extends React.Component {
 			.eachPage((partialRecords, fetchNextPage) => {
 				this.setState({
 					organizations: [...this.state.organizations, ...partialRecords]
-				})
+				});
 				fetchNextPage();
 			});
-			console.log(this.state.organizations)
-			alert("I'm here")
 	}
 
 	componentDidUpdate() {
@@ -114,7 +114,7 @@ export default class AddAgency extends React.Component {
 		}
 		/*==============================*/
 
-
+		console.log(this.state.organizations);
 	}
 
 	createNewOrg(e) {
@@ -161,17 +161,17 @@ export default class AddAgency extends React.Component {
 					<td>
 						<Row>
 							<Col>
-								<Form id="edit-unlist-org">
-									{["checkbox"].map(type => (
-										<div key={"default-${type}"} className="mb-3">
-											<Form.Check
-												type={type}
-												id={"default-${type}"}
-												label={"Unlist"}
-											/>
-										</div>
-									))}
-								</Form>
+								{/* <form id="edit-unlist-org" name="checked"> */}
+								<label className="form-check-label" type="checkbox">
+									Unlist
+								</label>
+								<input
+									className="form-check-input"
+									type="checkbox"
+									name={this.state.organizations[index].id}
+									value="1"
+								></input>
+								{/* </form> */}
 							</Col>
 							<Col>
 								<a
@@ -193,9 +193,70 @@ export default class AddAgency extends React.Component {
 		});
 	}
 
+	saveList(e) {
+		var org_id = [];
+		var org_value = [];
+		var did_update = [];
+		var updates = 0;
+		var org_update = [];
+		var checks = document.forms["checked"];
+		for (let i = 0; i < checks.length; i++) {
+			//org_id.push(checks[i].name);
+			if (
+				checks[i].checked === true &&
+				this.state.organizations[i].fields["isNotListed"] === 1
+			) {
+				//did_update.push(0);
+			} else if (
+				(checks[i].checked === true) &
+				(this.state.organizations[i].fields["isNotListed"] === 0)
+			) {
+				org_id.push(checks[i].name);
+				org_value.push(1);
+				//did_update.push(1);
+				updates += 1;
+			} else if (
+				(checks[i].checked === false) &
+				(this.state.organizations[i].fields["isNotListed"] === 1)
+			) {
+				org_value.push(0);
+				//did_update.push(1);
+				updates += 1;
+			} else {
+				//did_update.push(0);
+			}
+		}
+		console.log(updates);
+		if (updates > 10) {
+			alert("You can only update up to 10 records at once.");
+		} else {
+			for (let i = 0; i < did_update.length; i++) {
+				if (did_update[i] === 1) {
+					org_update.push(this.state.organizations[i].id);
+				}
+			}
+
+			this.props.database("organizations").update([
+				{
+					id: org_update[0],
+					field: {}
+				}
+			]);
+		}
+
+		console.log(org_id);
+		console.log(org_value);
+
+		/* for (let i = 0; i < org_id.length; i++) {
+			this.setState({
+				updateOrg: []
+			})
+		} */
+	}
+
 	render() {
 		return (
-			<div id="add-agency-page" class="scrollable">
+			<div id="add-agency-page" className="scrollable">
 				<div id="main-component-add-agency">
 					<br></br>
 					<Container id="add-agency" className="centered">
@@ -205,7 +266,7 @@ export default class AddAgency extends React.Component {
 							</Col>
 							<Col sm={4}>
 								<button
-									onClick={this.createNewOrg}
+									onClick={() => this.saveList()}
 									className="btn btn-info btn-sm"
 									type="button"
 								>
@@ -216,17 +277,31 @@ export default class AddAgency extends React.Component {
 					</Container>
 					<Container id="edit-org-table" className="centered">
 						<div className="table-wrapper-scroll-y custom-scrollbar">
-							<table className="table table-striped table-bordered table-hover table-dark">
-								<thead>
-									<tr>
-										<th>#</th>
-										<th>Organization</th>
-										<th>Email</th>
-										<th>Edit/Unlist</th>
-									</tr>
-								</thead>
-								<tbody>{this.renderTableData()}</tbody>
-							</table>
+							<form id="edit-unlist-org" name="checked">
+								<table className="table table-striped table-bordered table-hover table-dark">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Organization</th>
+											<th>Email</th>
+											<th>Edit/Unlist</th>
+										</tr>
+									</thead>
+									<tbody>{this.renderTableData()}</tbody>
+								</table>
+							</form>
+						</div>
+						<div className="clearfix">
+							<Row>
+								<button
+									onClick={this.saveList}
+									className="btn btn-primary"
+									type="button"
+									style={{ marginLeft: "78%" }}
+								>
+									Save List/Unlist
+								</button>
+							</Row>
 						</div>
 					</Container>
 					<br></br>
