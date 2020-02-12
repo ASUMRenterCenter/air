@@ -23,7 +23,7 @@ export default class AddAgency extends React.Component {
 			orgId: "",
 			active: false,
 			isJordan: false,
-			organizations: []
+			organizations: [],
 		};
 		this.createNewOrg = this.createNewOrg.bind(this);
 		this.renderTableData = this.renderTableData.bind(this);
@@ -53,16 +53,17 @@ export default class AddAgency extends React.Component {
 		this.props
 			.database("organizations")
 			.select({
-				fields: ["name", "email", "id"],
-				sort: [{ field: "id", direction: "asc" }],
-				maxRecords: 100
+				fields: ["name", "email", "id", "isNotListed"],
+				sort: [{ field: "id", direction: "asc" }]
 			})
-			.eachPage((organizations, fetchNextPage) => {
+			.eachPage((partialRecords, fetchNextPage) => {
 				this.setState({
-					organizations
-				});
+					organizations: [...this.state.organizations, ...partialRecords]
+				})
 				fetchNextPage();
 			});
+			console.log(this.state.organizations)
+			alert("I'm here")
 	}
 
 	componentDidUpdate() {
@@ -109,8 +110,11 @@ export default class AddAgency extends React.Component {
 					break;
 				}
 			}
+			//console.log(this.state.organizations)
 		}
 		/*==============================*/
+
+
 	}
 
 	createNewOrg(e) {
