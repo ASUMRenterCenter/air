@@ -11,6 +11,7 @@ import {
 } from "../../node_modules/react-bootstrap";
 import "../CSS/addagency.css";
 import history from "./history";
+import PropTypes from 'prop-types';
 
 export default class AddAgency extends React.Component {
 	constructor(props) {
@@ -30,6 +31,7 @@ export default class AddAgency extends React.Component {
 		this.renderTableData = this.renderTableData.bind(this);
 		this.editOrg = this.editOrg.bind(this);
 		this.saveList = this.saveList.bind(this);
+		this.isChecked = this.isChecked.bind(this);
 	}
 
 	componentDidMount() {
@@ -114,7 +116,6 @@ export default class AddAgency extends React.Component {
 		}
 		/*==============================*/
 
-		console.log(this.state.organizations);
 	}
 
 	createNewOrg(e) {
@@ -150,6 +151,32 @@ export default class AddAgency extends React.Component {
 		}
 	}
 
+	isChecked(value, action, id) {
+		if (action === "default"){
+			if (value === 0){
+				return false;
+			} else if (value === 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} else if (action === "update") {
+			//alert("inside update")
+			this.props.database("organizations").update([
+				{
+					id: id,
+					fields: {
+						"isNotListed": value
+					}
+				}
+			]);
+		}
+	}
+
+	justChecked(value) {
+
+	}
+
 	renderTableData() {
 		return this.state.organizations.map((organization, index) => {
 			// const { name, email, id } = organization;
@@ -169,9 +196,9 @@ export default class AddAgency extends React.Component {
 									className="form-check-input"
 									type="checkbox"
 									name={this.state.organizations[index].id}
-									value="1"
+									checked={this.isChecked(this.state.organizations[index].fields["isNotListed"], "default", "none")}
+									onChange={this.isChecked(this.state.organizations[index].fields["isNotListed"], "update", this.state.organizations[index].id)}
 								></input>
-								{/* </form> */}
 							</Col>
 							<Col>
 								<a
@@ -219,6 +246,7 @@ export default class AddAgency extends React.Component {
 				(checks[i].checked === false) &
 				(this.state.organizations[i].fields["isNotListed"] === 1)
 			) {
+				org_id.push(checks[i].name);
 				org_value.push(0);
 				//did_update.push(1);
 				updates += 1;
@@ -226,8 +254,8 @@ export default class AddAgency extends React.Component {
 				//did_update.push(0);
 			}
 		}
-		console.log(updates);
-		if (updates > 10) {
+
+		if (updates > 10 || updates <= 0) {
 			alert("You can only update up to 10 records at once.");
 		} else {
 			for (let i = 0; i < did_update.length; i++) {
@@ -236,22 +264,382 @@ export default class AddAgency extends React.Component {
 				}
 			}
 
-			this.props.database("organizations").update([
-				{
-					id: org_update[0],
-					field: {}
-				}
-			]);
+			switch (updates) {
+				default:
+					alert("Could not update database");
+					break;
+				case 1:
+					this.props.database("organizations").update([
+						{
+							id: org_id[updates - 1],
+							fields: {
+								"isNotListed": org_value[updates -1]
+							}
+						}
+					]);
+					break;
+				case 2:
+					this.props.database("organizations").update([
+						{
+							id: org_id[updates - 2],
+							fields: {
+								"isNotListed": org_value[updates -2]
+							}
+						},
+						{
+							id: org_id[updates - 1],
+							fields: {
+								"isNotListed": org_value[updates -1]
+							}
+						}
+					]);
+					break;
+				case 3:
+					this.props.database("organizations").update([
+						{
+							id: org_id[updates - 3],
+							fields: {
+								"isNotListed": org_value[updates -3]
+							}
+						},
+						{
+							id: org_id[updates - 2],
+							fields: {
+								"isNotListed": org_value[updates -2]
+							}
+						},
+						{
+							id: org_id[updates - 1],
+							fields: {
+								"isNotListed": org_value[updates -1]
+							}
+						}
+					]);
+					break;
+				case 4:
+					this.props.database("organizations").update([
+						{
+							id: org_id[updates - 4],
+							fields: {
+								"isNotListed": org_value[updates -4]
+							}
+						},
+						{
+							id: org_id[updates - 3],
+							fields: {
+								"isNotListed": org_value[updates -3]
+							}
+						},
+						{
+							id: org_id[updates - 2],
+							fields: {
+								"isNotListed": org_value[updates -2]
+							}
+						},
+						{
+							id: org_id[updates - 1],
+							fields: {
+								"isNotListed": org_value[updates -1]
+							}
+						}
+					]);
+					break;
+				case 5:
+					this.props.database("organizations").update([
+						{
+							id: org_id[updates - 5],
+							fields: {
+								"isNotListed": org_value[updates -5]
+							}
+						},
+						{
+							id: org_id[updates - 4],
+							fields: {
+								"isNotListed": org_value[updates -4]
+							}
+						},
+						{
+							id: org_id[updates - 3],
+							fields: {
+								"isNotListed": org_value[updates -3]
+							}
+						},
+						{
+							id: org_id[updates - 2],
+							fields: {
+								"isNotListed": org_value[updates -2]
+							}
+						},
+						{
+							id: org_id[updates - 1],
+							fields: {
+								"isNotListed": org_value[updates -1]
+							}
+						}
+					]);
+					break;
+				case 6:
+					this.props.database("organizations").update([
+						{
+							id: org_id[updates - 6],
+							fields: {
+								"isNotListed": org_value[updates -6]
+							}
+						},
+						{
+							id: org_id[updates - 5],
+							fields: {
+								"isNotListed": org_value[updates -5]
+							}
+						},
+						{
+							id: org_id[updates - 4],
+							fields: {
+								"isNotListed": org_value[updates -4]
+							}
+						},
+						{
+							id: org_id[updates - 3],
+							fields: {
+								"isNotListed": org_value[updates -3]
+							}
+						},
+						{
+							id: org_id[updates - 2],
+							fields: {
+								"isNotListed": org_value[updates -2]
+							}
+						},
+						{
+							id: org_id[updates - 1],
+							fields: {
+								"isNotListed": org_value[updates -1]
+							}
+						}
+					]);
+					break;
+				case 7:
+					this.props.database("organizations").update([
+						{
+							id: org_id[updates - 7],
+							fields: {
+								"isNotListed": org_value[updates -7]
+							}
+						},
+						{
+							id: org_id[updates - 6],
+							fields: {
+								"isNotListed": org_value[updates -6]
+							}
+						},
+						{
+							id: org_id[updates - 5],
+							fields: {
+								"isNotListed": org_value[updates -5]
+							}
+						},
+						{
+							id: org_id[updates - 4],
+							fields: {
+								"isNotListed": org_value[updates -4]
+							}
+						},
+						{
+							id: org_id[updates - 3],
+							fields: {
+								"isNotListed": org_value[updates -3]
+							}
+						},
+						{
+							id: org_id[updates - 2],
+							fields: {
+								"isNotListed": org_value[updates -2]
+							}
+						},
+						{
+							id: org_id[updates - 1],
+							fields: {
+								"isNotListed": org_value[updates -1]
+							}
+						}
+					]);
+					break;
+				case 8:
+					this.props.database("organizations").update([
+						{
+							id: org_id[updates - 8],
+							fields: {
+								"isNotListed": org_value[updates -8]
+							}
+						},
+						{
+							id: org_id[updates - 7],
+							fields: {
+								"isNotListed": org_value[updates -7]
+							}
+						},
+						{
+							id: org_id[updates - 6],
+							fields: {
+								"isNotListed": org_value[updates -6]
+							}
+						},
+						{
+							id: org_id[updates - 5],
+							fields: {
+								"isNotListed": org_value[updates -5]
+							}
+						},
+						{
+							id: org_id[updates - 4],
+							fields: {
+								"isNotListed": org_value[updates -4]
+							}
+						},
+						{
+							id: org_id[updates - 3],
+							fields: {
+								"isNotListed": org_value[updates -3]
+							}
+						},
+						{
+							id: org_id[updates - 2],
+							fields: {
+								"isNotListed": org_value[updates -2]
+							}
+						},
+						{
+							id: org_id[updates - 1],
+							fields: {
+								"isNotListed": org_value[updates -1]
+							}
+						}
+					]);
+					break;
+				case 9:
+					this.props.database("organizations").update([
+						{
+							id: org_id[updates - 9],
+							fields: {
+								"isNotListed": org_value[updates -9]
+							}
+						},
+						{
+							id: org_id[updates - 8],
+							fields: {
+								"isNotListed": org_value[updates -8]
+							}
+						},
+						{
+							id: org_id[updates - 7],
+							fields: {
+								"isNotListed": org_value[updates -7]
+							}
+						},
+						{
+							id: org_id[updates - 6],
+							fields: {
+								"isNotListed": org_value[updates -6]
+							}
+						},
+						{
+							id: org_id[updates - 5],
+							fields: {
+								"isNotListed": org_value[updates -5]
+							}
+						},
+						{
+							id: org_id[updates - 4],
+							fields: {
+								"isNotListed": org_value[updates -4]
+							}
+						},
+						{
+							id: org_id[updates - 3],
+							fields: {
+								"isNotListed": org_value[updates -3]
+							}
+						},
+						{
+							id: org_id[updates - 2],
+							fields: {
+								"isNotListed": org_value[updates -2]
+							}
+						},
+						{
+							id: org_id[updates - 1],
+							fields: {
+								"isNotListed": org_value[updates -1]
+							}
+						}
+					]);
+					break;
+				case 10:
+					this.props.database("organizations").update([
+						{
+							id: org_id[updates - 10],
+							fields: {
+								"isNotListed": org_value[updates -10]
+							}
+						},
+						{
+							id: org_id[updates - 9],
+							fields: {
+								"isNotListed": org_value[updates -9]
+							}
+						},
+						{
+							id: org_id[updates - 8],
+							fields: {
+								"isNotListed": org_value[updates -8]
+							}
+						},
+						{
+							id: org_id[updates - 7],
+							fields: {
+								"isNotListed": org_value[updates -7]
+							}
+						},
+						{
+							id: org_id[updates - 6],
+							fields: {
+								"isNotListed": org_value[updates -6]
+							}
+						},
+						{
+							id: org_id[updates - 5],
+							fields: {
+								"isNotListed": org_value[updates -5]
+							}
+						},
+						{
+							id: org_id[updates - 4],
+							fields: {
+								"isNotListed": org_value[updates -4]
+							}
+						},
+						{
+							id: org_id[updates - 3],
+							fields: {
+								"isNotListed": org_value[updates -3]
+							}
+						},
+						{
+							id: org_id[updates - 2],
+							fields: {
+								"isNotListed": org_value[updates -2]
+							}
+						},
+						{
+							id: org_id[updates - 1],
+							fields: {
+								"isNotListed": org_value[updates -1]
+							}
+						}
+					]);
+					break;
+			}
 		}
-
-		console.log(org_id);
-		console.log(org_value);
-
-		/* for (let i = 0; i < org_id.length; i++) {
-			this.setState({
-				updateOrg: []
-			})
-		} */
 	}
 
 	render() {
