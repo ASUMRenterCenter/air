@@ -5,7 +5,11 @@ import PrintSaveShare from "./PrintSaveShare";
 import '../../CSS/styles.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
+import PrintButton from '../../components/PrintButton'
+import Pdf from "react-to-pdf";
+import Button from "react-bootstrap/Button"
 
+const ref = React.createRef();
 
 
 export default class CategoryResultsPage extends React.Component{
@@ -83,11 +87,14 @@ export default class CategoryResultsPage extends React.Component{
   }
   render(){
     return (
-      <div>
+      <div ref ={ref}>
         <div className="jumbotron">
           <h4>{this.state.taxonomy_name} Results: </h4>
           <div id="printSaveShare">
-            <PrintSaveShare />
+            <PrintButton id="printSaveShare"></PrintButton>
+            <Pdf targetRef={ref} filename="code-example.pdf">
+              {({ toPdf }) => <Button onClick={toPdf} variant="dark">Download As PDF</Button>}
+            </Pdf>
           </div>
         </div>
         {this.state.organizations.length > 0 ? (
