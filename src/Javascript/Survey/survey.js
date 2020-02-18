@@ -135,11 +135,11 @@ export default class Survey extends React.Component {
 			console.log("id: " + id)
 		));
 		for (let i = 0; i < this.state.taxonomy_ids.length; i++){
-			urlstring = urlstring.concat("&taxid=" + this.state.taxonomy_ids[i])
+			urlstring = urlstring.concat("$taxid=" + this.state.taxonomy_ids[i])
 		}
 		for(let i = 0; i < checks.length; i++){
 			if(checks[i].checked === true){
-				urlstring = urlstring.concat("&taxid=" + checks[i].value)
+				urlstring = urlstring.concat("$taxid=" + checks[i].value)
 				// taxonomy_list.push(checks[i].value);
 				// console.log("Value: " + checks[i].value)
 				
