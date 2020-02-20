@@ -10,11 +10,7 @@ import {
 } from "../../node_modules/react-bootstrap";
 import "../CSS/addagency.css";
 import history from "./history";
-<<<<<<< HEAD
-// import PropTypes from "prop-types";
-=======
 import $ from "jquery";
->>>>>>> jesse_branch
 
 export default class AddAgency extends React.Component {
 	constructor(props) {
@@ -226,11 +222,8 @@ export default class AddAgency extends React.Component {
 							</Col>
 							<Col>
 								<button
-<<<<<<< HEAD
-=======
 									type="button"
 									class="btn btn-link"
->>>>>>> jesse_branch
 									onClick={() =>
 										this.editOrg(
 											organization.fields["id"],
