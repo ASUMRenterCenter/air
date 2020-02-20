@@ -106,6 +106,8 @@ export default class AgencyEditPage extends Component {
 		this.handleLocationAddressZipCodeChange = this.handleLocationAddressZipCodeChange.bind(this);
 		this.handleLocationAddressStateChange = this.handleLocationAddressStateChange.bind(this);
 		this.handleLocationAddressCityChange = this.handleLocationAddressCityChange.bind(this);
+		this.createServiceRecord = this.createServiceRecord.bind(this);
+		this.deleteServiceEntry = this.deleteServiceEntry.bind(this);
 
 
 
@@ -324,20 +326,32 @@ export default class AgencyEditPage extends Component {
 		//Retrieve the address Records: //////////////////////////////////////////
 		setTimeout(() => {
 			var locationAddressesArray = [];
+			var rearrangedArray = [];
 			for (let i = 0; i < this.state.locationRecords.length; i++){
 				console.log("Making it in the address retrieval loop");
 				//console.log(this.state.locationRecords[i].fields);
 				this.props.database('address').find(this.state.locationRecords[i].fields.address, (err, record) => {
 				    if (err) { console.error(err); return; }
-				    console.log('Retrieved');
-						console.log(record);
+				    //console.log('Retrieved');
+						//console.log(record);
 						locationAddressesArray.push(record);
 				});
 			}
 			setTimeout(() => {
 				//console.log("Phones array" + phonesArray);
+				for (let i = 0; i < this.state.locationRecords.length; i++){ //What's this little gem you asK? Well, even though we retrieve address records
+					for (let j = 0; j < this.state.locationRecords.length; j++){//and push them to a list in the same order the locations appear in, somehow
+						if (this.state.locationRecords[i].fields.address == locationAddressesArray[j].id){//because react is a treat, they still do not get added
+							rearrangedArray[i] = locationAddressesArray[j];// in propper order, and can screw up how we display loc / add pairs.
+						}																								//this thing fixes that problem!
+					}
+				}
+				//console.log("H E R E   I S   R E A R R A N G E D   A R R A Y ");
+				//console.log(rearrangedArray);
+				//console.log(this.state.locationRecords[0].fields.address);
+				//console.log(locationAddressesArray[0].fields.address_1);
 				this.setState({
-					locationAddressRecords: locationAddressesArray,
+					locationAddressRecords: rearrangedArray,
 				})
 			}, 2000);
 		}, 5000);
@@ -405,20 +419,29 @@ export default class AgencyEditPage extends Component {
 */
 
 	componentDidUpdate() {
+		//console.log("Here is the organization: ");
 		//console.log(this.state.organization);
 		//console.log(this.state.phoneRecords);
 		//console.log(this.state.organization.id);
+		//console.log("STARTS HERE:::::::::")
+		//console.log(this.state.organization != []);
+		//console.log(!this.state.org_update);
+		//console.log(this.state.phoneRecords.length > 0);
+		//console.log(this.state.serviceRecords.length > 0);
+		//console.log(this.state.contactRecords.length > 0);
+		//console.log(this.state.locationRecords.length > 0);
+		//console.log(this.state.locationAddressRecords.length > 0);
 
 		if (
 			this.state.organization !== [] &&
 			!this.state.org_update &&
 			this.state.phoneRecords.length > 0 &&
-			this.state.serviceRecords.length > 0 &&
-			this.state.contactRecords.length > 0 &&
-			this.state.locationRecords.length > 0 &&
-			this.state.locationAddressRecords.length > 0
-		) {
-			console.log("Reaching inside the didUpdate if")
+			this.state.serviceRecords.length > 0 &&				//FIXME: FROM TIME TO TIME THESE DO NOT EVALUATE TO TRUE
+			this.state.contactRecords.length > 0 &&							//In this event, the name of the organization is not loaded into state
+			this.state.locationRecords.length > 0 &&						//If the user clicks "update", the empty name is uploaded to the database
+			this.state.locationAddressRecords.length > 0		//this causes all other fields not to load, since most are linked to the org name
+		) {																													//and the base can't handle an empty string for a name!!!!
+			console.log("R e a c h i n g   i n s i d e   t h e   d i d U p d a t e   i f ")
 			var phoneNumArray = [];
 			var phoneDescArray = [];
 			for (let i = 0; i < this.state.phoneRecords.length; i++){
@@ -569,9 +592,23 @@ export default class AgencyEditPage extends Component {
 			//console.log(this.state.locationNames);
 			//console.log("The latitudes are: ");
 			//console.log(this.state.locationLatitude);
-			console.log("H E R E  I S  T H E  A D D R E S S  I N F O")
+			//console.log("H E R E  I S  T H E  A D D R E S S  I N F O")
 			//console.log(this.state.addressCities);
-			console.log(this.state.locationRecords[0].id); //FIXME: shit being put in list for some reason!!!!
+			//console.log(this.state.locationRecords[0].id);
+			//console.log(this.state.addressStates[0]);
+			//console.log(this.state.locationAddressRecords[0]);
+			/*for (let i = 0; i < this.state.locationRecords.length; i++){
+				console.log("Printing for index: " + i)
+				console.log(this.state.addresses[i]);
+				console.log(this.state.addressCities[i]);
+				console.log(this.state.addressStates[i]);
+				console.log(this.state.addressZipCodes[i]);
+				console.log(this.state.addressCountries[i]);
+				console.log(this.state.addressTypes[i]);
+				console.log(this.state.locationAddressRecords[i]);
+			}*/
+			//console.log(this.state.locationAddressRecords);
+			console.log(this.state.serviceRecords);
 		}, 10000);
 	}
 
@@ -579,7 +616,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			[e.target.name]: e.target.value
 		});
-		//console.log(e.target);
+		console.log(e.target.value);
 	}
 
 	handleNumberChange(e, index) {
@@ -1050,6 +1087,22 @@ export default class AgencyEditPage extends Component {
 		}, 100);
 	}
 
+
+	deleteServiceEntry(index){
+		this.props.database("services").destroy([this.state.serviceRecords[index].id], function(err, deletedRecords) {
+			if (err) {
+				console.error(err);
+				return;
+			}
+			console.log('Deleted', deletedRecords.length, 'records');
+		});
+		//console.log(this.state.phoneRecords[index].id);
+		setTimeout(function() {
+			refreshPage();
+		}, 100);
+	}
+
+
 	deleteLocationEntry(index){
 		this.props.database("locations").destroy([this.state.locationRecords[index].id], function(err, deletedRecords) {
 			if (err) {
@@ -1132,6 +1185,40 @@ export default class AgencyEditPage extends Component {
 	}
 
 
+	createServiceRecord(){
+
+
+		this.props.database('services').create([
+		  {
+		    "fields": {
+		      "id": "4",
+		      "Organization": [
+		        this.state.organization.id
+		      ],
+		      "Alternate Name": this.state.notListed,
+		      "Description": this.state.notListed,
+		      "url": this.state.notListed,
+		      "email": this.state.notListed,
+		      "Name": this.state.notListed,
+		    }
+		  },
+		], function(err, records) {
+		  if (err) {
+		    console.error(err);
+		    return;
+		  }
+		  records.forEach(function (record) {
+		    console.log(record.getId());
+		  });
+		});
+
+
+		setTimeout(function() {
+			refreshPage();
+		}, 100);
+	}
+
+
 	createContactRecord(){
 		this.props.database('contact').create([
 			{
@@ -1158,6 +1245,7 @@ export default class AgencyEditPage extends Component {
 	}
 
 	createLocationRecord(){
+		var newLocation = [];
 		this.props.database('locations').create([
 			{
 				"fields": {
@@ -1178,11 +1266,40 @@ export default class AgencyEditPage extends Component {
 				console.error(err);
 				return;
 			}
+			newLocation = records;
 		});
 		//console.log(this.state.phoneRecord.id);
+		setTimeout(() => {
+			//console.log(newLocation);
+			this.props.database('address').create([
+				{
+					"fields": {
+						"address_1": this.state.notListed,
+						"locations": [
+							newLocation[0].id
+						],
+						"city": this.props.notListed,
+						"State": this.props.notListed,
+						"Zip Code": this.props.notListed,
+						"address_type-x": [
+							"physical_address"
+						]
+					}
+				},
+			], function(err, records) {
+				if (err) {
+					console.error(err);
+					return;
+				}
+				records.forEach(function (record) {
+					console.log(record.getId());
+				});
+			});
+		}, 1000);
+
 		setTimeout(function() {
 			refreshPage();
-		}, 100);
+		}, 1200);
 	}
 
 
@@ -1331,17 +1448,24 @@ export default class AgencyEditPage extends Component {
 					}
 				);
 
+				/*console.log(this.state.addresses[i]);
+				console.log(this.state.addressCities[i]);
+				console.log(this.state.addressStates[i]);
+				console.log(this.state.addressZipCodes[i]);
+				console.log(this.state.addressCountries[i]);
+				console.log(this.state.addressTypes[i]);*/
 
 				this.props.database('address').update([
 				  {
-				    "id": this.state.locationAddressRecords[i].id,
+				    "id": this.state.locationAddressRecords[i].id[0],
 				    "fields": {
-				      "address_1": "9140 Schulist Meadows",
-				      "city": "Kilbackborough",
-				      "State": "Oregon",
-				      "Zip Code": "66853-8084",
+				      "address_1": this.state.addresses[i],
+				      "city": this.state.addressCities[i],
+				      "State": this.state.addressStates[i],
+				      "Zip Code": this.state.addressZipCodes[i],
+							"Country": this.state.addressCountries[i],
 				      "address_type-x": [
-				        "physical_address"
+				        this.state.addressTypes[i][0]
 				      ]
 				    }
 				  },
@@ -1362,7 +1486,7 @@ export default class AgencyEditPage extends Component {
 
 		setTimeout(function() {
 			refreshPage();
-		}, 70000000);
+		}, 2000);
 	}
 
 	render() {
@@ -1416,11 +1540,18 @@ export default class AgencyEditPage extends Component {
 									handleServiceAltNameChange = {this.handleServiceAltNameChange}
 									handleServiceURLChange = {this.handleServiceURLChange}
 									handleServiceEmailChange = {this.handleServiceEmailChange}
+									deleteServiceEntry = {this.deleteServiceEntry}
 								/>
 							</div>
 						))
 					: ""}
-
+					<button
+						onClick={event => this.createServiceRecord()}
+						className="btn btn-dark"
+						type="button"
+					>
+						Create New Service Record
+					</button>
 				</div>
 				<div className="container mt-3">
 					{this.state.contactRecords.length > 0
@@ -1622,8 +1753,11 @@ class ServiceEditFields extends Component {
 
 
 	render() {
-		//console.log("HERE ARE PROPS");
-		//console.log(this.props.taxonomy);
+		console.log("HERE ARE PROPS");
+		console.log(this.props.taxonomy);
+		if (this.props.taxonomy == [][0]){
+			return (<h1>loading services</h1>);
+		}
 
 		var taxonomyList = this.props.taxonomy;
 
@@ -1712,6 +1846,13 @@ class ServiceEditFields extends Component {
 
 					</Form.Group>
 				</Form>
+				<button
+					onClick={event => this.props.deleteServiceEntry(this.props.index)}
+					className="btn btn-dark"
+					type="button"
+				>
+					Delete Service {this.props.index + 1}
+				</button>
 			</div>
 		);
 	}
@@ -1841,8 +1982,8 @@ class LocationEditFields extends Component { // WE WILL ALSO USE THESE FOR ADDRE
 			name = this.props.locationServiceName;
 		}
 
-		console.log("The address record is as follows: ")
-		console.log(this.props.addressRecord);
+		//console.log("The address record is as follows: ")
+		//console.log(this.props.addressRecord);
 
 		if(this.props.addressRecord === [][0]){
 			return(
