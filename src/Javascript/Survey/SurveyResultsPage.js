@@ -91,13 +91,13 @@ export default class SurveyResultsPage extends React.Component{
                 //this.props.database('organizations').find(services[j].fields["Organization"], (err, organization) => {
                   // console.log(index)
                   // let index = j.valueOf();
-                  this.organizations.push(organization);
+                  this.organizations[index] = organization;
                 })
                   this.props.database('address').find(service.fields["address"], (err, address) => {
                     console.log("Index: " + index)
                     console.log(this.organizations)
                     if(this.organizations[index] !== undefined){
-                    this.org_array.push(<SurveyResult 
+                    this.org_array[i] =(<SurveyResult 
                                       key={this.organizations[index].id + index}
                                       database = {this.props.database}
                                       agency_id = {this.organizations[index].id}
@@ -110,6 +110,7 @@ export default class SurveyResultsPage extends React.Component{
                                       state={typeof address.fields['State'] === "undefined" ? "State Not Available" :address.fields['State']} 
                                       zip_code={typeof address.fields['Zip Code'] === "undefined" ? "Zip Code Not Available" :address.fields['Zip Code']}
                                     />);
+                    console.log(this.org_array)
                     // console.log("j: " + j)
                     // console.log("ORG ARRAY for " + record.fields['name'] + " is " + this.org_array);
                     // this.renderOrganization(record.fields['name'], address, organization, j)
