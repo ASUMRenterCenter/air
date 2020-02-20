@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
-import history from "./Javascript/history";
+// import history from "./Javascript/history";
 import "./CSS/styles.css";
 import Navbar from "./Javascript/navbar";
 import ExitButton from "./Javascript/exitbutton";
@@ -14,7 +14,7 @@ import Survey from "./Javascript/Survey/survey";
 import SurveyResults from "./Javascript/Survey/SurveyResultsPage";
 import CategoryResults from "./Javascript/CategoryResults/CategoryResultsPage";
 import AgencyInfoPage from "./components/AgencyInfoPage";
-import AgencyEditPage from "./components/AgencyEditPage";
+// import AgencyEditPage from "./components/AgencyEditPage";
 import CreateOrganization from "./Javascript/createOrganization";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Airtable from "airtable";
@@ -70,7 +70,7 @@ class Index extends React.Component {
 	} */
 
 	shouldComponentUpdate(nextProps, nextState) {
-		if (this.state.loggedIn == nextState.loggedIn) {
+		if (this.state.loggedIn === nextState.loggedIn) {
 			return false;
 		}
 	}

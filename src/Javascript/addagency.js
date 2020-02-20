@@ -5,13 +5,12 @@ import {
 	Row,
 	Col,
 	Table,
-	Form,
 	Accordion,
 	Card
 } from "../../node_modules/react-bootstrap";
 import "../CSS/addagency.css";
 import history from "./history";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 export default class AddAgency extends React.Component {
 	constructor(props) {
@@ -203,7 +202,7 @@ export default class AddAgency extends React.Component {
 								></input>
 							</Col>
 							<Col>
-								<a
+								<button
 									onClick={() =>
 										this.editOrg(
 											organization.fields["id"],
@@ -213,7 +212,7 @@ export default class AddAgency extends React.Component {
 									// href="#"
 								>
 									<h6>Edit</h6>
-								</a>
+								</button>
 							</Col>
 						</Row>
 					</td>

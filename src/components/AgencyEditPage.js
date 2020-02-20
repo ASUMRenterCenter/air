@@ -1,12 +1,12 @@
-import { Jumbotron } from "react-bootstrap";
+// import { Jumbotron } from "react-bootstrap";
 import "../CSS/ComponentStyle.css";
-import AgencyEditingFields from "./AgencyEditingFields";
+// import AgencyEditingFields from "./AgencyEditingFields";
 import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
-import { Col } from "react-bootstrap";
-import SaveChangesButton from "./SaveChangesButton.js";
-import Button from "react-bootstrap/Button"
-import Modal from "react-bootstrap/Modal"
+// import { Col } from "react-bootstrap";
+// import SaveChangesButton from "./SaveChangesButton.js";
+// import Button from "react-bootstrap/Button"
+// import Modal from "react-bootstrap/Modal"
 
 
 export default class AgencyEditPage extends Component {
@@ -241,7 +241,7 @@ export default class AgencyEditPage extends Component {
 			var contactServiceNameHolder = [];
 			for (let i = 0; i < this.state.contactRecords.length; i++){
 				for (let j = 0; j < this.state.serviceRecords.length; j ++){
-					if (this.state.contactRecords[i].fields.services == this.state.serviceRecords[j].id){
+					if (this.state.contactRecords[i].fields.services === this.state.serviceRecords[j].id){
 						contactServiceHolder[i] = this.state.serviceRecords[j];
 						contactServiceNameHolder[i] = this.state.serviceRecords[j].fields.Name;
 					}
@@ -251,7 +251,7 @@ export default class AgencyEditPage extends Component {
 			var contactPhoneNumberHolder = [];
 			for (let i = 0; i < this.state.contactRecords.length; i++){
 				for (let j = 0; j < this.state.phoneRecords.length; j ++){
-					if (this.state.contactRecords[i].fields.phones == this.state.phoneRecords[j].id){
+					if (this.state.contactRecords[i].fields.phones === this.state.phoneRecords[j].id){
 						contactPhoneHolder[i] = this.state.phoneRecords[j];
 						contactPhoneNumberHolder[i] = this.state.phoneRecords[j].fields.number;
 					}
@@ -304,7 +304,7 @@ export default class AgencyEditPage extends Component {
 			var locationServiceNameHolder = [];
 			for (let i = 0; i < this.state.locationRecords.length; i++){
 				for (let j = 0; j < this.state.serviceRecords.length; j ++){
-					if (this.state.locationRecords[i].fields.services == this.state.serviceRecords[j].id){
+					if (this.state.locationRecords[i].fields.services === this.state.serviceRecords[j].id){
 						locationServiceHolder[i] = this.state.serviceRecords[j];
 						locationServiceNameHolder[i] = this.state.serviceRecords[j].fields.Name;
 					}
@@ -349,11 +349,11 @@ export default class AgencyEditPage extends Component {
 		setTimeout(() => {
 			//console.log("Even accessing the service stuff?");
 			var allTax = [];
-			var taxonomyArray = [];
+			// var taxonomyArray = [];
 			for (let i = 0; i < this.state.serviceRecords.length; i++){
 				//console.log(this.state.serviceRecords[i].fields.Name + " at index " + i)
 				allTax.push([]);
-				taxonomyArray = [];
+				// taxonomyArray = [];
 				//console.log("Taxonomy Array at iteration " + i);
 				//console.log(allTax);
 				this.props.database('taxonomy').select({
@@ -410,7 +410,7 @@ export default class AgencyEditPage extends Component {
 		//console.log(this.state.organization.id);
 
 		if (
-			this.state.organization != [] &&
+			this.state.organization !== [] &&
 			!this.state.org_update &&
 			this.state.phoneRecords.length > 0 &&
 			this.state.serviceRecords.length > 0 &&
@@ -446,7 +446,7 @@ export default class AgencyEditPage extends Component {
 			var contactDepartmentsArray  = [];
 			var contactEmailsArray  = [];
 			var contactServicesArray  = [];									/////FIXME: TBD IF SERVICES AND PHONES SHALL BE DETERMINED HERE
-			var contactPhonesArray  = [];
+			// var contactPhonesArray  = [];
 			for (let i = 0; i < this.state.contactRecords.length; i++){
 				contactNamesArray[i] = this.state.contactRecords[i].fields.name;
 				contactTitlesArray[i] = this.state.contactRecords[i].fields.title;
@@ -841,14 +841,14 @@ export default class AgencyEditPage extends Component {
 				console.log("Here we print the taxonomyRecords and the recordHolder: ")
 				console.log(this.state.taxonomyRecords);
 				console.log(recordHolder);
-				if (finalLayer == true){
+				if (finalLayer === true){
 					var holder = this.state.serviceTaxonomies;
 					console.log("Here is holder!!!")
 					console.log(holder);
 					console.log("Here is the last of the taxonomies:")
 					console.log(this.state.taxonomyRecords[this.state.taxonomyRecords.length - 1]);
 					for (let i = 0; i < this.state.taxonomyRecords[this.state.taxonomyRecords.length - 1].length; i++){
-						if (this.state.taxonomyRecords[this.state.taxonomyRecords.length - 1][i].fields.id == this.state.serviceTaxonomyName){
+						if (this.state.taxonomyRecords[this.state.taxonomyRecords.length - 1][i].fields.id === this.state.serviceTaxonomyName){
 							holder[serviceIndex].push(this.state.taxonomyRecords[this.state.taxonomyRecords.length -1][i]);
 						}
 					}
@@ -918,7 +918,7 @@ export default class AgencyEditPage extends Component {
 		var serviceHolder = this.state.locationServices;
 		var nameHolder = this.state.locationServiceNames;
 		for (let i = 0; i < this.state.serviceRecords.length; i++){
-			if (this.state.serviceRecords[i].id == [e.target.value]){
+			if (this.state.serviceRecords[i].id === [e.target.value]){
 				serviceHolder[locationIndex] = this.state.serviceRecords[i];
 				nameHolder[locationIndex] = this.state.serviceRecords[i].fields.Name;
 				foundIt = true;
@@ -961,7 +961,7 @@ export default class AgencyEditPage extends Component {
 		var serviceHolder = this.state.contactServices;
 		var nameHolder = this.state.contactServiceNames;
 		for (let i = 0; i < this.state.serviceRecords.length; i++){
-			if (this.state.serviceRecords[i].id == [e.target.value]){
+			if (this.state.serviceRecords[i].id === [e.target.value]){
 				serviceHolder[contactIndex] = this.state.serviceRecords[i];
 				nameHolder[contactIndex] = this.state.serviceRecords[i].fields.Name;
 				foundIt = true;
@@ -1004,7 +1004,7 @@ export default class AgencyEditPage extends Component {
 		var phoneHolder = this.state.contactPhones;
 		var numberHolder = this.state.contactPhoneNumbers;
 		for (let i = 0; i < this.state.phoneRecords.length; i++){
-			if (this.state.phoneRecords[i].id == [e.target.value]){
+			if (this.state.phoneRecords[i].id === [e.target.value]){
 				phoneHolder[contactIndex] = this.state.phoneRecords[i];
 				numberHolder[contactIndex] = this.state.phoneRecords[i].fields.number;
 				foundIt = true;
@@ -1733,14 +1733,14 @@ class ContactEditFields extends Component {
 		//console.log("THE CONTACT SERVICE PASSED IN IS: ");
 		//console.log(this.props.contactServiceName);
 		var name = "";
-		if(this.props.contactServiceName == [][1]){
+		if(this.props.contactServiceName === [][1]){
 			name = "none";
 		} else {
 			name = this.props.contactServiceName;
 		}
 		//console.log("The name is : " + name);
 		var number = "";
-		if(this.props.contactPhoneNumber == [][1]){
+		if(this.props.contactPhoneNumber === [][1]){
 			number = "none";
 		} else {
 			number = this.props.contactPhoneNumber;
@@ -1835,7 +1835,7 @@ class LocationEditFields extends Component { // WE WILL ALSO USE THESE FOR ADDRE
 		//console.log("And the services are: ");
 		//console.log(this.props.services);
 		var name = "";
-		if(this.props.locationServiceName == [][1]){
+		if(this.props.locationServiceName === [][1]){
 			name = "none";
 		} else {
 			name = this.props.locationServiceName;
@@ -1844,7 +1844,7 @@ class LocationEditFields extends Component { // WE WILL ALSO USE THESE FOR ADDRE
 		console.log("The address record is as follows: ")
 		console.log(this.props.addressRecord);
 
-		if(this.props.addressRecord == [][0]){
+		if(this.props.addressRecord === [][0]){
 			return(
 				<h1>loading address records...</h1>
 			)

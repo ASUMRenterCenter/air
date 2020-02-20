@@ -8,7 +8,7 @@ import ResultMoreInfoBody from '../CategoryResults/ResultMoreInfoBody'
 
 function CustomToggle({ children, eventKey, agency_name, agency_website}) {
   const decoratedOnClick = useAccordionToggle(eventKey, () =>
-    console.log('totally custom!'),
+    null,
   );
 
   return (

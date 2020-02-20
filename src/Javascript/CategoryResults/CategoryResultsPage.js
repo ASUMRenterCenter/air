@@ -1,7 +1,6 @@
 import React from 'react';
 // import { Jumbotron } from 'react-bootstrap';
 import SurveyResult from './SurveyResult';
-import PrintSaveShare from "./PrintSaveShare";
 import '../../CSS/styles.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';

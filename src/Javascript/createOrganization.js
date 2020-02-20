@@ -1,11 +1,11 @@
 
-import { Jumbotron } from 'react-bootstrap'
+// import { Jumbotron } from 'react-bootstrap'
 import '../CSS/ComponentStyle.css'
 //import AgencyEditingFields from './AgencyEditingFields'
 import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form'
 
-import {Col} from "react-bootstrap"
+// import {Col} from "react-bootstrap"
 //import SaveChangesButton from "./SaveChangesButton.js"
 
 
@@ -106,7 +106,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 
 
 	checkRequired(e){
-		if (this.state.organizationName == "" || this.state.organizationPhone == ""|| this.state.address_1 == "" || this.state.locationName == ""){
+		if (this.state.organizationName === "" || this.state.organizationPhone === ""|| this.state.address_1 === "" || this.state.locationName === ""){
 			this.setState({
 				submitLabel: "Please fill out ALL required fields then SUBMIT again"
 			})
@@ -288,12 +288,12 @@ export default class CreateOrganization extends Component { //FIXME should be ag
     //Creating the service entry
     //these if statements certain service info if its left blank
     setTimeout(() => {
-      if(this.state.serviceURL == ""){
+      if(this.state.serviceURL === ""){
         this.setState({
           serviceAddress: this.state.organizationURL
         });
       }
-      if(this.state.serviceEmail == ""){
+      if(this.state.serviceEmail === ""){
         this.setState({
           serviceEmail: this.state.serviceEmail
         });
@@ -660,6 +660,6 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 
 }
 
-function refreshPage(){
-  window.location.reload(true);
-}
+// function refreshPage(){
+//   window.location.reload(true);
+// }

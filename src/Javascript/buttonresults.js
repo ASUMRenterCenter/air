@@ -36,7 +36,7 @@ export default class buttonresults extends React.Component{
       }
    }
 	handleClick(name, id, e){
-		{history.push('/ButtonResults/' + name + '/' + id)}
+		history.push('/ButtonResults/' + name + '/' + id)
 	}
 
    render (){
