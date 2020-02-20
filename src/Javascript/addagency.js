@@ -10,7 +10,11 @@ import {
 } from "../../node_modules/react-bootstrap";
 import "../CSS/addagency.css";
 import history from "./history";
+<<<<<<< HEAD
 // import PropTypes from "prop-types";
+=======
+import $ from "jquery";
+>>>>>>> jesse_branch
 
 export default class AddAgency extends React.Component {
 	constructor(props) {
@@ -65,6 +69,25 @@ export default class AddAgency extends React.Component {
 				});
 				fetchNextPage();
 			});
+		/* ===================================
+			The following is for the search
+			bar to properly search the table
+			==================================*/
+		$(document).ready(function() {
+			$("#myInput").on("keyup", function() {
+				var value = $(this)
+					.val()
+					.toLowerCase();
+				$("#myTable tr").filter(function() {
+					$(this).toggle(
+						$(this)
+							.text()
+							.toLowerCase()
+							.indexOf(value) > -1
+					);
+				});
+			});
+		});
 	}
 
 	componentDidUpdate() {
@@ -203,6 +226,11 @@ export default class AddAgency extends React.Component {
 							</Col>
 							<Col>
 								<button
+<<<<<<< HEAD
+=======
+									type="button"
+									class="btn btn-link"
+>>>>>>> jesse_branch
 									onClick={() =>
 										this.editOrg(
 											organization.fields["id"],
@@ -665,6 +693,16 @@ export default class AddAgency extends React.Component {
 						</Row>
 					</Container>
 					<Container id="edit-org-table" className="centered">
+						<div class="form-group row">
+							<div class="col-md-6">
+								<input
+									class="form-control"
+									id="myInput"
+									type="text"
+									placeholder="Search for organization..."
+								></input>
+							</div>
+						</div>
 						<div className="table-wrapper-scroll-y custom-scrollbar">
 							<form id="edit-unlist-org" name="checked">
 								<table className="table table-striped table-bordered table-hover table-dark">
@@ -676,7 +714,7 @@ export default class AddAgency extends React.Component {
 											<th>Edit/Unlist</th>
 										</tr>
 									</thead>
-									<tbody>{this.renderTableData()}</tbody>
+									<tbody id="myTable">{this.renderTableData()}</tbody>
 								</table>
 							</form>
 						</div>
