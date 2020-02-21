@@ -198,6 +198,7 @@ export default class AddAgency extends React.Component {
 									className="form-check-input"
 									type="checkbox"
 									name={this.state.organizations[index].id}
+									onChange={() => this.isChecked()}
 									defaultChecked={this.isChecked(
 										this.state.organizations[index].fields["isNotListed"],
 										"default",
@@ -234,11 +235,12 @@ export default class AddAgency extends React.Component {
 		var updates = 0;
 		var org_update = [];
 		var checks = document.forms["checked"];
-		//console.log(checks.length);
-		//console.log(this.state.organizations.length)
+		console.log(document.forms)
+		console.log(checks.length);
+		console.log(this.state.organizations.length)
 		for (let i = 0; i < checks.length; i++) {
 			//org_id.push(checks[i].name);
-			//console.log(i);
+			console.log(i);
 			if (i > this.state.organizations.length - 1) {
 				break;
 			}
