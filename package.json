@@ -20,7 +20,8 @@
 		"react-table": "^7.0.0-rc.16",
 		"react-to-pdf": "0.0.8",
 		"semantic-ui-react": "^0.88.2",
-		"showdown": "^1.9.1"
+		"showdown": "^1.9.1",
+		"node": "^12.16.0"
 	},
 	"scripts": {
 		"start": "react-scripts start",
