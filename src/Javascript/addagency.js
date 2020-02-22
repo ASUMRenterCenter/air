@@ -168,18 +168,11 @@ export default class AddAgency extends React.Component {
 	}
 
 	onUpdateItem = (index, value) => {
-		this.setState(state => {
-			const org = state.organizations.map((organization, j) => {
-				if (j === index) {
-					return value;
-				} else {
-					return organization;
-				}
-			});
-			return {
-				org,
-			};
-		});
+		const organizations = [...this.state.organizations];
+		organizations[index].fields["isNotListed"] = value;
+		this.setState(() => ({
+			organizations: organizations
+		}));
 	};
 
 	isChecked(value, action, id, org_index) {
@@ -190,7 +183,7 @@ export default class AddAgency extends React.Component {
 				return true;
 			} else {
 				return false;
-			};
+			}
 		} else if (action === "editChecked") {
 			if (value === 1) {
 				this.props.database("organizations").update([
@@ -214,7 +207,7 @@ export default class AddAgency extends React.Component {
 				this.onUpdateItem(org_index, 1);
 			}
 		}
-	};
+	}
 
 	renderTableData() {
 		return this.state.organizations.map((organization, index) => {
@@ -237,7 +230,14 @@ export default class AddAgency extends React.Component {
 									type="checkbox"
 									id={organization.id}
 									name={organization.id}
-									onChange={() => this.isChecked(this.state.organizations[index].fields["isNotListed"], "editChecked", organization, index)}
+									onChange={() =>
+										this.isChecked(
+											this.state.organizations[index].fields["isNotListed"],
+											"editChecked",
+											organization,
+											index
+										)
+									}
 									defaultChecked={this.isChecked(
 										this.state.organizations[index].fields["isNotListed"],
 										"default",
