@@ -341,7 +341,7 @@ export default class AgencyEditPage extends Component {
 				//console.log("Phones array" + phonesArray);
 				for (let i = 0; i < this.state.locationRecords.length; i++){ //What's this little gem you asK? Well, even though we retrieve address records
 					for (let j = 0; j < this.state.locationRecords.length; j++){//and push them to a list in the same order the locations appear in, somehow
-						if (this.state.locationRecords[i].fields.address == locationAddressesArray[j].id){//because react is a treat, they still do not get added
+						if (this.state.locationRecords[i].fields.address === locationAddressesArray[j].id){//because react is a treat, they still do not get added
 							rearrangedArray[i] = locationAddressesArray[j];// in propper order, and can screw up how we display loc / add pairs.
 						}																								//this thing fixes that problem!
 					}
@@ -1755,7 +1755,7 @@ class ServiceEditFields extends Component {
 	render() {
 		console.log("HERE ARE PROPS");
 		console.log(this.props.taxonomy);
-		if (this.props.taxonomy == [][0]){
+		if (this.props.taxonomy === [][0]){
 			return (<h1>loading services</h1>);
 		}
 

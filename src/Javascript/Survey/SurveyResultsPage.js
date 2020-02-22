@@ -72,7 +72,7 @@ export default class SurveyResultsPage extends React.Component{
                   //   </div>]
                 }))
               }
-              services.map((service, index) => {
+              services.foreach((service, index) => {
                 this.props.database('organizations').find(service.fields["Organization"], (err, organization) => {
                   this.props.database('address').find(service.fields["address"], (err, address) => {
                     if(organization.id !== undefined){
@@ -144,9 +144,9 @@ export default class SurveyResultsPage extends React.Component{
       console.log("GOT HERE")
       console.log(this.state.num_services)
       console.log(this.state.services)
-        this.state.services.map((service, index) => {
+        this.state.services.foreach((service, index) => {
           var temp_array = [];
-          var init = -1;
+          // var init = -1;
           for(let i = 0; i < this.state.organizations.length; i++){
             console.log(Object.keys(this.state.organizations[i])[0])
             if(Object.values(this.state.organizations[i]).includes(service)){
