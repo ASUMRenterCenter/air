@@ -169,29 +169,14 @@ export default class AddAgency extends React.Component {
 	}
 
 	isChecked(value, action, id) {
-		if (action === "default") {
-			//console.log("inside default");
-			if (value === 0) {
-				return false;
-			} else if (value === 1) {
-				return true;
-			} else {
-				return false;
-			}
-		} else if (action === "update") {
-			//console.log("inside update");
-			this.props.database("organizations").update([
-				{
-					id: id,
-					fields: {
-						isNotListed: value
-					}
-				}
-			]);
-		}
-	}
-
-	justChecked(value) {}
+		if (value === 0) {
+			return false;
+		} else if (value === 1) {
+			return true;
+		} else {
+			return false;
+		};
+	};
 
 	renderTableData() {
 		return this.state.organizations.map((organization, index) => {
@@ -249,8 +234,14 @@ export default class AddAgency extends React.Component {
 		var updates = 0;
 		var org_update = [];
 		var checks = document.forms["checked"];
+		//console.log(checks.length);
+		//console.log(this.state.organizations.length)
 		for (let i = 0; i < checks.length; i++) {
 			//org_id.push(checks[i].name);
+			//console.log(i);
+			if (i > this.state.organizations.length - 1) {
+				break;
+			}
 			if (
 				checks[i].checked === true &&
 				this.state.organizations[i].fields["isNotListed"] === 1
