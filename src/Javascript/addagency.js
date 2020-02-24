@@ -29,7 +29,6 @@ export default class AddAgency extends React.Component {
 		this.createNewOrg = this.createNewOrg.bind(this);
 		this.renderTableData = this.renderTableData.bind(this);
 		this.editOrg = this.editOrg.bind(this);
-		this.saveList = this.saveList.bind(this);
 		this.isChecked = this.isChecked.bind(this);
 	}
 
@@ -168,15 +167,47 @@ export default class AddAgency extends React.Component {
 		}
 	}
 
-	isChecked(value, action, id) {
-		if (value === 0) {
-			return false;
-		} else if (value === 1) {
-			return true;
-		} else {
-			return false;
-		};
+	onUpdateItem = (index, value) => {
+		const organizations = [...this.state.organizations];
+		organizations[index].fields["isNotListed"] = value;
+		this.setState(() => ({
+			organizations: organizations
+		}));
 	};
+
+	isChecked(value, action, id, org_index) {
+		if (action === "default") {
+			if (value === 0) {
+				return false;
+			} else if (value === 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} else if (action === "editChecked") {
+			if (value === 1) {
+				this.props.database("organizations").update([
+					{
+						id: id.id,
+						fields: {
+							isNotListed: 0
+						}
+					}
+				]);
+				this.onUpdateItem(org_index, 0);
+			} else if (value === 0) {
+				this.props.database("organizations").update([
+					{
+						id: id.id,
+						fields: {
+							isNotListed: 1
+						}
+					}
+				]);
+				this.onUpdateItem(org_index, 1);
+			}
+		}
+	}
 
 	renderTableData() {
 		return this.state.organizations.map((organization, index) => {
@@ -197,18 +228,28 @@ export default class AddAgency extends React.Component {
 								<input
 									className="form-check-input"
 									type="checkbox"
-									name={this.state.organizations[index].id}
+									id={organization.id}
+									name={organization.id}
+									onChange={() =>
+										this.isChecked(
+											this.state.organizations[index].fields["isNotListed"],
+											"editChecked",
+											organization,
+											index
+										)
+									}
 									defaultChecked={this.isChecked(
 										this.state.organizations[index].fields["isNotListed"],
 										"default",
-										"none"
+										"none",
+										index
 									)}
 								></input>
 							</Col>
 							<Col>
 								<button
 									type="button"
-									class="btn btn-link"
+									className="btn btn-link"
 									onClick={() =>
 										this.editOrg(
 											organization.fields["id"],
@@ -225,434 +266,6 @@ export default class AddAgency extends React.Component {
 				</tr>
 			);
 		});
-	}
-
-	saveList(e) {
-		var org_id = [];
-		var org_value = [];
-		var did_update = [];
-		var updates = 0;
-		var org_update = [];
-		var checks = document.forms["checked"];
-		//console.log(checks.length);
-		//console.log(this.state.organizations.length)
-		for (let i = 0; i < checks.length; i++) {
-			//org_id.push(checks[i].name);
-			//console.log(i);
-			if (i > this.state.organizations.length - 1) {
-				break;
-			}
-			if (
-				checks[i].checked === true &&
-				this.state.organizations[i].fields["isNotListed"] === 1
-			) {
-				//did_update.push(0);
-			} else if (
-				(checks[i].checked === true) &
-				(this.state.organizations[i].fields["isNotListed"] === 0)
-			) {
-				org_id.push(checks[i].name);
-				org_value.push(1);
-				//did_update.push(1);
-				updates += 1;
-			} else if (
-				(checks[i].checked === false) &
-				(this.state.organizations[i].fields["isNotListed"] === 1)
-			) {
-				org_id.push(checks[i].name);
-				org_value.push(0);
-				//did_update.push(1);
-				updates += 1;
-			} else {
-				//did_update.push(0);
-			}
-		}
-
-		if (updates > 10 || updates <= 0) {
-			alert("You can only update up to 10 records at once.");
-		} else {
-			for (let i = 0; i < did_update.length; i++) {
-				if (did_update[i] === 1) {
-					org_update.push(this.state.organizations[i].id);
-				}
-			}
-
-			switch (updates) {
-				default:
-					alert("Could not update database");
-					break;
-				case 1:
-					this.props.database("organizations").update([
-						{
-							id: org_id[updates - 1],
-							fields: {
-								isNotListed: org_value[updates - 1]
-							}
-						}
-					]);
-					break;
-				case 2:
-					this.props.database("organizations").update([
-						{
-							id: org_id[updates - 2],
-							fields: {
-								isNotListed: org_value[updates - 2]
-							}
-						},
-						{
-							id: org_id[updates - 1],
-							fields: {
-								isNotListed: org_value[updates - 1]
-							}
-						}
-					]);
-					break;
-				case 3:
-					this.props.database("organizations").update([
-						{
-							id: org_id[updates - 3],
-							fields: {
-								isNotListed: org_value[updates - 3]
-							}
-						},
-						{
-							id: org_id[updates - 2],
-							fields: {
-								isNotListed: org_value[updates - 2]
-							}
-						},
-						{
-							id: org_id[updates - 1],
-							fields: {
-								isNotListed: org_value[updates - 1]
-							}
-						}
-					]);
-					break;
-				case 4:
-					this.props.database("organizations").update([
-						{
-							id: org_id[updates - 4],
-							fields: {
-								isNotListed: org_value[updates - 4]
-							}
-						},
-						{
-							id: org_id[updates - 3],
-							fields: {
-								isNotListed: org_value[updates - 3]
-							}
-						},
-						{
-							id: org_id[updates - 2],
-							fields: {
-								isNotListed: org_value[updates - 2]
-							}
-						},
-						{
-							id: org_id[updates - 1],
-							fields: {
-								isNotListed: org_value[updates - 1]
-							}
-						}
-					]);
-					break;
-				case 5:
-					this.props.database("organizations").update([
-						{
-							id: org_id[updates - 5],
-							fields: {
-								isNotListed: org_value[updates - 5]
-							}
-						},
-						{
-							id: org_id[updates - 4],
-							fields: {
-								isNotListed: org_value[updates - 4]
-							}
-						},
-						{
-							id: org_id[updates - 3],
-							fields: {
-								isNotListed: org_value[updates - 3]
-							}
-						},
-						{
-							id: org_id[updates - 2],
-							fields: {
-								isNotListed: org_value[updates - 2]
-							}
-						},
-						{
-							id: org_id[updates - 1],
-							fields: {
-								isNotListed: org_value[updates - 1]
-							}
-						}
-					]);
-					break;
-				case 6:
-					this.props.database("organizations").update([
-						{
-							id: org_id[updates - 6],
-							fields: {
-								isNotListed: org_value[updates - 6]
-							}
-						},
-						{
-							id: org_id[updates - 5],
-							fields: {
-								isNotListed: org_value[updates - 5]
-							}
-						},
-						{
-							id: org_id[updates - 4],
-							fields: {
-								isNotListed: org_value[updates - 4]
-							}
-						},
-						{
-							id: org_id[updates - 3],
-							fields: {
-								isNotListed: org_value[updates - 3]
-							}
-						},
-						{
-							id: org_id[updates - 2],
-							fields: {
-								isNotListed: org_value[updates - 2]
-							}
-						},
-						{
-							id: org_id[updates - 1],
-							fields: {
-								isNotListed: org_value[updates - 1]
-							}
-						}
-					]);
-					break;
-				case 7:
-					this.props.database("organizations").update([
-						{
-							id: org_id[updates - 7],
-							fields: {
-								isNotListed: org_value[updates - 7]
-							}
-						},
-						{
-							id: org_id[updates - 6],
-							fields: {
-								isNotListed: org_value[updates - 6]
-							}
-						},
-						{
-							id: org_id[updates - 5],
-							fields: {
-								isNotListed: org_value[updates - 5]
-							}
-						},
-						{
-							id: org_id[updates - 4],
-							fields: {
-								isNotListed: org_value[updates - 4]
-							}
-						},
-						{
-							id: org_id[updates - 3],
-							fields: {
-								isNotListed: org_value[updates - 3]
-							}
-						},
-						{
-							id: org_id[updates - 2],
-							fields: {
-								isNotListed: org_value[updates - 2]
-							}
-						},
-						{
-							id: org_id[updates - 1],
-							fields: {
-								isNotListed: org_value[updates - 1]
-							}
-						}
-					]);
-					break;
-				case 8:
-					this.props.database("organizations").update([
-						{
-							id: org_id[updates - 8],
-							fields: {
-								isNotListed: org_value[updates - 8]
-							}
-						},
-						{
-							id: org_id[updates - 7],
-							fields: {
-								isNotListed: org_value[updates - 7]
-							}
-						},
-						{
-							id: org_id[updates - 6],
-							fields: {
-								isNotListed: org_value[updates - 6]
-							}
-						},
-						{
-							id: org_id[updates - 5],
-							fields: {
-								isNotListed: org_value[updates - 5]
-							}
-						},
-						{
-							id: org_id[updates - 4],
-							fields: {
-								isNotListed: org_value[updates - 4]
-							}
-						},
-						{
-							id: org_id[updates - 3],
-							fields: {
-								isNotListed: org_value[updates - 3]
-							}
-						},
-						{
-							id: org_id[updates - 2],
-							fields: {
-								isNotListed: org_value[updates - 2]
-							}
-						},
-						{
-							id: org_id[updates - 1],
-							fields: {
-								isNotListed: org_value[updates - 1]
-							}
-						}
-					]);
-					break;
-				case 9:
-					this.props.database("organizations").update([
-						{
-							id: org_id[updates - 9],
-							fields: {
-								isNotListed: org_value[updates - 9]
-							}
-						},
-						{
-							id: org_id[updates - 8],
-							fields: {
-								isNotListed: org_value[updates - 8]
-							}
-						},
-						{
-							id: org_id[updates - 7],
-							fields: {
-								isNotListed: org_value[updates - 7]
-							}
-						},
-						{
-							id: org_id[updates - 6],
-							fields: {
-								isNotListed: org_value[updates - 6]
-							}
-						},
-						{
-							id: org_id[updates - 5],
-							fields: {
-								isNotListed: org_value[updates - 5]
-							}
-						},
-						{
-							id: org_id[updates - 4],
-							fields: {
-								isNotListed: org_value[updates - 4]
-							}
-						},
-						{
-							id: org_id[updates - 3],
-							fields: {
-								isNotListed: org_value[updates - 3]
-							}
-						},
-						{
-							id: org_id[updates - 2],
-							fields: {
-								isNotListed: org_value[updates - 2]
-							}
-						},
-						{
-							id: org_id[updates - 1],
-							fields: {
-								isNotListed: org_value[updates - 1]
-							}
-						}
-					]);
-					break;
-				case 10:
-					this.props.database("organizations").update([
-						{
-							id: org_id[updates - 10],
-							fields: {
-								isNotListed: org_value[updates - 10]
-							}
-						},
-						{
-							id: org_id[updates - 9],
-							fields: {
-								isNotListed: org_value[updates - 9]
-							}
-						},
-						{
-							id: org_id[updates - 8],
-							fields: {
-								isNotListed: org_value[updates - 8]
-							}
-						},
-						{
-							id: org_id[updates - 7],
-							fields: {
-								isNotListed: org_value[updates - 7]
-							}
-						},
-						{
-							id: org_id[updates - 6],
-							fields: {
-								isNotListed: org_value[updates - 6]
-							}
-						},
-						{
-							id: org_id[updates - 5],
-							fields: {
-								isNotListed: org_value[updates - 5]
-							}
-						},
-						{
-							id: org_id[updates - 4],
-							fields: {
-								isNotListed: org_value[updates - 4]
-							}
-						},
-						{
-							id: org_id[updates - 3],
-							fields: {
-								isNotListed: org_value[updates - 3]
-							}
-						},
-						{
-							id: org_id[updates - 2],
-							fields: {
-								isNotListed: org_value[updates - 2]
-							}
-						},
-						{
-							id: org_id[updates - 1],
-							fields: {
-								isNotListed: org_value[updates - 1]
-							}
-						}
-					]);
-					break;
-			}
-		}
 	}
 
 	render() {
@@ -677,10 +290,10 @@ export default class AddAgency extends React.Component {
 						</Row>
 					</Container>
 					<Container id="edit-org-table" className="centered">
-						<div class="form-group row">
-							<div class="col-md-6">
+						<div className="form-group row">
+							<div className="col-md-6">
 								<input
-									class="form-control"
+									className="form-control"
 									id="myInput"
 									type="text"
 									placeholder="Search for organization..."
@@ -701,18 +314,6 @@ export default class AddAgency extends React.Component {
 									<tbody id="myTable">{this.renderTableData()}</tbody>
 								</table>
 							</form>
-						</div>
-						<div className="clearfix">
-							<Row>
-								<button
-									onClick={this.saveList}
-									className="btn btn-primary"
-									type="button"
-									style={{ marginLeft: "78%" }}
-								>
-									Save List/Unlist
-								</button>
-							</Row>
 						</div>
 					</Container>
 					<br></br>
