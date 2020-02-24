@@ -80,6 +80,7 @@ div {
 	height: 100%;
 	transition: margin .5s;
 	margin: 0 0 0 85%;
+	text-align: left;
 }
 
 .wrapper.is-nav-open {
@@ -232,7 +233,7 @@ ________________________*/
 	margin-right: 2%;
 	background-color: #98bada;
 	overflow: hidden;
-	display: block;
+	display: fixed;
 }
 
 #surveyimg {
@@ -358,8 +359,20 @@ td label {
 	margin-left: 15%;
  }
 
+.sidebarcontent {
+	align-content: left;
+}
 
-
+.hotlinetitles {
+	font-size: 17px;
+}
+.hotlinephone {
+	font-size: 15px;
+}
+.nav__body {
+	align-content: left;
+	text-align: left;
+}
 
 
 /* Homepage Go through */

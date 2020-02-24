@@ -28,7 +28,8 @@ export default class SurveyResultsPage extends React.Component{
         tax_html_done: false,
         org_indices: [],
         size_of_html: 0,
-        num_services: 0,
+        num_services: 999,
+        iterations: 0
     }
     this.renderOrganization = this.renderOrganization.bind(this);
   }
@@ -55,8 +56,9 @@ export default class SurveyResultsPage extends React.Component{
               fields: ["id", "Organization", "address", "taxonomy"],
               filterByFormula: filter,
               view: "Grid view",
-            }).eachPage((services, fetchNextPage) => {
-              if(services.length === 0){
+            }).eachPage((servicess, fetchNextPage) => {
+              if(servicess.length === 0){
+                console.log(record.fields['name'])
                 this.setState(previousState => ({
                   services: [...this.state.services, record.fields['name']]
                   // org_html: [...this.state.org_html,
@@ -72,15 +74,26 @@ export default class SurveyResultsPage extends React.Component{
                   //   </div>]
                 }))
               }
-              services.foreach((service, index) => {
+              servicess.map((service, index) => {
                 this.props.database('organizations').find(service.fields["Organization"], (err, organization) => {
                   this.props.database('address').find(service.fields["address"], (err, address) => {
+                    var address_1 = address.fields['address_1']
+                    var city = address.fields['city']
+                    var state = address.fields['State']
+                    var zipcode = address.fields['Zip Code']
+                    var id = organization.id
+                    var name = organization.fields['name']
+                    var url = organization.fields['url']
+                    var email = organization.fields['email']
+                    var phones = organization.fields['phones']
+                    var address_array = [record.fields['name'], address_1, city, state, zipcode]
+                    var organization_array = [record.fields['name'], id, name, url, email, phones]
                     if(organization.id !== undefined){
                       this.setState(previousState => ({
                         num_services: tax_ids.length,
                         services: [...this.state.services, record.fields['name']],
-                        addresses: [...this.state.addresses, {[address]:service}],
-                        organizations: [...this.state.organizations, {[organization]:service}]
+                        addresses: [...this.state.addresses, address_array],
+                        organizations: [...this.state.organizations, organization_array]
                       }))
                     }
                   // this.organizations.push(organization);
@@ -139,39 +152,38 @@ export default class SurveyResultsPage extends React.Component{
       }
 
   }
+
   componentDidUpdate(prevProps, prevState){
-    if(this.state.services.length > 0 && ((this.state.services.length === this.state.num_services) && !this.state.isready)){
-      console.log("GOT HERE")
-      console.log(this.state.num_services)
-      console.log(this.state.services)
-        this.state.services.foreach((service, index) => {
+    // var check_services = this.state.services.length === this.state.num_services
+    // var check_not_ready = !this.state.isready
+    // var check_length = this.state.services.length > 0
+    if(this.state.services.length === this.state.num_services && (!this.state.isready && this.state.iterations < 1)){
+      console.log(this.check_services)
+      console.log("Num Services: " + this.state.num_services)
+        this.state.services.map((service, index) => {
           var temp_array = [];
           // var init = -1;
           for(let i = 0; i < this.state.organizations.length; i++){
-            console.log(Object.keys(this.state.organizations[i])[0])
+            // console.log("I: " + i)
+            console.log(this.state.organizations)
+            console.log(Object.values(this.state.organizations[i]).includes(service))
             if(Object.values(this.state.organizations[i]).includes(service)){
-              var org_key = Object.keys(this.state.organizations[i])[0]
-              var addr_key = Object.keys(this.state.addresses[i])[0]
-              console.log(this.state.organizations[i][org_key].id)
-              console.log(org_key)
-              console.log(addr_key)
+              
               temp_array.push(<SurveyResult 
-                                key={this.state.organizations[i][org_key].id + index}
+                                key={this.state.organizations[i][1] + index}
                                 database = {this.props.database}
-                                agency_id = {this.state.organizations[i][org_key].id}
-                                agency_name = {this.state.organizations[i][org_key].fields['name'] === undefined ? "Not available" : this.state.organizations[i][org_key].fields['name']} 
-                                agency_website = {this.state.organizations[i][org_key].fields['url'] === undefined ? "Website Not Available" : this.state.organizations[i][org_key].fields['url']}
-                                phone_number={this.state.organizations[i][org_key].fields['phones'] === undefined ? "Phone Number Not Available" : this.state.organizations[i][org_key].fields['phones']} 
-                                email={this.state.organizations[i][org_key].fields['email'] === undefined ? "Email Not Available" : this.state.organizations[i][org_key].fields['email']} 
-                                address={typeof this.state.addresses[i][addr_key].fields['address_1'] === "undefined" ? "Street Not Available" :this.state.addresses[i][addr_key].fields['address_1']} 
-                                city={typeof this.state.addresses[i][addr_key].fields['city'] === "undefined" ? "City Not Available" :this.state.addresses[i][addr_key].fields['city']} 
-                                state={typeof this.state.addresses[i][addr_key].fields['State'] === "undefined" ? "State Not Available" :this.state.addresses[i][addr_key].fields['State']} 
-                                zip_code={typeof this.state.addresses[i][addr_key].fields['Zip Code'] === "undefined" ? "Zip Code Not Available" :this.state.addresses[i][addr_key].fields['Zip Code']}
+                                agency_id = {this.state.organizations[i][1]}
+                                agency_name = {this.state.organizations[i][2] === undefined ? "Not available" : this.state.organizations[i][2]} 
+                                agency_website = {this.state.organizations[i][3] === undefined ? "Website Not Available" : this.state.organizations[i][3]}
+                                phone_number={this.state.organizations[i][5] === undefined ? "Phone Number Not Available" : this.state.organizations[i][5]} 
+                                email={this.state.organizations[i][4] === undefined ? "Email Not Available" : this.state.organizations[i][4]} 
+                                address={typeof this.state.addresses[i][1] === "undefined" ? "Street Not Available" :this.state.addresses[i][1]} 
+                                city={typeof this.state.addresses[i][2] === "undefined" ? "City Not Available" :this.state.addresses[i][2]} 
+                                state={typeof this.state.addresses[i][3] === "undefined" ? "State Not Available" :this.state.addresses[i][3]} 
+                                zip_code={typeof this.state.addresses[i][4] === "undefined" ? "Zip Code Not Available" :this.state.addresses[i][4]}
               />);
-              // temp_org_array.push(Object.keys(this.state.organizations[0])[0]);
-              // temp_addr_array.push(Object.keys(this.state.addresses[0])[0]);
             }
-            if ((i === (this.state.organizations.length - 1)) && temp_array.length === 0){
+            else if ((i === (this.state.organizations.length - 1)) && temp_array.length === 0){
               console.log("Got Here")
               this.setState(previousState => ({
                 org_html: [...previousState.org_html, <div className="jumbotron" key={i}>
@@ -183,7 +195,8 @@ export default class SurveyResultsPage extends React.Component{
                                                         {({ toPdf }) => <Button onClick={toPdf} variant="dark">Download As PDF</Button>}
                                                         </Pdf>
                                                     </div>
-                                                  </div>]
+                                                  </div>],
+                iterations: previousState.iterations + 1
               }))
             }
             if(i === this.state.organizations.length - 1){
@@ -200,7 +213,8 @@ export default class SurveyResultsPage extends React.Component{
                                                     <div>
                                                       {[...temp_array]}
                                                     </div>
-                                                  </div>]
+                                                  </div>],
+                iterations: previousState.iterations + 1
               }))
               
             }
@@ -223,6 +237,14 @@ export default class SurveyResultsPage extends React.Component{
       //     size_of_html: this.state.org_html.length
       //   }))
       // }
+    // if(this.state.org_html.length > this.state.num_services){
+    //   console.log(this.state.org_html)
+    //   var organization_html = Array.from(new Set(this.state.org_html)) 
+    //   console.log(organization_html)
+    //   this.setState (previousState => ({
+    //     org_html: [...organization_html]
+    //   }))
+    // }
   
       
   }
