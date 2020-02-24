@@ -144,9 +144,7 @@ export default class nav extends React.PureComponent {
 			this.state.active &&
 			this.state.orgId === "1"
 		) {
-			history.push(
-				"/AddAgency/" + this.state.orgName + "/" + this.state.orgId
-			);
+			history.push("/AddAgency/" + this.state.orgName + "/" + this.state.orgId);
 		}
 	}
 
@@ -155,16 +153,14 @@ export default class nav extends React.PureComponent {
 			<div>
 				<Navbar expand="lg" id="navbackground">
 					<script></script>
-					<a
-						//href="javascript:window.location.href=window.location.href"
-						//href="/"
+					<button
+						onClick={this.handleSubmit}
 						id="logo"
-						className="Logo"
+						className="btn Logo btn-link"
+						type="button"
 					>
-						<button onClick={this.handleSubmit} className="btn" type="button">
-							<img src={logo} alt="AIR ASUM Information and Referral" />
-						</button>
-					</a>
+						<img src={logo} alt="AIR ASUM Information and Referral" />
+					</button>
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav" height="20px">
 						<Nav id="login-info" className="right">
@@ -240,11 +236,6 @@ export default class nav extends React.PureComponent {
 			</div>
 		);
 	}
-}
-
-function showButtons() {
-	document.getElementById("add-agency-button").removeAttribute("disabled");
-	document.getElementById("add-agency-button").setAttribute("active", "true");
 }
 
 //export default nav;
