@@ -1,10 +1,10 @@
 import React from "react";
 // import $ from "jquery";
 
-import { Navbar, Nav, Row } from "react-bootstrap";
 import "../CSS/styles.css";
 // import * as BCSS from "bootstrap/dist/css/bootstrap.css";
 // import * as BJS from "bootstrap/dist/js/bootstrap.js";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from "../Images/Logo.png";
 // import { toggleClass } from "dom-helpers";
 import history from "./history";
@@ -153,91 +153,80 @@ export default class nav extends React.PureComponent {
 	render() {
 		return (
 			<div>
-				<Navbar expand="lg" id="navbackground">
-					<script></script>
-					<a
-						//href="javascript:window.location.href=window.location.href"
-						//href="/"
+			<nav className="navbar navbar-expand-md navbar-dark" id="navbackground">
+				<a
 						id="logo"
-						className="Logo"
+						className="navbar-brand Logo"
 					>
 						<button onClick={this.handleSubmit} className="btn" type="button">
 							<img src={logo} alt="AIR ASUM Information and Referral" />
 						</button>
-					</a>
-					<Navbar.Toggle aria-controls="basic-navbar-nav" />
-					<Navbar.Collapse id="basic-navbar-nav" height="20px">
-						<Nav id="login-info" className="right">
-							<Row>
-								{this.state.loggedIn &&
-								this.state.active &&
-								this.state.isJordan ? (
-									<div>
-										<button
-											id="add-agency-button"
-											onClick={this.addAgency}
-											className="btn btn-outline-light btn-sm"
-											type="button"
-										>
-											Add Agency
-										</button>
-									</div>
-								) : null}
-								{this.state.loggedIn && this.state.active ? (
-									<div>
-										<button
-											id="edit-agency-button"
-											className="btn-outline-light btn btn-sm"
-											onClick={this.editAgency}
-											type="button"
-										>
-											Edit Agency
-										</button>
-									</div>
-								) : null}
-								{/* 	<div>
-								<Button
-									id="login-button"
-									variant="outline-light"
-									size="sm"
-									onClick={this.showButtons}
-								>
-									Click to enable buttons
-								</Button>
-							</div> */}
-								{!this.state.loggedIn && !this.state.active ? (
-									<div>
-										<button
-											id="login-button"
-											onClick={this.orgLogin}
-											className="btn btn-outline-light btn-sm"
-											type="button"
-										>
-											Organization Login
-										</button>
-									</div>
-								) : null}
-								{this.state.loggedIn && this.state.active ? (
-									<div>
-										<button
-											id="logout-button"
-											onClick={this.logOut}
-											className="btn btn-outline-light btn-sm"
-											type="button"
-										>
-											Logout
-										</button>
-									</div>
-								) : null}
-							</Row>
-						</Nav>
-					</Navbar.Collapse>
-				</Navbar>
-				<div className="buttonpagesrow">
-					{this.props.children}
-					{this.props.Sidebar}
+				</a>
+
+				<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+					<span className="navbar-toggler-icon"></span>
+				</button>
+
+				<div className="collapse navbar-collapse" id="collapsibleNavbar">
+					<ul className="navbar-nav ml-auto">
+					{this.state.loggedIn && this.state.active && this.state.isJordan ? (
+						<li className="nav-item">
+							<button
+								id="add-agency-button"
+								onClick={this.addAgency}
+								className="btn btn-outline-light btn-sm"
+								type="button"
+							>
+								Add Agency
+							</button>
+						</li>
+					) : null}
+					{this.state.loggedIn && this.state.active ? (
+						<li className="nav-item">
+							<button
+								id="edit-agency-button"
+								className="btn-outline-light btn btn-sm"
+								onClick={this.editAgency}
+								type="button"
+							>
+								Edit Agency
+							</button>
+						</li>
+					) : null}
+					{!this.state.loggedIn && !this.state.active ? (
+						<li className="nav-item">
+							<button
+								id="login-button"
+								onClick={this.orgLogin}
+								className="btn btn-outline-light btn-sm"
+								type="button"
+							>
+								Organization Login
+							</button>
+						</li>
+					) : null}
+					{this.state.loggedIn && this.state.active ? (
+						<li className="nav-item">
+							<button
+								id="logout-button"
+								onClick={this.logOut}
+								className="btn btn-outline-light btn-sm"
+								type="button"
+							>
+								Logout
+							</button>
+						</li>
+					) : null}
+					</ul>
 				</div>
-			</div>
+				
+			</nav>
+		<div className="buttonpagesrow">
+			{this.props.children}
+			{this.props.Sidebar}
+		</div>
+		</div>
+			
 		);
 	}
 }
