@@ -280,7 +280,7 @@ export default class AddAgency extends React.Component {
 							</Col>
 							<Col sm={4}>
 								<button
-									onClick={() => this.saveList()}
+									onClick={() => this.createNewOrg()}
 									className="btn btn-info btn-sm"
 									type="button"
 								>
