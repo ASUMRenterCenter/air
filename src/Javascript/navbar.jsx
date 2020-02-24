@@ -1,14 +1,14 @@
 import React from "react";
-import $ from "jquery";
+// import $ from "jquery";
 
-import { Navbar, Nav, Button, Image, Row } from "react-bootstrap";
+import { Navbar, Nav, Row } from "react-bootstrap";
 import "../CSS/styles.css";
-import * as BCSS from "bootstrap/dist/css/bootstrap.css";
-import * as BJS from "bootstrap/dist/js/bootstrap.js";
+// import * as BCSS from "bootstrap/dist/css/bootstrap.css";
+// import * as BJS from "bootstrap/dist/js/bootstrap.js";
 import logo from "../Images/Logo.png";
-import { toggleClass } from "dom-helpers";
+// import { toggleClass } from "dom-helpers";
 import history from "./history";
-import PrintSaveShare from "./CategoryResults/PrintSaveShare";
+// import PrintSaveShare from "./CategoryResults/PrintSaveShare";
 
 export default class nav extends React.PureComponent {
 	// 1/19/20 Added this pure component. It may make it only render once??
@@ -105,7 +105,7 @@ export default class nav extends React.PureComponent {
 			history.replace("/");
 		} else if (this.state.loggedIn) {
 			history.push(
-				"/" + "Organization_Home/" + this.state.orgName + "/" + this.state.orgId
+				"/Organization_Home/" + this.state.orgName + "/" + this.state.orgId
 			);
 		}
 	}
@@ -131,7 +131,7 @@ export default class nav extends React.PureComponent {
 			history.replace("/");
 		} else if (this.state.loggedIn && this.state.active) {
 			history.push(
-				"/" + "EditAgency/" + this.state.orgName + "/" + this.state.orgId
+				"/EditAgency/" + this.state.orgName + "/" + this.state.orgId
 			);
 		}
 	}
@@ -145,7 +145,7 @@ export default class nav extends React.PureComponent {
 			this.state.orgId === "1"
 		) {
 			history.push(
-				"/" + "AddAgency/" + this.state.orgName + "/" + this.state.orgId
+				"/AddAgency/" + this.state.orgName + "/" + this.state.orgId
 			);
 		}
 	}

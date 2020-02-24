@@ -5,13 +5,12 @@ import {
 	Row,
 	Col,
 	Table,
-	Form,
 	Accordion,
 	Card
 } from "../../node_modules/react-bootstrap";
 import "../CSS/addagency.css";
 import history from "./history";
-import PropTypes from "prop-types";
+import $ from "jquery";
 
 export default class AddAgency extends React.Component {
 	constructor(props) {
@@ -66,6 +65,25 @@ export default class AddAgency extends React.Component {
 				});
 				fetchNextPage();
 			});
+		/* ===================================
+			The following is for the search
+			bar to properly search the table
+			==================================*/
+		$(document).ready(function() {
+			$("#myInput").on("keyup", function() {
+				var value = $(this)
+					.val()
+					.toLowerCase();
+				$("#myTable tr").filter(function() {
+					$(this).toggle(
+						$(this)
+							.text()
+							.toLowerCase()
+							.indexOf(value) > -1
+					);
+				});
+			});
+		});
 	}
 
 	componentDidUpdate() {
@@ -151,29 +169,14 @@ export default class AddAgency extends React.Component {
 	}
 
 	isChecked(value, action, id) {
-		if (action === "default") {
-			//console.log("inside default");
-			if (value === 0) {
-				return false;
-			} else if (value === 1) {
-				return true;
-			} else {
-				return false;
-			}
-		} else if (action === "update") {
-			//console.log("inside update");
-			this.props.database("organizations").update([
-				{
-					id: id,
-					fields: {
-						isNotListed: value
-					}
-				}
-			]);
-		}
-	}
-
-	justChecked(value) {}
+		if (value === 0) {
+			return false;
+		} else if (value === 1) {
+			return true;
+		} else {
+			return false;
+		};
+	};
 
 	renderTableData() {
 		return this.state.organizations.map((organization, index) => {
@@ -203,7 +206,9 @@ export default class AddAgency extends React.Component {
 								></input>
 							</Col>
 							<Col>
-								<a
+								<button
+									type="button"
+									class="btn btn-link"
 									onClick={() =>
 										this.editOrg(
 											organization.fields["id"],
@@ -213,7 +218,7 @@ export default class AddAgency extends React.Component {
 									// href="#"
 								>
 									<h6>Edit</h6>
-								</a>
+								</button>
 							</Col>
 						</Row>
 					</td>
@@ -229,8 +234,14 @@ export default class AddAgency extends React.Component {
 		var updates = 0;
 		var org_update = [];
 		var checks = document.forms["checked"];
+		//console.log(checks.length);
+		//console.log(this.state.organizations.length)
 		for (let i = 0; i < checks.length; i++) {
 			//org_id.push(checks[i].name);
+			//console.log(i);
+			if (i > this.state.organizations.length - 1) {
+				break;
+			}
 			if (
 				checks[i].checked === true &&
 				this.state.organizations[i].fields["isNotListed"] === 1
@@ -666,6 +677,16 @@ export default class AddAgency extends React.Component {
 						</Row>
 					</Container>
 					<Container id="edit-org-table" className="centered">
+						<div class="form-group row">
+							<div class="col-md-6">
+								<input
+									class="form-control"
+									id="myInput"
+									type="text"
+									placeholder="Search for organization..."
+								></input>
+							</div>
+						</div>
 						<div className="table-wrapper-scroll-y custom-scrollbar">
 							<form id="edit-unlist-org" name="checked">
 								<table className="table table-striped table-bordered table-hover table-dark">
@@ -677,7 +698,7 @@ export default class AddAgency extends React.Component {
 											<th>Edit/Unlist</th>
 										</tr>
 									</thead>
-									<tbody>{this.renderTableData()}</tbody>
+									<tbody id="myTable">{this.renderTableData()}</tbody>
 								</table>
 							</form>
 						</div>

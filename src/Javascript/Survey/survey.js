@@ -1,5 +1,5 @@
-import React, {Suspense, Fragment} from "react";
-import { Table, Button } from "react-bootstrap";
+import React from "react";
+// import { Table, Button } from "react-bootstrap";
 import history from "../history";
 import "../../CSS/styles.css";
 
@@ -84,7 +84,6 @@ export default class Survey extends React.Component {
 						onClick={this.handlePrevious}
 						type='button'
 						className="btn btn-dark"
-						id="survey_button"
 						id="previous_button"
 					>
 						Previous
@@ -93,7 +92,6 @@ export default class Survey extends React.Component {
 						type="button"
 						onClick={this.handleSeeResults}
 						className="btn btn-dark"
-						id="survey_button"
 						id="see_results_button"
 					>
 						See Results
@@ -128,7 +126,6 @@ export default class Survey extends React.Component {
 
 	handleSeeResults (){
 		var checks = document.forms['form-check'];
-		var taxonomy_list = [];
 		var urlstring = "";
 		console.log(this.state.taxonomy_ids);
 		this.state.taxonomy_ids.map((id, index) => (

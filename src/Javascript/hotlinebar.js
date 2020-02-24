@@ -43,7 +43,7 @@ export default class HotlineBar extends Component {
                                 this.state.hotlines.map((hotline, index) =>
                                     <li key={hotline.id}>
                                         <h1 className="hotlinetitles">
-                                            <img src={phoneimg} height="30px" width="30px" />
+                                            <img src={phoneimg} alt='phone' height="30px" width="30px" />
                                             {hotline.fields['name']} Hotline
                                         </h1>
                                         <h2 className="hotlinephone">{hotline.fields['phone']}</h2>   

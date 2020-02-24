@@ -1,13 +1,13 @@
 import React from "react"
 import Button from "react-bootstrap/Button"
-import Modal from "react-bootstrap/Modal"
+// import Modal from "react-bootstrap/Modal"
 
 
 function PrintButton() {
-  const [show, setShow] = React.useState(false);
+  // const [show, setShow] = React.useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
 
   return (
     <>

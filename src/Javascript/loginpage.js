@@ -11,7 +11,6 @@ import {
 } from "../../node_modules/react-bootstrap";
 import "../CSS/loginpage.css";
 import history from "./history";
-import axios from "axios";
 
 class Loginpage extends React.Component {
 	constructor(props) {

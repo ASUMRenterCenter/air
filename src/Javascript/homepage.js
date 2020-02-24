@@ -145,9 +145,7 @@ export default class Homepage extends Component {
 	}
 
 	handleClick(name, id, e) {
-		{
 			history.push("/ButtonResults/" + name + "/" + id);
-		}
 	}
 	// openNav() {
 	//     document.getElementById("mySidebar").style.width = "250px";
@@ -169,7 +167,7 @@ export default class Homepage extends Component {
 					onClick={this.surveyClick}
 					id="gotosurveybutton"
 				>
-					<img src={survey} id="surveyimg" />
+					<img src={survey} alt="survey" id="surveyimg" />
 					<h1 id="btn-text">
 						Need Help Choosing a Resource? Click here to take a quick survey.
 					</h1>
