@@ -238,7 +238,7 @@ class Index extends React.Component {
 							<div className="indexdivinner">
 								<Navbar
 									database={base}
-									children={<AgencyInfoPage {...props} />}
+									children={<AgencyInfoPage {...props} database={base} />}
 								/>
 							</div>
 						)}

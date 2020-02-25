@@ -42,7 +42,8 @@
 
 .ServiceEditingChunk1 {
   float: left;
-  padding-left: 70px;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .ServiceDescriptionField {
