@@ -380,280 +380,303 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 
   render() {
     return(
-      <div className = "ServiceEditingChunk1">
+      <div>
         <Form>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Organization Name (REQUIRED)</Form.Label>
-            <textarea
-              type="organizationName"
-              name="organizationName"
-              className="form-control"
-							required ={true}
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Organization Email</Form.Label>
-            <textarea
-              type="organizationEmail"
-              name="organizationEmail"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Organization URL</Form.Label>
-            <textarea
-              type="organizationURL"
-              name="organizationURL"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Organization Description</Form.Label>
-            <textarea
-              type="organizationDescription"
-              name="organizationDescription"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Organization Phone (REQUIRED)</Form.Label>
-            <textarea
-              type="organizationPhone"
-              name="organizationPhone"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Organization Phone Description</Form.Label>
-            <textarea
-              type="organizationPhoneDescription"
-              name="organizationPhoneDescription"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Contact Name</Form.Label>
-            <textarea
-              type="contactName"
-              name="contactName"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Contact Title</Form.Label>
-            <textarea
-              type="contactTitle"
-              name="contactTitle"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Contact Department</Form.Label>
-            <textarea
-              type="contactDepartment"
-              name="contactDepartment"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Contact Email</Form.Label>
-            <textarea
-              type="contactEmail"
-              name="contactEmail"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Address Number and Street (REQUIRED)</Form.Label>
-            <textarea
-              type="address_1"
-              name="address_1"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Address City</Form.Label>
-            <textarea
-              type="addressCity"
-              name="addressCity"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Address Region</Form.Label>
-            <textarea
-              type="addressRegion"
-              name="addressRegion"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Address State</Form.Label>
-            <textarea
-              type="addressState"
-              name="addressState"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Address Zip</Form.Label>
-            <textarea
-              type="addressZip"
-              name="addressZip"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Address Country</Form.Label>
-            <textarea
-              type="addressCountry"
-              name="addressCountry"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <label>
-            Select Address Type --
-            <select value={this.state.address} onChange={this.handleChange} name="addressType">
-              <option value="Physical Address">Physical Address</option>
-              <option value="Postal Address">Postal Address</option>
-            </select>
-          </label>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Service Name</Form.Label>
-            <textarea
-              type="serviceName"
-              name="serviceName"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Service Alternate Name</Form.Label>
-            <textarea
-              type="serviceAltName"
-              name="serviceAltName"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Service Description</Form.Label>
-            <textarea
-              type="serviceDescription"
-              name="serviceDescription"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Service URL (if different from Organization)</Form.Label>
-            <textarea
-              type="serviceURL"
-              name="serviceURL"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Service Email (if different from organization)</Form.Label>
-            <textarea
-              type="serviceEmail"
-              name="serviceEmail"
-              className="form-control"
-              onChange={event => this.handleChange(event)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Please narrow down the taxonomy of the service</Form.Label>
-						{(this.state.taxonomyRecords || []).map((recordSet, id) =>{
-							return(
-								<Form.Control key={id} as="select" name="serviceTaxonomyName" onChange={event => this.handleServiceTaxonomy(event)}>
-									{(recordSet || []).map((record, key) => {
-										return <option key={key} value={record.fields.id}>{record.fields.name}</option>;
-									})}
-								</Form.Control>
-							)
-						})}
-          </Form.Group>
-					<Form.Group controlId="exampleForm.ControlSelect1">
-						<Form.Label>Location "Name" (REQUIRED)</Form.Label>
-						<textarea
-							type="locationName"
-							name="locationName"
-							className="form-control"
-							onChange={event => this.handleChange(event)}
-						/>
-					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
-						<Form.Label>Location Alternate Name</Form.Label>
-						<textarea
-							type="locationAltName"
-							name="locationAltName"
-							className="form-control"
-							onChange={event => this.handleChange(event)}
-						/>
-					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
-						<Form.Label>Location Description</Form.Label>
-						<textarea
-							type="locationDescription"
-							name="locationDescription"
-							className="form-control"
-							onChange={event => this.handleChange(event)}
-						/>
-					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
-						<Form.Label>Location Transportation</Form.Label>
-						<textarea
-							type="locationTransportation"
-							name="locationTransportation"
-							className="form-control"
-							onChange={event => this.handleChange(event)}
-						/>
-					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
-						<Form.Label>Location Latitude</Form.Label>
-						<textarea
-							type="locationLatitude"
-							name="locationLatitude"
-							className="form-control"
-							onChange={event => this.handleChange(event)}
-						/>
-					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
-						<Form.Label>Location Longitude</Form.Label>
-						<textarea
-							type="locationLongitude"
-							name="locationLongitude"
-							className="form-control"
-							onChange={event => this.handleChange(event)}
-						/>
-					</Form.Group>
+					<div className = "ServiceEditingChunk1">
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Organization Name (REQUIRED)</Form.Label>
+	            <textarea
+	              type="organizationName"
+	              name="organizationName"
+	              className="form-control"
+								required ={true}
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Organization Email</Form.Label>
+	            <textarea
+	              type="organizationEmail"
+	              name="organizationEmail"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Organization URL</Form.Label>
+	            <textarea
+	              type="organizationURL"
+	              name="organizationURL"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Organization Description</Form.Label>
+	            <textarea
+	              type="organizationDescription"
+	              name="organizationDescription"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+					</div>
+					<div className = "ServiceEditingChunk1">
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Organization Phone (REQUIRED)</Form.Label>
+	            <textarea
+	              type="organizationPhone"
+	              name="organizationPhone"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Organization Phone Description</Form.Label>
+	            <textarea
+	              type="organizationPhoneDescription"
+	              name="organizationPhoneDescription"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+					</div>
+					<div className = "ServiceEditingChunk1">
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Contact Name</Form.Label>
+	            <textarea
+	              type="contactName"
+	              name="contactName"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Contact Title</Form.Label>
+	            <textarea
+	              type="contactTitle"
+	              name="contactTitle"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Contact Department</Form.Label>
+	            <textarea
+	              type="contactDepartment"
+	              name="contactDepartment"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Contact Email</Form.Label>
+	            <textarea
+	              type="contactEmail"
+	              name="contactEmail"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+					</div>
+					<div className = "ServiceEditingChunk1">
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Address Number and Street (REQUIRED)</Form.Label>
+	            <textarea
+	              type="address_1"
+	              name="address_1"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Address City</Form.Label>
+	            <textarea
+	              type="addressCity"
+	              name="addressCity"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Address Region</Form.Label>
+	            <textarea
+	              type="addressRegion"
+	              name="addressRegion"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Address State</Form.Label>
+	            <textarea
+	              type="addressState"
+	              name="addressState"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Address Zip</Form.Label>
+	            <textarea
+	              type="addressZip"
+	              name="addressZip"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Address Country</Form.Label>
+	            <textarea
+	              type="addressCountry"
+	              name="addressCountry"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+	          <label>
+	            Select Address Type --
+	            <select value={this.state.address} onChange={this.handleChange} name="addressType">
+	              <option value="Physical Address">Physical Address</option>
+	              <option value="Postal Address">Postal Address</option>
+	            </select>
+	          </label>
+					</div>
+					<div className = "ServiceEditingChunk1">
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Service Name</Form.Label>
+	            <textarea
+	              type="serviceName"
+	              name="serviceName"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Service Alternate Name</Form.Label>
+	            <textarea
+	              type="serviceAltName"
+	              name="serviceAltName"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Service Description</Form.Label>
+	            <textarea
+	              type="serviceDescription"
+	              name="serviceDescription"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Service URL (if different from Organization)</Form.Label>
+	            <textarea
+	              type="serviceURL"
+	              name="serviceURL"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Service Email (if different from organization)</Form.Label>
+	            <textarea
+	              type="serviceEmail"
+	              name="serviceEmail"
+	              className="form-control"
+	              onChange={event => this.handleChange(event)}
+	            />
+	          </Form.Group>
+	          <Form.Group controlId="formBasicEmail">
+	            <Form.Label>Please narrow down the taxonomy of the service</Form.Label>
+							{(this.state.taxonomyRecords || []).map((recordSet, id) =>{
+								return(
+									<Form.Control key={id} as="select" name="serviceTaxonomyName" onChange={event => this.handleServiceTaxonomy(event)}>
+										{(recordSet || []).map((record, key) => {
+											return <option key={key} value={record.fields.id}>{record.fields.name}</option>;
+										})}
+									</Form.Control>
+								)
+							})}
+	          </Form.Group>
+					</div>
+					<div className = "ServiceEditingChunk1">
+						<Form.Group controlId="exampleForm.ControlSelect1">
+							<Form.Label>Location "Name" (REQUIRED)</Form.Label>
+							<textarea
+								type="locationName"
+								name="locationName"
+								className="form-control"
+								onChange={event => this.handleChange(event)}
+							/>
+						</Form.Group>
+						<Form.Group controlId="formBasicEmail">
+							<Form.Label>Location Alternate Name</Form.Label>
+							<textarea
+								type="locationAltName"
+								name="locationAltName"
+								className="form-control"
+								onChange={event => this.handleChange(event)}
+							/>
+						</Form.Group>
+						<Form.Group controlId="formBasicEmail">
+							<Form.Label>Location Description</Form.Label>
+							<textarea
+								type="locationDescription"
+								name="locationDescription"
+								className="form-control"
+								onChange={event => this.handleChange(event)}
+							/>
+						</Form.Group>
+						<Form.Group controlId="formBasicEmail">
+							<Form.Label>Location Transportation</Form.Label>
+							<textarea
+								type="locationTransportation"
+								name="locationTransportation"
+								className="form-control"
+								onChange={event => this.handleChange(event)}
+							/>
+						</Form.Group>
+						<Form.Group controlId="formBasicEmail">
+							<Form.Label>Location Latitude</Form.Label>
+							<textarea
+								type="locationLatitude"
+								name="locationLatitude"
+								className="form-control"
+								onChange={event => this.handleChange(event)}
+							/>
+						</Form.Group>
+						<Form.Group controlId="formBasicEmail">
+							<Form.Label>Location Longitude</Form.Label>
+							<textarea
+								type="locationLongitude"
+								name="locationLongitude"
+								className="form-control"
+								onChange={event => this.handleChange(event)}
+							/>
+						</Form.Group>
+					</div>
         </Form>
-
-        <button
-          onClick={event => this.checkRequired(event)}
-          className="btn btn-dark"
-          type="button"
-        >
-          {this.state.submitLabel}
-        </button>
+				<div className = "ServiceEditingChunk1">
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+	        <button
+	          onClick={event => this.checkRequired(event)}
+	          className="btn btn-dark"
+	          type="button"
+	        >
+	          {this.state.submitLabel}
+	        </button>
+				</div>
       </div>
     )
 	}
