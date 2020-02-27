@@ -375,6 +375,11 @@ td label {
 	
 	
  }
+ #home-button {
+	 background-color: rgb(16, 66, 41);
+	 color: white;
+	 padding: 3px;
+ }
  
  #main_component_survey {
 	height: 100%;
