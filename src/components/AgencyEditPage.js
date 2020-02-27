@@ -121,7 +121,7 @@ export default class AgencyEditPage extends Component {
 	componentDidMount() {
 
 		//RETRIEVING ORGANIZATION RECORD
-		this.props.database('organizations').find('recgRmL5hpzXrhUHI', (err, record) => {
+		this.props.database('organizations').find(this.props.match.params.org_name, (err, record) => {
 		    if (err) { console.error(err); return; }
 		    //console.log('Retrieved', record.id);
 				this.setState({
@@ -431,6 +431,8 @@ export default class AgencyEditPage extends Component {
 		//console.log(this.state.contactRecords.length > 0);
 		//console.log(this.state.locationRecords.length > 0);
 		//console.log(this.state.locationAddressRecords.length > 0);
+		console.log("H e r e   a r e   a l l   p r o p s :  ")
+		console.log(this.props);
 
 		if (
 			this.state.organization !== [] &&
@@ -1492,17 +1494,19 @@ export default class AgencyEditPage extends Component {
 	render() {
 		return (
 			<div className ="outermost">
-				<div className="container mt-3">
+				<br/>
+				<br/>
+				<div className="">
 					<OrgEditFields
 						{...this.state.organization.fields}
 						handleChange={this.handleChange}
 						handleSubmit={this.handleSubmit}
 					/>
 				</div>
-				<div className="container mt-3">
+				<div className="">
 					{this.state.phoneRecords.length > 0
 						? this.state.phoneRecords.map((phones, index) => (
-								<div className="container mt-3" key={index}>
+								<div className="" key={index}>
 									<PhoneEditFields
 										{...phones.fields}
 										index = {index}
@@ -1514,18 +1518,20 @@ export default class AgencyEditPage extends Component {
 								</div>
 							))
 						: ""}
-						<button
+						<button className = "centered"
 							onClick={event => this.createPhoneRecord()}
 							className="btn btn-dark"
 							type="button"
 						>
 							Create New Phone Record
 						</button>
+						<br/>
+						<hr className="class-1"/>
 				</div>
 				<div>
 				{this.state.serviceRecords.length > 0
 					? this.state.serviceRecords.map((services, index) => (
-							<div className="container mt-3" key={index}>
+							<div className="" key={index}>
 								<ServiceEditFields
 									{...services.fields}
 									taxonomy = {this.state.serviceTaxonomies[index]}
@@ -1552,11 +1558,13 @@ export default class AgencyEditPage extends Component {
 					>
 						Create New Service Record
 					</button>
+					<br/>
+					<hr className="class-1"/>
 				</div>
-				<div className="container mt-3">
+				<div className="">
 					{this.state.contactRecords.length > 0
 						? this.state.contactRecords.map((contacts, index) => (
-								<div className="container mt-3" key={index}>
+								<div className="" key={index}>
 									<ContactEditFields
 										{...contacts.fields}
 										index = {index}
@@ -1582,11 +1590,13 @@ export default class AgencyEditPage extends Component {
 						>
 							Create New Contact Record
 						</button>
+					<br/>
+					<hr className="class-1"/>
 				</div>
-				<div className="container mt-3">
+				<div className="">
 					{this.state.locationRecords.length > 0
 						? this.state.locationRecords.map((location, index) => (
-								<div className="container mt-3" key={index}>
+								<div className="" key={index}>
 									<LocationEditFields
 										{...location.fields}
 										handleLocationNameChange = {this.handleLocationNameChange}
@@ -1620,6 +1630,8 @@ export default class AgencyEditPage extends Component {
 						>
 							Create New Location Record
 						</button>
+					<br/>
+					<hr className="class-1"/>
 				</div>
 				<button
 					onClick={event => this.handleSubmit(event)}
@@ -1648,8 +1660,8 @@ class OrgEditFields extends Component {
 		return (
 			<div>
 				<Form>
-					<div className="ServiceEditingChunk1">
-						<Form.Group controlId="organizationNameId">
+					<div >
+						<Form.Group controlId="organizationNameId" className = "rowChunk">
 							<Form.Label><h5>Organization Name</h5></Form.Label>
 							<input
 								type="organizationName"
@@ -1659,7 +1671,7 @@ class OrgEditFields extends Component {
 								onChange={event => this.props.handleChange(event)}
 							/>
 						</Form.Group>
-						<Form.Group controlId="formBasicEmail">
+						<Form.Group controlId="formBasicEmail" className = "rowChunk">
 							<Form.Label>Description</Form.Label>
 							<textarea
 								type="organizationDescription"
@@ -1671,7 +1683,7 @@ class OrgEditFields extends Component {
 								onChange={event => this.props.handleChange(event)}
 							/>
 						</Form.Group>
-						<Form.Group controlId="formBasicEmail">
+						<Form.Group controlId="formBasicEmail" className = "rowChunk">
 							<Form.Label>Email</Form.Label>
 							<input
 								type="organizationEmail"
@@ -1682,7 +1694,7 @@ class OrgEditFields extends Component {
 							/>
 						</Form.Group>
 
-						<Form.Group controlId="formGridAddress1">
+						<Form.Group controlId="formGridAddress1" className = "rowChunk">
 							<Form.Label>URL</Form.Label>
 							<input
 								type="organizationURL"
@@ -1694,6 +1706,12 @@ class OrgEditFields extends Component {
 						</Form.Group>
 					</div>
 				</Form>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<hr className="class-1"/>
 			</div>
 		);
 	}
@@ -1708,9 +1726,9 @@ class PhoneEditFields extends Component {
 	render() {
 		//console.log(this.props)
 		return (
-			<div className="ServiceEditingChunk1">
+			<div>
 				<Form>
-					<Form.Group controlId="formBasicEmail">
+					<Form.Group controlId="formBasicEmail" className = "rowChunk">
 						<Form.Label><h5>Phone {this.props.index + 1}</h5></Form.Label>
 						<input
 							type="organizationPhone"
@@ -1720,7 +1738,7 @@ class PhoneEditFields extends Component {
 							onChange={event => this.props.handleNumberChange(event, this.props.index)}
 						/>
 					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
+					<Form.Group controlId="formBasicEmail" className = "rowChunk">
 						<Form.Label>Phone Description</Form.Label>
 						<textarea
 							type="organizationPhoneDescription"
@@ -1733,13 +1751,21 @@ class PhoneEditFields extends Component {
 						/>
 					</Form.Group>
 				</Form>
-				<button
-					onClick={event => this.props.deleteEntry("phones", this.props.index)}
-					className="btn btn-dark"
-					type="button"
-				>
-					Delete Phone {this.props.index + 1}
-				</button>
+				<div className = "rowChunk">
+					<button
+						onClick={event => this.props.deleteEntry("phones", this.props.index)}
+						className="btn btn-dark"
+						type="button"
+					>
+						Delete Phone {this.props.index + 1}
+					</button>
+				</div>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<hr />
 			</div>
 		);
 	}
@@ -1762,17 +1788,20 @@ class ServiceEditFields extends Component {
 		var taxonomyList = this.props.taxonomy;
 
 		return (
-			<div className="ServiceEditingChunk1">
+			<div >
 				<Form>
 					<Form.Group controlId="formBasicEmail">
-						<Form.Label><h5>Service {this.props.index + 1} Name: {this.props.Name}</h5></Form.Label>
-						<input
-							type="serviceNames"
-							name="serviceNames"
-							placeholder={this.props.Name}
-							className="form-control"
-							onChange={event => this.props.handleServiceNameChange(event, this.props.index)}
-						/>
+						<div className = "serviceRowChunk">
+							<Form.Label><h5>Service {this.props.index + 1} Name: {this.props.Name}</h5></Form.Label>
+							<input
+								type="serviceNames"
+								name="serviceNames"
+								placeholder={this.props.Name}
+								className="form-control"
+								onChange={event => this.props.handleServiceNameChange(event, this.props.index)}
+							/>
+						</div>
+						<div className = "serviceRowChunk">
 						<Form.Label>Service Description</Form.Label>
 						<input
 							type="serviceNames"
@@ -1783,38 +1812,48 @@ class ServiceEditFields extends Component {
 							className="form-control"
 							onChange={event => this.props.handleServiceDescriptionChange(event, this.props.index)}
 						/>
-						<Form.Label>Service Alt Name</Form.Label>
-						<input
-							type="serviceNames"
-							name="serviceNames"
-							placeholder={this.props["Alternate Name"]}
-							className="form-control"
-							onChange={event => this.props.handleServiceAltNameChange(event, this.props.index)}
-						/>
-						<Form.Label>Service Location</Form.Label>
-						<input
-							type="serviceNames"
-							name="serviceNames"
-							placeholder={this.props.locations}
-							className="form-control"
-							onChange={event => this.props.handleServiceLocationChange(event, this.props.index)}
-						/>
-						<Form.Label>Service URL (if different from organization)</Form.Label>
-						<input
-							type="serviceNames"
-							name="serviceNames"
-							placeholder={this.props.url}
-							className="form-control"
-							onChange={event => this.props.handleServiceURLChange(event, this.props.index)}
-						/>
-						<Form.Label>Service Email (if different form Oranization)</Form.Label>
-						<input
-							type="serviceNames"
-							name="serviceNames"
-							placeholder={this.props.email}
-							className="form-control"
-							onChange={event => this.props.handleServiceEmailChange(event, this.props.index)}
-						/>
+						</div>
+						<div className = "serviceRowChunk">
+							<Form.Label>Service Alt Name</Form.Label>
+							<input
+								type="serviceNames"
+								name="serviceNames"
+								placeholder={this.props["Alternate Name"]}
+								className="form-control"
+								onChange={event => this.props.handleServiceAltNameChange(event, this.props.index)}
+							/>
+						</div>
+						<div className = "serviceRowChunk">
+							<Form.Label>Service Location</Form.Label>
+							<input
+								type="serviceNames"
+								name="serviceNames"
+								placeholder={this.props.locations}
+								className="form-control"
+								onChange={event => this.props.handleServiceLocationChange(event, this.props.index)}
+							/>
+						</div>
+						<div className = "serviceRowChunk">
+							<Form.Label>Service URL (if different from organization)</Form.Label>
+							<input
+								type="serviceNames"
+								name="serviceNames"
+								placeholder={this.props.url}
+								className="form-control"
+								onChange={event => this.props.handleServiceURLChange(event, this.props.index)}
+							/>
+						</div>
+						<div className = "serviceRowChunk">
+							<Form.Label>Service Email (if different form Oranization)</Form.Label>
+							<input
+								type="serviceNames"
+								name="serviceNames"
+								placeholder={this.props.email}
+								className="form-control"
+								onChange={event => this.props.handleServiceEmailChange(event, this.props.index)}
+							/>
+						</div>
+						<div className = "serviceRowChunk">
 						<Form.Label>{this.props.Name} Taxonomy / Taxonomies</Form.Label>
 						{taxonomyList.length > 0
 							? taxonomyList.map((taxonomy, index) => (
@@ -1831,7 +1870,8 @@ class ServiceEditFields extends Component {
 									</div>
 								))
 							: ""}
-
+							</div>
+							<div className = "serviceRowChunk">
 							<p>If you would like to add another taxonomy, please narrow it down here: <br/> (continue until fields are no longer generated)</p>
 							{(this.props.taxonomyRecords || []).map((recordSet, id) =>{
 								return(
@@ -1843,16 +1883,33 @@ class ServiceEditFields extends Component {
 									</Form.Control>
 								)
 							})}
+							</div>
 
 					</Form.Group>
 				</Form>
-				<button
-					onClick={event => this.props.deleteServiceEntry(this.props.index)}
-					className="btn btn-dark"
-					type="button"
-				>
-					Delete Service {this.props.index + 1}
-				</button>
+				<div className = "rowChunk">
+					<button
+						onClick={event => this.props.deleteServiceEntry(this.props.index)}
+						className="btn btn-dark"
+						type="button"
+					>
+						Delete Service {this.props.index + 1}
+					</button>
+				</div>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<hr />
 			</div>
 		);
 	}
@@ -1889,9 +1946,9 @@ class ContactEditFields extends Component {
 		//console.log("The number is : " + number);
 
 		return (
-			<div className="ServiceEditingChunk1">
+			<div >
 				<Form>
-					<Form.Group controlId="formBasicEmail">
+					<Form.Group controlId="formBasicEmail" className = "rowChunk">
 						<Form.Label><h5>Contact {this.props.index + 1}</h5></Form.Label>
 						<input
 							type="contctName"
@@ -1901,7 +1958,7 @@ class ContactEditFields extends Component {
 							onChange={event => this.props.handleContactNameChange(event, this.props.index)}
 						/>
 					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
+					<Form.Group controlId="formBasicEmail" className = "rowChunk">
 						<Form.Label>Contact Title</Form.Label>
 						<input
 							type="contactTitle"
@@ -1911,7 +1968,7 @@ class ContactEditFields extends Component {
 							onChange={event => this.props.handleContactTitleChange(event, this.props.index)}
 						/>
 					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
+					<Form.Group controlId="formBasicEmail" className = "rowChunk">
 						<Form.Label>Contact Department: </Form.Label>
 						<input
 							type="contactDepartment"
@@ -1921,7 +1978,7 @@ class ContactEditFields extends Component {
 							onChange={event => this.props.handleContactDepartmentChange(event, this.props.index)}
 						/>
 					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
+					<Form.Group controlId="formBasicEmail" className = "rowChunk">
 						<Form.Label>Contact Email: </Form.Label>
 						<input
 							type="contactEmail"
@@ -1931,24 +1988,28 @@ class ContactEditFields extends Component {
 							onChange={event => this.props.handleContactEmailChange(event, this.props.index)}
 						/>
 					</Form.Group>
-					<p>This contact is currently associate with the service: {name}</p>
-					<Form.Label>Would you like to associate this contact with a different service?</Form.Label>
-					<Form.Control as="select" name="contactService" onChange={event => this.props.handleContactService(event, this.props.index)}>
-						<option key={888} value={""}>No Change</option>
-						<option key={987} value={""}>None / No service</option>
-						{(this.props.services || []).map((service, key) => {
-							return <option key={key} value={service.id}>{service.fields.Name}</option>;
-						})}
-					</Form.Control>
-					<p><br/>This contact is currently associate with the phone: {number}</p>
-					<Form.Label>Would you like to associate this contact with a different number?</Form.Label>
-					<Form.Control as="select" name="contactNumber" onChange={event => this.props.handleContactPhone(event, this.props.index)}>
-						<option key={888} value={""}>No Change</option>
-						<option key={987} value={""}>None / No number</option>
-						{(this.props.phones || []).map((phone, key) => {
-							return <option key={key} value={phone.id}>{phone.fields.number}</option>;
-						})}
-					</Form.Control>
+					<div className = "rowChunk">
+						<p>This contact is currently associate with the service: {name}</p>
+						<Form.Label>Would you like to associate this contact with a different service?</Form.Label>
+						<Form.Control as="select" name="contactService" onChange={event => this.props.handleContactService(event, this.props.index)}>
+							<option key={888} value={""}>No Change</option>
+							<option key={987} value={""}>None / No service</option>
+							{(this.props.services || []).map((service, key) => {
+								return <option key={key} value={service.id}>{service.fields.Name}</option>;
+							})}
+						</Form.Control>
+					</div>
+					<div className = "rowChunk">
+						<p><br/>This contact is currently associate with the phone: {number}</p>
+						<Form.Label>Would you like to associate this contact with a different number?</Form.Label>
+						<Form.Control as="select" name="contactNumber" onChange={event => this.props.handleContactPhone(event, this.props.index)}>
+							<option key={888} value={""}>No Change</option>
+							<option key={987} value={""}>None / No number</option>
+							{(this.props.phones || []).map((phone, key) => {
+								return <option key={key} value={phone.id}>{phone.fields.number}</option>;
+							})}
+						</Form.Control>
+					</div>
 				</Form>
 				<button
 					onClick={event => this.props.deleteContactEntry(this.props.index)}
@@ -1957,6 +2018,13 @@ class ContactEditFields extends Component {
 				>
 					Delete Contact {this.props.index + 1}
 				</button>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<hr />
 			</div>
 		);
 	}
@@ -1992,9 +2060,9 @@ class LocationEditFields extends Component { // WE WILL ALSO USE THESE FOR ADDRE
 		}
 
 		return (
-			<div className="ServiceEditingChunk1">
+			<div>
 				<Form>
-					<Form.Group controlId="formBasicEmail">
+					<Form.Group controlId="formBasicEmail" className = "rowChunk">
 						<Form.Label><h5>Location {this.props.index + 1}</h5></Form.Label>
 						<input
 							type="locationName"
@@ -2004,7 +2072,7 @@ class LocationEditFields extends Component { // WE WILL ALSO USE THESE FOR ADDRE
 							onChange={event => this.props.handleLocationNameChange(event, this.props.index)}
 						/>
 					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
+					<Form.Group controlId="formBasicEmail" className = "rowChunk">
 						<Form.Label>Location Alt Name</Form.Label>
 						<input
 							type="locationAltName"
@@ -2014,7 +2082,7 @@ class LocationEditFields extends Component { // WE WILL ALSO USE THESE FOR ADDRE
 							onChange={event => this.props.handleLocationAltNameChange(event, this.props.index)}
 						/>
 					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
+					<Form.Group controlId="formBasicEmail" className = "rowChunk">
 						<Form.Label>Location Description: </Form.Label>
 						<input
 							type="locationDescription"
@@ -2024,7 +2092,7 @@ class LocationEditFields extends Component { // WE WILL ALSO USE THESE FOR ADDRE
 							onChange={event => this.props.handleLocationDescriptionChange(event, this.props.index)}
 						/>
 					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
+					<Form.Group controlId="formBasicEmail" className = "rowChunk">
 						<Form.Label>Location Transportation: </Form.Label>
 						<input
 							type="locationTransportation"
@@ -2034,7 +2102,7 @@ class LocationEditFields extends Component { // WE WILL ALSO USE THESE FOR ADDRE
 							onChange={event => this.props.handleLocationTransportationChange(event, this.props.index)}
 						/>
 					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
+					<Form.Group controlId="formBasicEmail" className = "rowChunk">
 						<Form.Label>Location Latitude: </Form.Label>
 						<input
 							type="locationLatitude"
@@ -2044,7 +2112,7 @@ class LocationEditFields extends Component { // WE WILL ALSO USE THESE FOR ADDRE
 							onChange={event => this.props.handleLocationLatitudeChange(event, this.props.index)}
 						/>
 					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
+					<Form.Group controlId="formBasicEmail" className = "rowChunk">
 						<Form.Label>Location Longitude: </Form.Label>
 						<input
 							type="locationLongitude"
@@ -2054,7 +2122,7 @@ class LocationEditFields extends Component { // WE WILL ALSO USE THESE FOR ADDRE
 							onChange={event => this.props.handleLocationLongitudeChange(event, this.props.index)}
 						/>
 					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
+					<Form.Group controlId="formBasicEmail" className = "rowChunk">
 						<Form.Label>Location Address: </Form.Label>
 						<input
 							type="locationAddress"
@@ -2064,7 +2132,7 @@ class LocationEditFields extends Component { // WE WILL ALSO USE THESE FOR ADDRE
 							onChange={event => this.props.handleLocationAddressChange(event, this.props.index)}
 						/>
 					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
+					<Form.Group controlId="formBasicEmail" className = "rowChunk">
 						<Form.Label>Location Address City: </Form.Label>
 						<input
 							type="locationAddressCity"
@@ -2074,7 +2142,7 @@ class LocationEditFields extends Component { // WE WILL ALSO USE THESE FOR ADDRE
 							onChange={event => this.props.handleLocationAddressCityChange(event, this.props.index)}
 						/>
 					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
+					<Form.Group controlId="formBasicEmail" className = "rowChunk">
 						<Form.Label>Location Address State: </Form.Label>
 						<input
 							type="locationAddressState"
@@ -2084,7 +2152,7 @@ class LocationEditFields extends Component { // WE WILL ALSO USE THESE FOR ADDRE
 							onChange={event => this.props.handleLocationAddressStateChange(event, this.props.index)}
 						/>
 					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
+					<Form.Group controlId="formBasicEmail" className = "rowChunk">
 						<Form.Label>Location Address Zip Code: </Form.Label>
 						<input
 							type="locationAddressZip"
@@ -2094,7 +2162,7 @@ class LocationEditFields extends Component { // WE WILL ALSO USE THESE FOR ADDRE
 							onChange={event => this.props.handleLocationAddressZipCodeChange(event, this.props.index)}
 						/>
 					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
+					<Form.Group controlId="formBasicEmail" className = "rowChunk">
 						<Form.Label>Location Address Country: </Form.Label>
 						<input
 							type="locationAddressCountry"
@@ -2104,7 +2172,7 @@ class LocationEditFields extends Component { // WE WILL ALSO USE THESE FOR ADDRE
 							onChange={event => this.props.handleLocationAddressCountryChange(event, this.props.index)}
 						/>
 					</Form.Group>
-					<Form.Group controlId="formBasicEmail">
+					<Form.Group controlId="formBasicEmail" className = "rowChunk">
 						<Form.Label>Location Address Type: </Form.Label>
 						<select onChange={event => this.props.handleLocationAddressTypeChange(event, this.props.index)}>
 							<option value={this.props.addressRecord.fields["address_type-x"]}>{this.props.addressRecord.fields["address_type-x"]}</option>
@@ -2112,23 +2180,40 @@ class LocationEditFields extends Component { // WE WILL ALSO USE THESE FOR ADDRE
 							<option value="Postal Address">Postal Address</option>
 						</select>
 					</Form.Group>
-					<p>This location is currently associate with the service: {name}</p>
-					<Form.Label>Would you like to associate this contact with a different service?</Form.Label>
-					<Form.Control as="select" name="contactService" onChange={event => this.props.handleLocationService(event, this.props.index)}>
-						<option key={888} value={""}>No Change</option>
-						<option key={987} value={""}>None / No service</option>
-						{(this.props.services || []).map((service, key) => {
-							return <option key={key} value={service.id}>{service.fields.Name}</option>;
-						})}
-					</Form.Control>
+					<div className = "rowChunk">
+						<p>This location is currently associate with the service: {name}</p>
+						<Form.Label>Would you like to associate this contact with a different service?</Form.Label>
+						<Form.Control as="select" name="contactService" onChange={event => this.props.handleLocationService(event, this.props.index)}>
+							<option key={888} value={""}>No Change</option>
+							<option key={987} value={""}>None / No service</option>
+							{(this.props.services || []).map((service, key) => {
+								return <option key={key} value={service.id}>{service.fields.Name}</option>;
+							})}
+						</Form.Control>
+					</div>
 				</Form>
-				<button
-					onClick={event => this.props.deleteLocationEntry(this.props.index)}
-					className="btn btn-dark"
-					type="button"
-				>
-					Delete Location {this.props.index + 1}
-				</button>
+				<div className = "rowChunk">
+					<button
+						onClick={event => this.props.deleteLocationEntry(this.props.index)}
+						className="btn btn-dark"
+						type="button"
+					>
+						Delete Location {this.props.index + 1}
+					</button>
+				</div>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<hr />
 			</div>
 		);
 	}

@@ -382,8 +382,11 @@ export default class CreateOrganization extends Component { //FIXME should be ag
     return(
       <div>
         <Form>
-					<div className = "ServiceEditingChunk1">
-	          <Form.Group controlId="formBasicEmail">
+					<div>
+						<br/>
+						<br/>
+						<h3 className="rowHeadingPad">Organization Info:</h3>
+	          <Form.Group controlId="formBasicEmail" className="rowChunk">
 	            <Form.Label>Organization Name (REQUIRED)</Form.Label>
 	            <textarea
 	              type="organizationName"
@@ -393,7 +396,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	              onChange={event => this.handleChange(event)}
 	            />
 	          </Form.Group>
-	          <Form.Group controlId="formBasicEmail">
+	          <Form.Group controlId="formBasicEmail"  className="rowChunk">
 	            <Form.Label>Organization Email</Form.Label>
 	            <textarea
 	              type="organizationEmail"
@@ -402,7 +405,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	              onChange={event => this.handleChange(event)}
 	            />
 	          </Form.Group>
-	          <Form.Group controlId="formBasicEmail">
+	          <Form.Group controlId="formBasicEmail" className="rowChunk">
 	            <Form.Label>Organization URL</Form.Label>
 	            <textarea
 	              type="organizationURL"
@@ -411,7 +414,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	              onChange={event => this.handleChange(event)}
 	            />
 	          </Form.Group>
-	          <Form.Group controlId="formBasicEmail">
+	          <Form.Group controlId="formBasicEmail" className="rowChunk">
 	            <Form.Label>Organization Description</Form.Label>
 	            <textarea
 	              type="organizationDescription"
@@ -421,8 +424,14 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	            />
 	          </Form.Group>
 					</div>
-					<div className = "ServiceEditingChunk1">
-	          <Form.Group controlId="formBasicEmail">
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<hr/>
+					<div>
+						<h3 className="rowHeadingPad">Phone Info:</h3>
+	          <Form.Group controlId="formBasicEmail" className="rowChunk">
 	            <Form.Label>Organization Phone (REQUIRED)</Form.Label>
 	            <textarea
 	              type="organizationPhone"
@@ -431,7 +440,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	              onChange={event => this.handleChange(event)}
 	            />
 	          </Form.Group>
-	          <Form.Group controlId="formBasicEmail">
+	          <Form.Group controlId="formBasicEmail" className="rowChunk">
 	            <Form.Label>Organization Phone Description</Form.Label>
 	            <textarea
 	              type="organizationPhoneDescription"
@@ -441,8 +450,14 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	            />
 	          </Form.Group>
 					</div>
-					<div className = "ServiceEditingChunk1">
-	          <Form.Group controlId="formBasicEmail">
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<hr/>
+					<div>
+						<h3 className="rowHeadingPad">Contact Info:</h3>
+	          <Form.Group controlId="formBasicEmail"  className="rowChunk">
 	            <Form.Label>Contact Name</Form.Label>
 	            <textarea
 	              type="contactName"
@@ -451,7 +466,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	              onChange={event => this.handleChange(event)}
 	            />
 	          </Form.Group>
-	          <Form.Group controlId="formBasicEmail">
+	          <Form.Group controlId="formBasicEmail" className="rowChunk">
 	            <Form.Label>Contact Title</Form.Label>
 	            <textarea
 	              type="contactTitle"
@@ -460,7 +475,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	              onChange={event => this.handleChange(event)}
 	            />
 	          </Form.Group>
-	          <Form.Group controlId="formBasicEmail">
+	          <Form.Group controlId="formBasicEmail" className="rowChunk">
 	            <Form.Label>Contact Department</Form.Label>
 	            <textarea
 	              type="contactDepartment"
@@ -469,7 +484,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	              onChange={event => this.handleChange(event)}
 	            />
 	          </Form.Group>
-	          <Form.Group controlId="formBasicEmail">
+	          <Form.Group controlId="formBasicEmail" className="rowChunk">
 	            <Form.Label>Contact Email</Form.Label>
 	            <textarea
 	              type="contactEmail"
@@ -479,8 +494,14 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	            />
 	          </Form.Group>
 					</div>
-					<div className = "ServiceEditingChunk1">
-	          <Form.Group controlId="formBasicEmail">
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<hr/>
+					<div >
+					<h3 className="rowHeadingPad">Address Info:</h3>
+	          <Form.Group controlId="formBasicEmail"  className="rowChunk">
 	            <Form.Label>Address Number and Street (REQUIRED)</Form.Label>
 	            <textarea
 	              type="address_1"
@@ -489,7 +510,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	              onChange={event => this.handleChange(event)}
 	            />
 	          </Form.Group>
-	          <Form.Group controlId="formBasicEmail">
+	          <Form.Group controlId="formBasicEmail" className="rowChunk">
 	            <Form.Label>Address City</Form.Label>
 	            <textarea
 	              type="addressCity"
@@ -498,7 +519,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	              onChange={event => this.handleChange(event)}
 	            />
 	          </Form.Group>
-	          <Form.Group controlId="formBasicEmail">
+	          <Form.Group controlId="formBasicEmail" className="rowChunk">
 	            <Form.Label>Address Region</Form.Label>
 	            <textarea
 	              type="addressRegion"
@@ -507,7 +528,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	              onChange={event => this.handleChange(event)}
 	            />
 	          </Form.Group>
-	          <Form.Group controlId="formBasicEmail">
+	          <Form.Group controlId="formBasicEmail" className="rowChunk">
 	            <Form.Label>Address State</Form.Label>
 	            <textarea
 	              type="addressState"
@@ -516,7 +537,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	              onChange={event => this.handleChange(event)}
 	            />
 	          </Form.Group>
-	          <Form.Group controlId="formBasicEmail">
+	          <Form.Group controlId="formBasicEmail" className="rowChunk">
 	            <Form.Label>Address Zip</Form.Label>
 	            <textarea
 	              type="addressZip"
@@ -525,7 +546,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	              onChange={event => this.handleChange(event)}
 	            />
 	          </Form.Group>
-	          <Form.Group controlId="formBasicEmail">
+	          <Form.Group controlId="formBasicEmail" className="rowChunk">
 	            <Form.Label>Address Country</Form.Label>
 	            <textarea
 	              type="addressCountry"
@@ -534,7 +555,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	              onChange={event => this.handleChange(event)}
 	            />
 	          </Form.Group>
-	          <label>
+	          <label className="rowChunk">
 	            Select Address Type --
 	            <select value={this.state.address} onChange={this.handleChange} name="addressType">
 	              <option value="Physical Address">Physical Address</option>
@@ -542,8 +563,16 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	            </select>
 	          </label>
 					</div>
-					<div className = "ServiceEditingChunk1">
-	          <Form.Group controlId="formBasicEmail">
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<hr/>
+					<div>
+					<h3 className="rowHeadingPad">Service Info:</h3>
+	          <Form.Group controlId="formBasicEmail" className="rowChunk">
 	            <Form.Label>Service Name</Form.Label>
 	            <textarea
 	              type="serviceName"
@@ -552,7 +581,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	              onChange={event => this.handleChange(event)}
 	            />
 	          </Form.Group>
-	          <Form.Group controlId="formBasicEmail">
+	          <Form.Group controlId="formBasicEmail" className="rowChunk">
 	            <Form.Label>Service Alternate Name</Form.Label>
 	            <textarea
 	              type="serviceAltName"
@@ -561,7 +590,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	              onChange={event => this.handleChange(event)}
 	            />
 	          </Form.Group>
-	          <Form.Group controlId="formBasicEmail">
+	          <Form.Group controlId="formBasicEmail" className="rowChunk">
 	            <Form.Label>Service Description</Form.Label>
 	            <textarea
 	              type="serviceDescription"
@@ -570,7 +599,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	              onChange={event => this.handleChange(event)}
 	            />
 	          </Form.Group>
-	          <Form.Group controlId="formBasicEmail">
+	          <Form.Group controlId="formBasicEmail" className="rowChunk">
 	            <Form.Label>Service URL (if different from Organization)</Form.Label>
 	            <textarea
 	              type="serviceURL"
@@ -579,7 +608,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	              onChange={event => this.handleChange(event)}
 	            />
 	          </Form.Group>
-	          <Form.Group controlId="formBasicEmail">
+	          <Form.Group controlId="formBasicEmail" className="rowChunk">
 	            <Form.Label>Service Email (if different from organization)</Form.Label>
 	            <textarea
 	              type="serviceEmail"
@@ -588,7 +617,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	              onChange={event => this.handleChange(event)}
 	            />
 	          </Form.Group>
-	          <Form.Group controlId="formBasicEmail">
+	          <Form.Group controlId="formBasicEmail" className="rowChunk">
 	            <Form.Label>Please narrow down the taxonomy of the service</Form.Label>
 							{(this.state.taxonomyRecords || []).map((recordSet, id) =>{
 								return(
@@ -601,8 +630,17 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 							})}
 	          </Form.Group>
 					</div>
-					<div className = "ServiceEditingChunk1">
-						<Form.Group controlId="exampleForm.ControlSelect1">
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<hr/>
+					<div>
+					<h3 className="rowHeadingPad">Location Info:</h3>
+						<Form.Group controlId="exampleForm.ControlSelect1" className="rowChunk">
 							<Form.Label>Location "Name" (REQUIRED)</Form.Label>
 							<textarea
 								type="locationName"
@@ -611,7 +649,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 								onChange={event => this.handleChange(event)}
 							/>
 						</Form.Group>
-						<Form.Group controlId="formBasicEmail">
+						<Form.Group controlId="formBasicEmail" className="rowChunk">
 							<Form.Label>Location Alternate Name</Form.Label>
 							<textarea
 								type="locationAltName"
@@ -620,7 +658,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 								onChange={event => this.handleChange(event)}
 							/>
 						</Form.Group>
-						<Form.Group controlId="formBasicEmail">
+						<Form.Group controlId="formBasicEmail" className="rowChunk">
 							<Form.Label>Location Description</Form.Label>
 							<textarea
 								type="locationDescription"
@@ -629,7 +667,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 								onChange={event => this.handleChange(event)}
 							/>
 						</Form.Group>
-						<Form.Group controlId="formBasicEmail">
+						<Form.Group controlId="formBasicEmail" className="rowChunk">
 							<Form.Label>Location Transportation</Form.Label>
 							<textarea
 								type="locationTransportation"
@@ -638,7 +676,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 								onChange={event => this.handleChange(event)}
 							/>
 						</Form.Group>
-						<Form.Group controlId="formBasicEmail">
+						<Form.Group controlId="formBasicEmail" className="rowChunk">
 							<Form.Label>Location Latitude</Form.Label>
 							<textarea
 								type="locationLatitude"
@@ -647,7 +685,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 								onChange={event => this.handleChange(event)}
 							/>
 						</Form.Group>
-						<Form.Group controlId="formBasicEmail">
+						<Form.Group controlId="formBasicEmail" className="rowChunk">
 							<Form.Label>Location Longitude</Form.Label>
 							<textarea
 								type="locationLongitude"
@@ -661,14 +699,6 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 				<div className = "ServiceEditingChunk1">
 					<br/>
 					<br/>
-					<br/>
-					<br/>
-					<br/>
-					<br/>
-					<br/>
-					<br/>
-					<br/>
-					<br/>
 	        <button
 	          onClick={event => this.checkRequired(event)}
 	          className="btn btn-dark"
@@ -676,6 +706,9 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	        >
 	          {this.state.submitLabel}
 	        </button>
+					<br/>
+					<br/>
+					<br/>
 				</div>
       </div>
     )

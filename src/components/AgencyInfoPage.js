@@ -78,12 +78,12 @@ export default class AgencyInfo extends Component { //FIXME should be agency cre
 
   componentDidMount() {
     //RETRIEVING ORGANIZATION RECORD
-    this.props.database('organizations').find('recgRmL5hpzXrhUHI', (err, record) => {
+    this.props.database('organizations').find(this.props.match.params.agency_id, (err, record) => {
         if (err) { console.error(err); return; }
         //console.log('Retrieved', record.id);
         this.setState({
           organization: record,
-          serviceTaxonomies: [[record, record], [record, record]] //TAXONOMY PLACEHOLDER TO AVOID GLITCHES
+          //serviceTaxonomies: [[record, record], [record, record]] //TAXONOMY PLACEHOLDER TO AVOID GLITCHES
         })
     });
 
@@ -322,26 +322,22 @@ export default class AgencyInfo extends Component { //FIXME should be agency cre
       var allTax = [];
       var taxonomyArray = [];
       for (let i = 0; i < this.state.serviceRecords.length; i++){
-        //console.log(this.state.serviceRecords[i].fields.Name + " at index " + i)
+
+				console.log("The taxonomies list is: ")
         allTax.push([]);
         taxonomyArray = [];
-        //console.log("Taxonomy Array at iteration " + i);
-        //console.log(allTax);
-        this.props.database('taxonomy').select({
-            filterByFormula: '{services 2} = "' + this.state.serviceRecords[i].fields.id +'"',
-            view: 'Grid view',
-        }).firstPage((err, records) => {
-            if (err) { console.error(err); return; }
-            records.forEach((record) => {
-          //			console.log('Retrieved taxonomy', record.get('name'), 'at ' + i);
-                allTax[i].push(record);
-            });
-            //allTax.push(taxonomyArray);
-        });
+				for (let j = 0; j < this.state.serviceRecords[i].fields.taxonomy.length; j++){
+						//console.log(this.state.serviceRecords[i].fields.taxonomy[j])
+						this.props.database('taxonomy').find(this.state.serviceRecords[i].fields.taxonomy[j], (err, record) => {
+					    if (err) { console.error(err); return; }
+					    //console.log('Retrieved', record.id);
+							allTax[i].push([record]);
+					});
+				}
       }
       setTimeout(() => {
-        //console.log("Alltax here");
-        //console.log(allTax);
+        console.log("A l l t a x here");
+        console.log(allTax);
         this.setState({
           serviceTaxonomies: allTax
         })
@@ -368,17 +364,20 @@ export default class AgencyInfo extends Component { //FIXME should be agency cre
     //console.log(this.state.phoneRecords.length > 0);
     //console.log(this.state.serviceRecords.length > 0);
     //console.log(this.state.contactRecords.length > 0);
-    //console.log(this.state.locationRecords.length > 0);
-    //console.log(this.state.locationAddressRecords.length > 0);
+    //console.log(this.state.locationRecords.length);
+    //console.log(this.state.locationAddressRecords.length);
+		//console.log(this.props.match.params.agency_id);
+		console.log("S e r v i c e   T a x o n o m i e s : ");
+		console.log(this.state.serviceTaxonomies);
 
     if (
       this.state.organization != [] &&
       !this.state.org_update &&
-      this.state.phoneRecords.length > 0 &&
-      this.state.serviceRecords.length > 0 &&				//FIXME: FROM TIME TO TIME THESE DO NOT EVALUATE TO TRUE
-      this.state.contactRecords.length > 0 &&							//In this event, the name of the organization is not loaded into state
-      this.state.locationRecords.length > 0 &&						//If the user clicks "update", the empty name is uploaded to the database
-      this.state.locationAddressRecords.length > 0		//this causes all other fields not to load, since most are linked to the org name
+      this.state.phoneRecords != [][0] &&
+      this.state.serviceRecords != [][0]	&&			//FIXME: FROM TIME TO TIME THESE DO NOT EVALUATE TO TRUE
+      this.state.contactRecords != [][0]	&&						//In this event, the name of the organization is not loaded into state
+      this.state.locationRecords != [][0]	&&					//If the user clicks "update", the empty name is uploaded to the database
+      this.state.locationAddressRecords != [][0]	//this causes all other fields not to load, since most are linked to the org name
     ) {																													//and the base can't handle an empty string for a name!!!!
       console.log("R e a c h i n g   i n s i d e   t h e   d i d U p d a t e   i f ")
       var phoneNumArray = [];
@@ -547,7 +546,10 @@ export default class AgencyInfo extends Component { //FIXME should be agency cre
         console.log(this.state.locationAddressRecords[i]);
       }*/
       //console.log(this.state.locationAddressRecords);
-      console.log(this.state.serviceRecords);
+      //console.log(this.state.serviceRecords);
+			console.log("T a x o n o m y   R e c o r d s   a n d   S e r v i c e   T a x ")
+			console.log(this.state.taxonomyRecords);
+			console.log(this.state.serviceTaxonomies);
     }, 10000);
   }
 
@@ -577,7 +579,6 @@ export default class AgencyInfo extends Component { //FIXME should be agency cre
             {/*<h3>Rating: 8 / 10</h3>*/}
             <h3>Description:</h3>
             <p>{this.state.organizationDescription}</p>
-              <h4>Service Name:</h4>
             <h3>Phones:</h3>
             <div>
               {this.state.phoneRecords.length > 0
@@ -610,12 +611,31 @@ export default class AgencyInfo extends Component { //FIXME should be agency cre
             </div>
             <div>
             <br/>
-            <h3>Contacts</h3>
+            <h3>Contacts:</h3>
               {this.state.contactRecords.length > 0
                 ? this.state.contactRecords.map((contacts, index) => (
                     <div key={index}>
                       <ContactInfo
                         {...contacts.fields}
+                        index = {index}
+                        services = {this.state.serviceRecords}
+                        contactServiceName = {this.state.contactServiceNames[index]}
+                        contactPhoneNumber = {this.state.contactPhoneNumbers[index]}
+                        phones = {this.state.phoneRecords}
+                      />
+                    </div>
+                  ))
+                : ""}
+            </div>
+						<div>
+            <br/>
+            <h3>Locations:</h3>
+              {this.state.locationRecords.length > 0
+                ? this.state.locationRecords.map((location, index) => (
+                    <div key={index}>
+                      <LocationInfo
+                        {...location.fields}
+												addressRecord = {this.state.locationAddressRecords[index]}
                         index = {index}
                         services = {this.state.serviceRecords}
                         contactServiceName = {this.state.contactServiceNames[index]}
@@ -660,13 +680,17 @@ class ServiceInfo extends Component {
 
 
 	render() {
-		console.log("HERE ARE PROPS");
-		console.log(this.props.taxonomy);
+		console.log("H E R E   A R E   S E R V I C E   P R O P S ");
+		console.log(this.props);
 		if (this.props.taxonomy == [][0]){
 			return (<h1>loading services</h1>);
 		}
 
 		var taxonomyList = this.props.taxonomy;
+
+		if (this.props.taxonomy === [][0]){
+			return(<h4>loading</h4>);
+		}
 
 		return (
 			<div>
@@ -680,7 +704,7 @@ class ServiceInfo extends Component {
 				{taxonomyList.length > 0
 					? taxonomyList.map((taxonomy, index) => (
 							<div key={index}>
-								<p>{taxonomy.fields.name}</p>
+								<p>{taxonomy[0].fields.name}</p>
 							</div>
 						))
 					: ""}
@@ -754,11 +778,13 @@ class LocationInfo extends Component { // WE WILL ALSO USE THESE FOR ADDRESSES
 		//console.log("The address record is as follows: ")
 		//console.log(this.props.addressRecord);
 
-		if(this.props.addressRecord == [][0]){
+		if (this.props.addressRecord == [][0]){
 			return(
 				<h1>loading address records...</h1>
 			)
 		}
+
+
 
 		return (
 			<div className>
@@ -771,7 +797,7 @@ class LocationInfo extends Component { // WE WILL ALSO USE THESE FOR ADDRESSES
         <h5>
           {this.props.addressRecord.fields.address_1} <br/>
           {this.props.addressRecord.fields.city}, {this.props.addressRecord.fields.state} {this.props.addressRecord.fields["Zip Code"]} <br/>
-          {this.props.addressRecords.fields.Country}
+          {this.props.addressRecord.fields.Country}
         </h5>
         <h6>Address type: {this.props.addressRecord.fields["address_type-x"]}</h6>
         <h6>Transportation: </h6>
