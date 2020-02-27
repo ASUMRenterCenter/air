@@ -190,6 +190,7 @@ export default class Survey extends React.Component {
 									{this.renderForm2()}
 					</form>)
 					}
+					<a type='button' className='btn btn-success' id='home-button' href = "/">Home</a>
 				</div>);
 	}
 

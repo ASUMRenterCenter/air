@@ -59,6 +59,7 @@ export default class SurveyResultsPage extends React.Component{
             }).eachPage((servicess, fetchNextPage) => {
               if(servicess.length === 0){
                 console.log(record.fields['name'])
+                console.log(record.fields['address'])
                 this.setState(previousState => ({
                   services: [...this.state.services, record.fields['name']]
                   // org_html: [...this.state.org_html,
@@ -76,29 +77,40 @@ export default class SurveyResultsPage extends React.Component{
               }
               servicess.map((service, index) => {
                 this.props.database('organizations').find(service.fields["Organization"], (err, organization) => {
+                  if(service.fields['address'] !== undefined){
                   this.props.database('address').find(service.fields["address"], (err, address) => {
-                    var address_1 = address.fields['address_1']
-                    var city = address.fields['city']
-                    var state = address.fields['State']
-                    var zipcode = address.fields['Zip Code']
-                    var id = organization.id
-                    var name = organization.fields['name']
-                    var url = organization.fields['url']
-                    var email = organization.fields['email']
-                    var phones = organization.fields['phones']
-                    var address_array = [record.fields['name'], address_1, city, state, zipcode]
-                    var organization_array = [record.fields['name'], id, name, url, email, phones]
-                    if(organization.id !== undefined){
-                      this.setState(previousState => ({
-                        num_services: tax_ids.length,
-                        services: [...this.state.services, record.fields['name']],
-                        addresses: [...this.state.addresses, address_array],
-                        organizations: [...this.state.organizations, organization_array]
-                      }))
+                    if(typeof address !== "undefined"){
+                      var address_1 = address.fields['address_1']
+                      var city = address.fields['city']
+                      var state = address.fields['State']
+                      var zipcode = address.fields['Zip Code']
                     }
+                    else {
+                      var address_1 = "Not Available";
+                      var city = "Not Available";
+                      var state = "Not Available";
+                      var zipcode = "Not Available";
+                    }
+                      if(organization.id !== undefined){
+                        var id = organization.id
+                        var name = organization.fields['name']
+                        var url = organization.fields['url']
+                        var email = organization.fields['email']
+                        var phones = organization.fields['phones']
+                        var address_array = [record.fields['name'], address_1, city, state, zipcode]
+                        var organization_array = [record.fields['name'], id, name, url, email, phones]
+                        this.setState(previousState => ({
+                          num_services: tax_ids.length,
+                          services: [...this.state.services, record.fields['name']],
+                          addresses: [...this.state.addresses, address_array],
+                          organizations: [...this.state.organizations, organization_array]
+                        }))
+                      }
+                    
                   // this.organizations.push(organization);
                     
                 });
+              }
                 })
                   // this.props.database('address').find(service.fields["address"], (err, address) => {
                   //   this.setState(previousState => ({
@@ -157,7 +169,7 @@ export default class SurveyResultsPage extends React.Component{
     // var check_services = this.state.services.length === this.state.num_services
     // var check_not_ready = !this.state.isready
     // var check_length = this.state.services.length > 0
-    if(this.state.services.length === this.state.num_services && (!this.state.isready && this.state.iterations < 1)){
+    if((this.state.services.length === this.state.num_services) && (!this.state.isready && this.state.iterations < 1)){
       console.log(this.check_services)
       console.log("Num Services: " + this.state.num_services)
         this.state.services.map((service, index) => {
@@ -188,13 +200,13 @@ export default class SurveyResultsPage extends React.Component{
               this.setState(previousState => ({
                 org_html: [...previousState.org_html, <div className="jumbotron" key={i}>
                                                     <h4>{service} Results: </h4>
-                                                    <div id="printSaveShare">
+                                                    {/* <div id="printSaveShare">
                                                             
                                                       <PrintButton id="printSaveShare"></PrintButton>
                                                         <Pdf targetRef={ref} filename="code-example.pdf">
                                                         {({ toPdf }) => <Button onClick={toPdf} variant="dark">Download As PDF</Button>}
                                                         </Pdf>
-                                                    </div>
+                                                    </div> */}
                                                   </div>],
                 iterations: previousState.iterations + 1
               }))
@@ -203,13 +215,13 @@ export default class SurveyResultsPage extends React.Component{
               this.setState(previousState => ({
                 org_html: [...previousState.org_html, <div className="jumbotron" key={i}>
                                                     <h4>{service} Results: </h4>
-                                                    <div id="printSaveShare">
+                                                    {/* <div id="printSaveShare">
                                                             
                                                       <PrintButton id="printSaveShare"></PrintButton>
                                                         <Pdf targetRef={ref} filename="code-example.pdf">
                                                         {({ toPdf }) => <Button onClick={toPdf} variant="dark">Download As PDF</Button>}
                                                         </Pdf>
-                                                    </div>
+                                                    </div> */}
                                                     <div>
                                                       {[...temp_array]}
                                                     </div>
@@ -317,7 +329,15 @@ export default class SurveyResultsPage extends React.Component{
     else{
       return (
         <div ref={ref}>
+          <div id="printSaveShare">
+                                                            
+            <PrintButton id="printSaveShare"></PrintButton>
+              <Pdf targetRef={ref} filename="code-example.pdf">
+              {({ toPdf }) => <Button onClick={toPdf} variant="dark">Download As PDF</Button>}
+              </Pdf>
+          </div>
           {this.state.org_html}
+          
          </div>
       );
     }

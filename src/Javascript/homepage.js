@@ -156,6 +156,7 @@ export default class Homepage extends Component {
 		history.replace("/Survey");
 	}
 
+
 	render() {
 		return (
 			<div className="buttonpagescolumn width85">
@@ -167,6 +168,7 @@ export default class Homepage extends Component {
 					onClick={this.surveyClick}
 					id="gotosurveybutton"
 				>
+					
 					<img src={survey} alt="survey" id="surveyimg" />
 					<h1 id="btn-text">
 						Need Help Choosing a Resource? Click here to take a quick survey.

@@ -14,7 +14,7 @@ function CustomToggle({ children, eventKey, agency_name, agency_website}) {
   return (
     <div>
       <div>
-        <h5 style = {{float: "left"}}>{agency_name} : {agency_website}</h5>
+        <h5 style = {{float: "left"}}>{agency_name} : <a href={agency_website}>{agency_website}</a></h5>
       </div>
       <div>
         <Button
