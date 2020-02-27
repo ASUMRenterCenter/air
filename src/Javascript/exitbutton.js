@@ -1,13 +1,41 @@
 import React from 'react';
 import { Navbar, Nav, Button } from '../../node_modules/react-bootstrap';
-import "../CSS/exitbutton.css";
+import "../CSS/styles.css";
+
 
 export default class exitbutton extends React.Component{
+   constructor(props) {
+		super(props);
+      this.wrapperRef = React.createRef();
+      this.buttonRef = React.createRef();
+    }
+   handle_hide() {
+      const wrapper = this.wrapperRef.current;
+      const button = this.buttonRef.current;
+      const classes = Object.values(button.classList);
+      if(classes.includes("is-button-open")){
+         button.innerText='Hide Button';
+      }
+      else {
+         button.innerText='Show Button';
+      }
+      
+      wrapper.classList.toggle('is-exit-open')
+      button.classList.toggle('is-button-open')
+   }
    render(){
       return (
-         <Nav className="exit_button" id="flash-button">
-         <Button id="flash-button" className ="center" href="https://www.google.com"><Navbar.Text id="button-exit-text">Exit Now</Navbar.Text><Navbar.Text id="button-description">If you are in an unsafe environment, click this button to quickly go to Google.com. Remember to clear your web history.</Navbar.Text></Button>
-         </Nav>
+         <div className='exitbuttondiv'>
+            <button type='button' className='btn btn-dark hide-button' id='exitbuttonhide' onClick={() => this.handle_hide()} ref={this.buttonRef} >
+               Hide Button
+            </button>
+            <nav className="navbar exit_button" id='flash-button-nav' ref={this.wrapperRef}>
+               <a type='button' className ="navbar-item center" href="https://www.google.com" id='flash-button' >
+                  <span className='navbar-text' id="button-exit-text">Exit Now</span>
+                  <span className='navbar-text' id="button-description">If you are in an unsafe environment, click this button to quickly go to Google.com. Remember to clear your web history.</span>
+               </a>
+            </nav>
+         </div>
       );
    }
 };
