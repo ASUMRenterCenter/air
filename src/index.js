@@ -14,6 +14,7 @@ import Survey from "./Javascript/Survey/survey";
 import SurveyResults from "./Javascript/Survey/SurveyResultsPage";
 import CategoryResults from "./Javascript/CategoryResults/CategoryResultsPage";
 import AgencyInfoPage from "./components/AgencyInfoPage";
+import Bulletin from "./Javascript/bulletinboard";
 // import AgencyEditPage from "./components/AgencyEditPage";
 import CreateOrganization from "./Javascript/createOrganization";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -151,6 +152,15 @@ class Index extends React.Component {
 						component={() => (
 							<div className="indexdivinner">
 								<Navbar database={base} children={<Survey database={base} />} />
+								<ExitButton />
+							</div>
+						)}
+					/>
+					<Route
+						path="/Events"
+						component={() => (
+							<div className="indexdivinner">
+								<Navbar database={base} children={<Bulletin database={base} />} />
 								<ExitButton />
 							</div>
 						)}
