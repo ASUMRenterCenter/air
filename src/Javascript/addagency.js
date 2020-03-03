@@ -148,7 +148,7 @@ export default class AddAgency extends React.Component {
 		}
 	}
 
-	editOrg(orgID, orgName) {
+	editOrg(orgID, orgRecName) {
 		if (!this.state.isJordan) {
 			alert("You don't have permission to edit.");
 			history.replace("/");
@@ -160,7 +160,7 @@ export default class AddAgency extends React.Component {
 					"/" +
 					this.state.orgId +
 					"/" +
-					orgName +
+					orgRecName +
 					"/" +
 					orgID
 			);
@@ -251,10 +251,7 @@ export default class AddAgency extends React.Component {
 									type="button"
 									className="btn btn-link"
 									onClick={() =>
-										this.editOrg(
-											organization.fields["id"],
-											organization.fields["name"]
-										)
+										this.editOrg(organization.id, organization.fields["name"])
 									}
 									// href="#"
 								>
