@@ -1,9 +1,15 @@
+import Airtable from "airtable";
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const pino = require("express-pino-logger")();
 const cors = require("cors");
 const path = require("path");
 const PORT = process.env.PORT || 3001;
+
+const base = new Airtable({ apiKey: "key68OVjXXeLKQuEl" }).base(
+	"app6JuPyfzqD3RZiA"
+);
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,6 +28,17 @@ app.get("*", (req, res) => {
 app.post("/login", function(req, res) {
 	const username = req.body.username;
 	const password = req.body.password;
+	const organization_accounts = [];
+
+	base("organization_accounts")
+		.select({
+			fields: ["org_acc_id", "org_name", "username", "password"],
+			sort: [{ field: "org_acc_id", direction: "asc" }]
+		})
+		.eachPage((organization_accounts, fetchNextPage) => {
+			organization_accounts
+			fetchNextPage();
+		});
 	console.log(username);
 	console.log(password);
 	res.send("got it");
