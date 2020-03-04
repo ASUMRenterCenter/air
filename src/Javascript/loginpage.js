@@ -19,7 +19,9 @@ class Loginpage extends React.Component {
 		this.state = {
 			organization_accounts: [],
 			username: "",
-			password: ""
+			password: "",
+			name: "",
+			greeting: ""
 		};
 
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -49,7 +51,26 @@ class Loginpage extends React.Component {
 		//document.getElementById("add-agency-button").setAttribute("active", "true");
 	}
 
-	handleSubmit(e) {
+	handleSubmit(event) {
+		event.preventDefault();
+
+		const { username, password } = this.state;
+		console.log(username);
+		console.log(password);
+
+		const authorization = {
+			username,
+			password
+		};
+
+		axios
+			.post("/login", authorization)
+			.then(function(response) {
+				console.log("logging in and " + response.data);
+			})
+			.catch(err => {
+				console.error(err);
+			});
 		/* var apiBaseUrl = "http://localhost:3000/";
 		var payload = {
 			username: this.state.username,
@@ -82,7 +103,7 @@ class Loginpage extends React.Component {
 			});
 	} */
 
-		for (let i = 0; i <= this.state.organization_accounts.length; i++) {
+		/* for (let i = 0; i <= this.state.organization_accounts.length; i++) {
 			if (i >= this.state.organization_accounts.length) {
 				history.push("/");
 			} else if (
@@ -117,13 +138,14 @@ class Loginpage extends React.Component {
 			}
 			//console.log(i);
 			//console.log(this.state.organization_accounts.length);
-		}
+		} */
 	}
 
 	handleChange(e) {
 		this.setState({
 			[e.target.name]: e.target.value
 		});
+		//this.setState({ name: e.target.value });
 		//console.log(this.state.organization_accounts[0].fields["password"]);
 	}
 
@@ -152,7 +174,7 @@ class Loginpage extends React.Component {
 					<Container id="login-container" className="centered">
 						<Row>
 							<Col md={{ span: 4, offset: 1 }}>
-								<form>
+								<form onSubmit={this.handleSubmit}>
 									<Form.Group controlId="formBasicUsername">
 										<label className="form-label" form="formBasicUsername">
 											Enter Username
@@ -180,7 +202,18 @@ class Loginpage extends React.Component {
 										/>
 										<ForgotPassword />
 									</Form.Group>
-									<SubmitBtn buttonHandler={this.handleSubmit.bind(this)} />
+									{/* <label htmlFor="name">Enter your name: </label> */}
+									{/* <input
+										id="name"
+										type="text"
+										value={this.state.name}
+										onChange={event => this.handleChange(event)}
+									/> */}
+									{/* <button type="submit">Submit</button>*/}
+									<p>{this.state.greeting}</p>
+									<button type="submit" className="btn btn-primary btn-sm">
+										Submit
+									</button>
 								</form>
 							</Col>
 							<Col md={{ offset: 1 }}>
