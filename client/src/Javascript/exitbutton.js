@@ -1,6 +1,6 @@
 import React from 'react';
-import { Navbar, Nav, Button } from '../../node_modules/react-bootstrap';
 import "../CSS/styles.css";
+import axios from "axios";
 
 
 export default class exitbutton extends React.Component{
@@ -11,6 +11,7 @@ export default class exitbutton extends React.Component{
       }
       this.wrapperRef = React.createRef();
       this.buttonRef = React.createRef();
+      this.handle_hide = this.handle_hide.bind(this)
     }
 
    static getDerivedStateFromProps(nextProps, prevState){
@@ -38,7 +39,15 @@ export default class exitbutton extends React.Component{
       console.log(this.props.displayed)
       if(!this.state.isopen){
          button.innerText='Hide Button';
-         this.props.action(true);
+         // this.props.action(true);
+         const open = true;
+         axios.post('/', open)
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
          wrapper.classList.toggle('is-exit-open')
          button.classList.toggle('is-button-open')
          this.setState(prevState => ({
@@ -47,8 +56,16 @@ export default class exitbutton extends React.Component{
          // this.props.action;
       }
       else {
+         const open = false;
          button.innerText='Show Button';
-         this.props.action(false);
+         // this.props.action(false);
+         axios.post('/', open)
+         .then(function (response) {
+           console.log(response);
+         })
+         .catch(function (error) {
+           console.log(error);
+         });
          wrapper.classList.toggle('is-exit-open')
          button.classList.toggle('is-button-open')
          this.setState(prevState => ({

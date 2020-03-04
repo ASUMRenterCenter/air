@@ -9,15 +9,26 @@ export default class buttonresults extends React.Component{
 		this.state = {
             events: [],
             html: [],
+            num_events: 9999,
             events_did_update: false,
 		}
     }
     componentDidMount (){
         this.props.database('bulletin_board').select({
         }).eachPage((events, fetchNextPage) => {
-            // this.setState(previousState => ({
-            //     events: [...this.state.events, ...events]            
-            // }));
+            if(this.state.num_events === 9999){
+                this.setState(previousState => ({
+                    num_events: events.length
+                    //events: [...this.state.events, ...events]            
+                }));
+            }
+            else{
+                this.setState(previousState => ({
+                    num_events: previousState.num_events + events.length
+                    //events: [...this.state.events, ...events]            
+                }));
+            }
+            
             events.map((event, index) => (
                 console.log(event.fields['services']),
                 this.props.database('services').find(event.fields['services'], (err, service) => {
