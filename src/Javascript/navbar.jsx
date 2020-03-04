@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import logo from "../Images/Logo.png";
 // import { toggleClass } from "dom-helpers";
 import history from "./history";
+
 // import PrintSaveShare from "./CategoryResults/PrintSaveShare";
 
 export default class nav extends React.PureComponent {
@@ -24,10 +25,7 @@ export default class nav extends React.PureComponent {
 			isJordan: false
 		};
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.editAgency = this.editAgency.bind(this);
-		this.addAgency = this.addAgency.bind(this);
-		this.orgLogin = this.orgLogin.bind(this);
-		this.logOut = this.logOut.bind(this);
+		/* this.getData = this.getData.bind(this); */
 	}
 
 	componentDidMount() {
@@ -50,7 +48,24 @@ export default class nav extends React.PureComponent {
 				orgId: this.props.match.params.org_acc_id
 			});
 		}
+		/* this.getData(); */
 	}
+
+	/* 	getData() {
+		var xhr = new XMLHttpRequest();
+
+		xhr.addEventListener("load", () => {
+			// update the state of the component with the result here
+			console.log(xhr.responseText);
+			console.log("i'm here");
+		});
+
+		// open the request with the verb and the url
+
+		xhr.open("GET", "https://dog.ceo/api/breeds/list/all");
+		// send the request
+		xhr.send();
+	} */
 
 	componentDidUpdate() {
 		/*===============================
@@ -100,51 +115,49 @@ export default class nav extends React.PureComponent {
 		/*==============================*/
 	}
 
-	handleSubmit(e) {
-		if (!this.state.loggedIn) {
-			history.replace("/");
-		} else if (this.state.loggedIn) {
-			history.push(
-				"/Organization_Home/" + this.state.orgName + "/" + this.state.orgId
-			);
-		}
-	}
-
-	orgLogin(e) {
-		if (this.state.loggedIn && this.state.active) {
-			alert("You're already logged in");
-		} else {
-			history.push("/login");
-		}
-	}
-
-	logOut(e) {
-		if (!this.state.loggedIn && !this.state.active) {
-			alert("Can't log out if you're not logged in");
-		} else {
-			history.replace("/");
-		}
-	}
-
-	editAgency(e) {
-		if (!this.state.loggedIn) {
-			history.replace("/");
-		} else if (this.state.loggedIn && this.state.active) {
-			history.push(
-				"/EditAgency/" + this.state.orgName + "/" + this.state.orgId
-			);
-		}
-	}
-
-	addAgency(e) {
-		if (!this.state.loggedIn) {
-			history.replace("/");
-		} else if (
-			this.state.loggedIn &&
-			this.state.active &&
-			this.state.orgId === "1"
-		) {
-			history.push("/AddAgency/" + this.state.orgName + "/" + this.state.orgId);
+	handleSubmit(action) {
+		if (action === "main") {
+			if (!this.state.loggedIn) {
+				history.replace("/");
+			} else if (this.state.loggedIn) {
+				history.push(
+					"/Organization_Home/" + this.state.orgName + "/" + this.state.orgId
+				);
+			}
+		} else if (action === "login") {
+			if (this.state.loggedIn && this.state.active) {
+				alert("You're already logged in");
+			} else {
+				history.push("/login");
+			}
+		} else if (action === "logout") {
+			if (!this.state.loggedIn && !this.state.active) {
+				alert("Can't log out if you're not logged in");
+			} else {
+				history.replace("/");
+			}
+		} else if (action === "edit") {
+			if (!this.state.loggedIn) {
+				history.replace("/");
+			} else if (this.state.loggedIn && this.state.active) {
+				history.push(
+					"/EditAgency/" + this.state.orgName + "/" + this.state.orgId
+				);
+			}
+		} else if (action === "view") {
+			if (!this.state.loggedIn) {
+				history.replace("/");
+			} else if (
+				this.state.loggedIn &&
+				this.state.active &&
+				this.state.orgId === "1"
+			) {
+				history.push(
+					"/AddAgency/" + this.state.orgName + "/" + this.state.orgId
+				);
+			}
+		} else if (action === "events") {
+			history.push("/Events");
 		}
 	}
 
@@ -153,7 +166,7 @@ export default class nav extends React.PureComponent {
 			<div>
 				<nav className="navbar navbar-expand-md navbar-dark" id="navbackground">
 					<button
-						onClick={this.handleSubmit}
+						onClick={() => this.handleSubmit("main")}
 						id="logo"
 						className="btn Logo btn-link navbar-brand"
 						type="button"
@@ -172,13 +185,23 @@ export default class nav extends React.PureComponent {
 
 					<div className="collapse navbar-collapse" id="collapsibleNavbar">
 						<ul className="navbar-nav ml-auto">
+							<li className="nav-item">
+								<button
+									id="local-events-button"
+									onClick={() => this.handleSubmit("events")}
+									className="btn btn-outline-light btn-sm"
+									type="button"
+								>
+									View Local Events
+								</button>
+							</li>
 							{this.state.loggedIn &&
 							this.state.active &&
 							this.state.isJordan ? (
 								<li className="nav-item">
 									<button
 										id="add-agency-button"
-										onClick={this.addAgency}
+										onClick={() => this.handleSubmit("view")}
 										className="btn btn-outline-light btn-sm"
 										type="button"
 									>
@@ -193,7 +216,7 @@ export default class nav extends React.PureComponent {
 									<button
 										id="edit-agency-button"
 										className="btn-outline-light btn btn-sm"
-										onClick={this.editAgency}
+										onClick={() => this.handleSubmit("edit")}
 										type="button"
 									>
 										Edit Organization
@@ -204,7 +227,7 @@ export default class nav extends React.PureComponent {
 								<li className="nav-item">
 									<button
 										id="login-button"
-										onClick={this.orgLogin}
+										onClick={() => this.handleSubmit("login")}
 										className="btn btn-outline-light btn-sm"
 										type="button"
 									>
@@ -216,7 +239,7 @@ export default class nav extends React.PureComponent {
 								<li className="nav-item">
 									<button
 										id="logout-button"
-										onClick={this.logOut}
+										onClick={() => this.handleSubmit("logout")}
 										className="btn btn-outline-light btn-sm"
 										type="button"
 									>

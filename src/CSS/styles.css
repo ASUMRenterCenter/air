@@ -31,7 +31,7 @@ ul {
 ****************************
 ****************************/
 
-  /*______________________
+/*______________________
   Miscellaneous (Reusable)
   ________________________*/
 
@@ -47,19 +47,18 @@ ul {
 	height: 100%;
 	position: relative;
 	text-align: left;
- }
-
-.Fixed {
-	position:fixed;
-	top:30%;
 }
 
- .whitespace {
-	 padding: 10%;
- }
+.Fixed {
+	position: fixed;
+	top: 30%;
+}
 
+.whitespace {
+	padding: 10%;
+}
 
-  /*______________________
+/*______________________
   		  Navbar
   ________________________*/
 
@@ -67,7 +66,7 @@ ul {
 	min-height: 50px;
 }
 
-  /*______________________
+/*______________________
 		Sidebar
 		Possibly use https://github.com/negomi/react-burger-menu/tree/master/src
 		or https://www.w3schools.com/w3css/w3css_sidebar.asp
@@ -75,10 +74,10 @@ ul {
 
 .wrapper {
 	display: flex;
-	position: absolute;    /*added in position absolute*/
+	position: absolute; /*added in position absolute*/
 	width: 15%;
 	height: 100%;
-	transition: margin .5s;
+	transition: margin 0.5s;
 	margin: 0 0 0 85%;
 	text-align: left;
 }
@@ -100,17 +99,17 @@ ul {
 	background-color: #cfcdcc;
 }
 
-@media (min-width: 760px){
+@media (min-width: 760px) {
 	.wrapper {
 		display: flex;
-		position: absolute;    /*added in position absolute*/
+		position: absolute; /*added in position absolute*/
 		width: 15%;
 		height: 100%;
-		transition: margin .5s;
+		transition: margin 0.5s;
 		margin: 0 0 0 85%;
 		text-align: left;
 	}
-	
+
 	.wrapper.is-nav-open {
 		margin-left: 100%;
 	}
@@ -126,21 +125,20 @@ ul {
 }
 
 /* Mobile Hotline Button */
-@media (max-width: 760px){
+@media (max-width: 760px) {
 	.wrapper {
 		display: flex;
-		position: absolute;    /*added in position absolute*/
+		position: absolute; /*added in position absolute*/
 		width: 30%;
 		height: 100%;
-		transition: margin .5s;
+		transition: margin 0.5s;
 		margin-left: 100%;
 		text-align: left;
 	}
-	
+
 	.wrapper.is-nav-open {
 		margin-left: 70%;
 		/* margin: 0 0 0 70%; */
-		
 	}
 	.nav__icon {
 		position: absolute;
@@ -157,7 +155,7 @@ ul {
 	color: #4fb368;
 }
 
-  /*______________________
+/*______________________
   Homepage and Sidebar Columns
   ________________________*/
 .buttonpagesrow {
@@ -177,14 +175,14 @@ ul {
 }
 
 .width85.is-nav-open {
-   width: 85%;
+	width: 85%;
 }
 
-  /*______________________
+/*______________________
   	Taxonomy Buttons
   ________________________*/
 
-  @media (min-width: 760px){
+@media (min-width: 760px) {
 	#taxonomy-btn-card {
 		width: 200px;
 		height: 200px;
@@ -202,27 +200,27 @@ ul {
 		height: 100%; */
 	}
 
-	#card-img{
-		width:30%;
-		width:30%;
+	#card-img {
+		width: 30%;
+		width: 30%;
 	}
 
-	#card-title{
+	#card-title {
 		color: black;
 	}
 
 	#img-rep {
-		width:20px;
-		height:70px;
+		width: 20px;
+		height: 70px;
 	}
 
 	.taxonomy-btn-outline {
 		padding-bottom: 20px;
 	}
-  }
+}
 
-  /*Taxonomy for Mobile*/
-  @media (max-width: 760px){
+/*Taxonomy for Mobile*/
+@media (max-width: 760px) {
 	#taxonomy-btn-card {
 		width: 150px;
 		height: 150px;
@@ -242,25 +240,25 @@ ul {
 		height: 100%; */
 	}
 
-	#card-img{
-		width:40%;
-		width:40%;
+	#card-img {
+		width: 40%;
+		width: 40%;
 	}
 
-	#card-title{
+	#card-title {
 		color: black;
 		font-size: 15px;
 	}
 
 	#img-rep {
-		width:20px;
-		height:10px;
+		width: 20px;
+		height: 10px;
 	}
 
 	.taxonomy-btn-outline {
 		padding-bottom: 10px;
 	}
-  }
+}
 
 /***************************
 ****************************
@@ -321,6 +319,11 @@ ________________________*/
 	color: black;
 	margin-right: 10px;
 }
+#local-events-button {
+	background-color: white;
+	color: black;
+	margin-right: 10px;
+}
 #add-agency-button {
 	background-color: white;
 	color: black;
@@ -349,7 +352,6 @@ ________________________*/
 ****************************
 ****************************/
 
-
 /*Survey Go through*/
 
 td label {
@@ -358,56 +360,50 @@ td label {
 #survey_button {
 	background-color: black;
 	color: black;
- }
- 
- #prev_and_results_button {
+}
+
+#prev_and_results_button {
 	margin-left: 75%;
- }
- 
- #previous_button {
+}
+
+#previous_button {
 	margin-right: 2%;
-	
-	
- }
- 
- #continue_button {
+}
+
+#continue_button {
 	margin-left: 80%;
-	
-	
- }
- #home-button {
-	 background-color: rgb(16, 66, 41);
-	 color: white;
-	 padding: 3px;
- }
- 
- #main_component_survey {
+}
+#home-button {
+	background-color: rgb(16, 66, 41);
+	color: white;
+	padding: 3px;
+}
+
+#main_component_survey {
 	height: 100%;
 	/*background-image: url("../Images/clocktower_cropped.jpg");*/
- }
- 
- #directions {
+}
+
+#directions {
 	padding-top: 2%;
- }
- 
- #notice {
+}
+
+#notice {
 	color: red;
 	padding-bottom: 1%;
 	font-size: 100%;
- }
- 
- #table_parent {
-	margin-left:auto; 
-	margin-right:auto;
+}
+
+#table_parent {
+	margin-left: auto;
+	margin-right: auto;
 	width: 70%;
 	padding-bottom: 100px;
- }
- 
- #survey-parent {
-	align-content: center;
- }
- 
+}
 
+#survey-parent {
+	align-content: center;
+}
 
 .sidebarcontent {
 	align-content: left;
@@ -431,22 +427,22 @@ ________________________*/
 #exit_button {
 	margin-left: 15%;
 	position: fixed;
- }
+}
 
- .exitbuttondiv {
+.exitbuttondiv {
 	position: fixed;
 	left: 0;
 	bottom: 0;
- }
+}
 
- #exitbuttonhide {
-	 z-index: 5;
-	 left: 80%;
-	 /* margin-bottom: 80px; */
-	 padding: 2px;
-	 font-size: 12px;
- }
- /* #exitbuttonhide.is-button-open {
+#exitbuttonhide {
+	z-index: 5;
+	left: 80%;
+	/* margin-bottom: 80px; */
+	padding: 2px;
+	font-size: 12px;
+}
+/* #exitbuttonhide.is-button-open {
 	z-index: 5;
 	left: 80%;
 	margin-bottom: 80px;
@@ -454,28 +450,28 @@ ________________________*/
 	font-size: 12px;
 } */
 
- .hide-button {
+.hide-button {
 	margin-bottom: 80px;
- }
+}
 
- .hide-button.is-button-open {
+.hide-button.is-button-open {
 	margin-bottom: 0px;
- }
+}
 
- @media (min-width: 760px){
+@media (min-width: 760px) {
 	.exit_button {
-	   position: fixed;
-	   left: 0;
-	   bottom: 0;
-	   width: 100%;
-	   height: 50px;
-	   background-color: red;
-	   color: white;
-	   text-align: center;
-	   z-index: 1;
-	   visibility: visible;
-	 }
-	 .exit_button.is-exit-open {
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		height: 50px;
+		background-color: red;
+		color: white;
+		text-align: center;
+		z-index: 1;
+		visibility: visible;
+	}
+	.exit_button.is-exit-open {
 		position: fixed;
 		left: 0;
 		bottom: 0;
@@ -486,42 +482,42 @@ ________________________*/
 		text-align: center;
 		z-index: 1;
 		visibility: hidden;
-	 }
-	 #flash-button-nav{
-	   position: fixed;
-	   background:red;
-	   padding: 1% 2%;
-	
-	   color:#fff;
-	   border:none;
-	   border-radius:1%;
-	   height: 80px;
-	   
-	   animation-name: flash;
-	   animation-duration: 1s;
-	   animation-timing-function: linear;
-	   animation-iteration-count: infinite;
-	   z-index: 1;
+	}
+	#flash-button-nav {
+		position: fixed;
+		background: red;
+		padding: 1% 2%;
+
+		color: #fff;
+		border: none;
+		border-radius: 1%;
+		height: 80px;
+
+		animation-name: flash;
+		animation-duration: 1s;
+		animation-timing-function: linear;
+		animation-iteration-count: infinite;
+		z-index: 1;
 	}
 	#flash-button {
 		margin-bottom: 20px;
 	}
- }
- 
-  @media (max-width: 760px){
+}
+
+@media (max-width: 760px) {
 	.exit_button {
-	   position: fixed;
-	   left: 0;
-	   bottom: 0;
-	   width: 100%;
-	   height: 100px;
-	   background-color: red;
-	   color: white;
-	   text-align: center;
-	   z-index: 10;
-	   visibility: visible;
-	 }
-	 .exit_button.is-exit-open {
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		height: 100px;
+		background-color: red;
+		color: white;
+		text-align: center;
+		z-index: 10;
+		visibility: visible;
+	}
+	.exit_button.is-exit-open {
 		position: fixed;
 		left: 0;
 		bottom: 0;
@@ -532,40 +528,38 @@ ________________________*/
 		text-align: center;
 		z-index: 10;
 		visibility: hidden;
-	 }
-	 #flash-button-nav{
-	   position: fixed;
-	   background:red;
-	   padding: 1% 2%;
-	   display: block;
-	
-	   color:#fff;
-	   border:none;
-	   border-radius:1%;
-	   height: 70px;
-	   
-	   animation-name: flash;
-	   animation-duration: 1s;
-	   animation-timing-function: linear;
-	   animation-iteration-count: infinite;
-	   z-index: 10;
+	}
+	#flash-button-nav {
+		position: fixed;
+		background: red;
+		padding: 1% 2%;
+		display: block;
+
+		color: #fff;
+		border: none;
+		border-radius: 1%;
+		height: 70px;
+
+		animation-name: flash;
+		animation-duration: 1s;
+		animation-timing-function: linear;
+		animation-iteration-count: infinite;
+		z-index: 10;
 	}
 	#flash-button {
 		margin-bottom: 20px;
 	}
-  }
- 
- 
- 
- .center {
+}
+
+.center {
 	position: absolute;
 	right: 0px;
 	left: 0px;
 	bottom: 0px;
 	align-self: center;
- }
- 
- #button-exit-text {
+}
+
+#button-exit-text {
 	/*vertical-align: text-top;*/
 	bottom: 50px;
 	position: absolute;
@@ -574,9 +568,9 @@ ________________________*/
 	height: 50%;
 	font-size: 40px;
 	color: white;
- }
- 
- #button-description {
+}
+
+#button-description {
 	/*vertical-align: text-bottom;*/
 	bottom: 0px;
 	position: absolute;
@@ -584,15 +578,19 @@ ________________________*/
 	right: 0;
 	height: 50%;
 	color: white;
- 
-	
- }
- 
- @keyframes flash {  
-	 0% { opacity: 1.0; }
-	 50% { opacity: 0.75; }
-	 100% {opacity: 1.0; }
- }
+}
+
+@keyframes flash {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.75;
+	}
+	100% {
+		opacity: 1;
+	}
+}
 /* Homepage Go through */
 /* #parent {
 	display: flex;
@@ -715,7 +713,3 @@ ________________________*/
  }
  
  */
-
-
-
-  
