@@ -1,7 +1,7 @@
 {
 	"name": "air",
 	"version": "1.0.0",
-	"private": true,
+	"main": "index.js",
 	"dependencies": {
 		"axios": "^0.19.2",
 		"bootstrap": "^4.4.1",
