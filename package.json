@@ -11,6 +11,7 @@
 		"antd": "^3.26.7",
 		"axios": "^0.19.2",
 		"bootstrap": "^4.4.1",
+		"concurrently": "^5.1.0",
 		"cors": "^2.8.5",
 		"express-pino-logger": "^4.0.0",
 		"jquery": "^3.4.1",
