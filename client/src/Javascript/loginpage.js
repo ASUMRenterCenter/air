@@ -66,7 +66,7 @@ class Loginpage extends React.Component {
 		axios
 			.post("/login", authorization)
 			.then(function(response) {
-				console.log("logging in and " + response.data);
+				console.log(response);
 			})
 			.catch(err => {
 				console.error(err);
