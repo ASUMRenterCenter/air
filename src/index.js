@@ -34,12 +34,21 @@ class Index extends React.Component {
 		this.state = {
 			loggedIn: false,
 			org_name: "",
-			org_acc_id: ""
+			org_acc_id: "",
+			show_exit_button: true
 		};
 		this.setLoggedIn = this.setLoggedIn.bind(this);
 		this.setLoggedOut = this.setLoggedOut.bind(this);
 		this.setOrgName = this.setOrgName.bind(this);
 		this.setOrgAccId = this.setOrgAccId.bind(this);
+		this.handleExitButton = this.handleExitButton.bind(this);
+	}
+
+	handleExitButton (buttonstate) {
+		alert("Did a thing: " + buttonstate)
+		this.setState (prevState => ({
+			show_exit_button: buttonstate
+		}))
 	}
 
 	setOrgName = name => {
@@ -107,7 +116,7 @@ class Index extends React.Component {
 									children={<Homepage database={base} />}
 									Sidebar={<Sidebar database={base} />}
 								/>
-								<ExitButton />
+								<ExitButton action={this.handleExitButton} displayed={this.state.show_exit_button}/>
 							</div>
 						)}
 					/>
@@ -143,7 +152,7 @@ class Index extends React.Component {
 									database={base}
 									children={<ButtonResults {...props} database={base} />}
 								/>
-								<ExitButton />
+								<ExitButton action={this.handleExitButton} displayed={this.state.show_exit_button}/>
 							</div>
 						)}
 					/>
@@ -152,7 +161,7 @@ class Index extends React.Component {
 						component={() => (
 							<div className="indexdivinner">
 								<Navbar database={base} children={<Survey database={base} />} />
-								<ExitButton />
+								<ExitButton action={this.handleExitButton} displayed={this.state.show_exit_button}/>
 							</div>
 						)}
 					/>
@@ -161,7 +170,7 @@ class Index extends React.Component {
 						component={() => (
 							<div className="indexdivinner">
 								<Navbar database={base} children={<Bulletin database={base} />} />
-								<ExitButton />
+								<ExitButton action={this.handleExitButton} displayed={this.state.show_exit_button}/>
 							</div>
 						)}
 					/>
@@ -274,7 +283,7 @@ class Index extends React.Component {
 									database={base}
 									children={<Homepage {...props} database={base} />}
 								/>
-								<ExitButton />
+								<ExitButton action={this.handleExitButton} displayed={this.state.show_exit_button}/>
 							</div>
 						)}
 					/>
