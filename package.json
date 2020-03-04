@@ -1,7 +1,7 @@
 {
 	"name": "air",
 	"version": "1.0.0",
-	"main": "index.js",
+	"main": "server.js",
 	"dependencies": {
 		"axios": "^0.19.2",
 		"bootstrap": "^4.4.1",
@@ -18,7 +18,7 @@
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node index.js",
+		"start": "node server.js",
 		"heroku-postbuild": "cd client && npm install && npm run build"
 	}
 }
