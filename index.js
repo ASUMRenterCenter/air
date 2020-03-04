@@ -10,20 +10,20 @@ app.use(bodyParser.json());
 app.use(pino);
 app.use(cors());
 
-app.post("/login", function(req, res) {
-	const username = req.body.username;
-	const password = req.body.password;
-	console.log(username);
-	console.log(password);
-	res.send("got it");
-});
-
 // Serve static files from the React frontend app
 app.use(express.static(path.join(__dirname, "client/public")));
 
 // Anything that doesn't match the above, send back index.html
 app.get("*", (req, res) => {
 	res.sendFile(path.join(__dirname + "/client/public/index.html"));
+});
+
+app.post("/login", function(req, res) {
+	const username = req.body.username;
+	const password = req.body.password;
+	console.log(username);
+	console.log(password);
+	res.send("got it");
 });
 
 app.listen(3001, () =>
