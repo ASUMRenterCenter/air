@@ -11,6 +11,7 @@ import {
 } from "../../node_modules/react-bootstrap";
 import "../CSS/loginpage.css";
 import history from "./history";
+import axios from "axios";
 
 class Loginpage extends React.Component {
 	constructor(props) {
@@ -49,9 +50,37 @@ class Loginpage extends React.Component {
 	}
 
 	handleSubmit(e) {
-		//var i;
-
-		//e.preventDefault();
+		/* var apiBaseUrl = "http://localhost:3000/";
+		var payload = {
+			username: this.state.username,
+			password: this.state.password
+		};
+		axios
+			.post(apiBaseUrl + "login", payload)
+			.then(function(response) {
+				console.log(response);
+				if (response.data.code == 200) {
+					console.log("Login successfull");
+					var uploadScreen = [];
+					uploadScreen.push(
+						<UploadScreen appContext={this.props.appContext} />
+					);
+					this.props.appContext.setState({
+						loginPage: [],
+						uploadScreen: uploadScreen
+					});
+				} else if (response.data.code == 204) {
+					console.log("Username password do not match");
+					alert("username password do not match");
+				} else {
+					console.log("Username does not exists");
+					alert("Username does not exist");
+				}
+			})
+			.catch(function(error) {
+				console.log(error);
+			});
+	} */
 
 		for (let i = 0; i <= this.state.organization_accounts.length; i++) {
 			if (i >= this.state.organization_accounts.length) {
