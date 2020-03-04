@@ -27,6 +27,12 @@ app.post("/login", function(req, res) {
 	res.send("got it");
 });
 
+app.post("*", function(req, res) {
+	const open = req.body.open;
+	console.log(open);
+	res.send("got it");
+});
+
 app.listen(PORT, () =>
 	console.log(`Express server is running and listening on port ${PORT}`)
 );
