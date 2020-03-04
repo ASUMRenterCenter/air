@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const pino = require("express-pino-logger")();
 const cors = require("cors");
 const path = require("path");
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -26,6 +27,6 @@ app.post("/login", function(req, res) {
 	res.send("got it");
 });
 
-app.listen(3001, () =>
-	console.log("Express server is running and listening on localhost:3001")
+app.listen(PORT, () =>
+	console.log(`Express server is running and listening on port ${PORT}`)
 );
