@@ -51,22 +51,6 @@ export default class nav extends React.PureComponent {
 		/* this.getData(); */
 	}
 
-	/* 	getData() {
-		var xhr = new XMLHttpRequest();
-
-		xhr.addEventListener("load", () => {
-			// update the state of the component with the result here
-			console.log(xhr.responseText);
-			console.log("i'm here");
-		});
-
-		// open the request with the verb and the url
-
-		xhr.open("GET", "https://dog.ceo/api/breeds/list/all");
-		// send the request
-		xhr.send();
-	} */
-
 	componentDidUpdate() {
 		/*===============================
 		Checks the url with information in database
@@ -158,6 +142,10 @@ export default class nav extends React.PureComponent {
 			}
 		} else if (action === "events") {
 			history.push("/Events");
+		} else if (action === "addEvent") {
+			history.replace(
+				"/AddEvent/" + this.state.orgName + "/" + this.state.orgId
+			);
 		}
 	}
 
@@ -195,6 +183,18 @@ export default class nav extends React.PureComponent {
 									View Local Events
 								</button>
 							</li>
+							{this.state.loggedIn && this.state.active ? (
+								<li className="nav-item">
+									<button
+										id="add-local-events-button"
+										onClick={() => this.handleSubmit("addEvent")}
+										className="btn btn-outline-light btn-sm"
+										type="button"
+									>
+										Add Local Event
+									</button>
+								</li>
+							) : null}
 							{this.state.loggedIn &&
 							this.state.active &&
 							this.state.isJordan ? (

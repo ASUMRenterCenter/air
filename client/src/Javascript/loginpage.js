@@ -10,6 +10,7 @@ import {
 	ButtonToolbar
 } from "../../node_modules/react-bootstrap";
 import "../CSS/loginpage.css";
+import "../CSS/styles.css";
 import history from "./history";
 import axios from "axios";
 
@@ -80,13 +81,13 @@ class Loginpage extends React.Component {
 								<h1 className="aligncenter">Organization Login</h1>
 							</Col>
 							<Col>
-								<p className="alignright">
+								{/* <p className="alignright">
 									Here by mistake?
 									<br></br>
 									<Button href="/" size="sm" variant="dark">
 										Back
 									</Button>
-								</p>
+								</p> */}
 							</Col>
 						</Row>
 					</Container>
@@ -131,10 +132,20 @@ class Loginpage extends React.Component {
 										onChange={event => this.handleChange(event)}
 									/> */}
 									{/* <button type="submit">Submit</button>*/}
-									<p>{this.state.greeting}</p>
-									<button type="submit" className="btn btn-primary btn-sm">
-										Submit
-									</button>
+									<div className="login-submit">
+										<ul className="">
+											<li className="">
+												<button type="submit" className="btn btn-primary">
+													Submit
+												</button>
+											</li>
+											<li className="nav-item">
+												<button type="button" className="btn btn-dark" href="/">
+													Back
+												</button>
+											</li>
+										</ul>
+									</div>
 								</form>
 							</Col>
 							<Col md={{ offset: 1 }}>
