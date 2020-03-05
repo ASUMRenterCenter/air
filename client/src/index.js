@@ -160,7 +160,24 @@ class Index extends React.Component {
 						path="/Events"
 						component={() => (
 							<div className="indexdivinner">
-								<Navbar database={base} children={<Bulletin database={base} />} />
+								<Navbar
+									database={base}
+									children={<Bulletin database={base} />}
+								/>
+								<ExitButton />
+							</div>
+						)}
+					/>
+					<Route
+						path="/AddEvent/:org_name/:org_acc_id"
+						component={props => (
+							<div className="indexdivinner">
+								<Navbar
+									{...props}
+									loggedIn={true}
+									database={base}
+									children={<Bulletin database={base} />}
+								/>
 								<ExitButton />
 							</div>
 						)}

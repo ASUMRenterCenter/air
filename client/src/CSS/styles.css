@@ -293,6 +293,18 @@ ________________________*/
 	font-size: 100%;
 }
 
+/* ======================
+		Login page
+========================*/
+
+.login-submit li {
+	display: inline;
+}
+
+.login-submit button {
+	margin: 5px;
+}
+
 /*______________________
 		 Navbar
 ________________________*/
@@ -320,6 +332,11 @@ ________________________*/
 	margin-right: 10px;
 }
 #local-events-button {
+	background-color: white;
+	color: black;
+	margin-right: 10px;
+}
+#add-local-events-button {
 	background-color: white;
 	color: black;
 	margin-right: 10px;
