@@ -4,7 +4,6 @@ import '../CSS/ComponentStyle.css'
 import PrintButton from './PrintButton'
 import Pdf from "react-to-pdf";
 import Button from "react-bootstrap/Button"
-import Form from "react-bootstrap/Form";
 //import SavePageButton from './SavePageButton'
 
 const ref = React.createRef();
@@ -200,7 +199,7 @@ export default class AgencyInfo extends Component { //FIXME should be agency cre
       var contactServiceNameHolder = [];
       for (let i = 0; i < this.state.contactRecords.length; i++){
         for (let j = 0; j < this.state.serviceRecords.length; j ++){
-          if (this.state.contactRecords[i].fields.services == this.state.serviceRecords[j].id){
+          if (this.state.contactRecords[i].fields.services === this.state.serviceRecords[j].id){
             contactServiceHolder[i] = this.state.serviceRecords[j];
             contactServiceNameHolder[i] = this.state.serviceRecords[j].fields.Name;
           }
@@ -210,7 +209,7 @@ export default class AgencyInfo extends Component { //FIXME should be agency cre
       var contactPhoneNumberHolder = [];
       for (let i = 0; i < this.state.contactRecords.length; i++){
         for (let j = 0; j < this.state.phoneRecords.length; j ++){
-          if (this.state.contactRecords[i].fields.phones == this.state.phoneRecords[j].id){
+          if (this.state.contactRecords[i].fields.phones === this.state.phoneRecords[j].id){
             contactPhoneHolder[i] = this.state.phoneRecords[j];
             contactPhoneNumberHolder[i] = this.state.phoneRecords[j].fields.number;
           }
@@ -263,7 +262,7 @@ export default class AgencyInfo extends Component { //FIXME should be agency cre
       var locationServiceNameHolder = [];
       for (let i = 0; i < this.state.locationRecords.length; i++){
         for (let j = 0; j < this.state.serviceRecords.length; j ++){
-          if (this.state.locationRecords[i].fields.services == this.state.serviceRecords[j].id){
+          if (this.state.locationRecords[i].fields.services === this.state.serviceRecords[j].id){
             locationServiceHolder[i] = this.state.serviceRecords[j];
             locationServiceNameHolder[i] = this.state.serviceRecords[j].fields.Name;
           }
@@ -298,7 +297,7 @@ export default class AgencyInfo extends Component { //FIXME should be agency cre
         //console.log("Phones array" + phonesArray);
         for (let i = 0; i < this.state.locationRecords.length; i++){ //What's this little gem you asK? Well, even though we retrieve address records
           for (let j = 0; j < this.state.locationRecords.length; j++){//and push them to a list in the same order the locations appear in, somehow
-            if (this.state.locationRecords[i].fields.address == locationAddressesArray[j].id){//because react is a treat, they still do not get added
+            if (this.state.locationRecords[i].fields.address === locationAddressesArray[j].id){//because react is a treat, they still do not get added
               rearrangedArray[i] = locationAddressesArray[j];// in propper order, and can screw up how we display loc / add pairs.
             }																								//this thing fixes that problem!
           }
@@ -371,13 +370,13 @@ export default class AgencyInfo extends Component { //FIXME should be agency cre
 		console.log(this.state.serviceTaxonomies);
 
     if (
-      this.state.organization != [] &&
+      this.state.organization !== [] &&
       !this.state.org_update &&
-      this.state.phoneRecords != [][0] &&
-      this.state.serviceRecords != [][0]	&&			//FIXME: FROM TIME TO TIME THESE DO NOT EVALUATE TO TRUE
-      this.state.contactRecords != [][0]	&&						//In this event, the name of the organization is not loaded into state
-      this.state.locationRecords != [][0]	&&					//If the user clicks "update", the empty name is uploaded to the database
-      this.state.locationAddressRecords != [][0]	//this causes all other fields not to load, since most are linked to the org name
+      this.state.phoneRecords !== [][0] &&
+      this.state.serviceRecords !== [][0]	&&			//FIXME: FROM TIME TO TIME THESE DO NOT EVALUATE TO TRUE
+      this.state.contactRecords !== [][0]	&&						//In this event, the name of the organization is not loaded into state
+      this.state.locationRecords !== [][0]	&&					//If the user clicks "update", the empty name is uploaded to the database
+      this.state.locationAddressRecords !== [][0]	//this causes all other fields not to load, since most are linked to the org name
     ) {																													//and the base can't handle an empty string for a name!!!!
       console.log("R e a c h i n g   i n s i d e   t h e   d i d U p d a t e   i f ")
       var phoneNumArray = [];
@@ -682,7 +681,7 @@ class ServiceInfo extends Component {
 	render() {
 		console.log("H E R E   A R E   S E R V I C E   P R O P S ");
 		console.log(this.props);
-		if (this.props.taxonomy == [][0]){
+		if (this.props.taxonomy === [][0]){
 			return (<h1>loading services</h1>);
 		}
 
@@ -728,14 +727,14 @@ class ContactInfo extends Component {
 		//console.log("THE CONTACT SERVICE PASSED IN IS: ");
 		//console.log(this.props.contactServiceName);
 		var name = "";
-		if(this.props.contactServiceName == [][1]){
+		if(this.props.contactServiceName === [][1]){
 			name = "none";
 		} else {
 			name = this.props.contactServiceName;
 		}
 		//console.log("The name is : " + name);
 		var number = "";
-		if(this.props.contactPhoneNumber == [][1]){
+		if(this.props.contactPhoneNumber === [][1]){
 			number = "none";
 		} else {
 			number = this.props.contactPhoneNumber;
@@ -769,7 +768,7 @@ class LocationInfo extends Component { // WE WILL ALSO USE THESE FOR ADDRESSES
 		//console.log("And the services are: ");
 		//console.log(this.props.services);
 		var name = "";
-		if(this.props.locationServiceName == [][1]){
+		if(this.props.locationServiceName === [][1]){
 			name = "none";
 		} else {
 			name = this.props.locationServiceName;
@@ -778,7 +777,7 @@ class LocationInfo extends Component { // WE WILL ALSO USE THESE FOR ADDRESSES
 		//console.log("The address record is as follows: ")
 		//console.log(this.props.addressRecord);
 
-		if (this.props.addressRecord == [][0]){
+		if (this.props.addressRecord === [][0]){
 			return(
 				<h1>loading address records...</h1>
 			)

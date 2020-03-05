@@ -2,7 +2,6 @@ import React from 'react';
 import "../CSS/styles.css";
 import axios from "axios";
 
-
 export default class exitbutton extends React.Component{
    constructor(props) {
       super(props);
@@ -40,10 +39,11 @@ export default class exitbutton extends React.Component{
       if(!this.state.isopen){
          button.innerText='Hide Button';
          // this.props.action(true);
-         const open = true;
-         axios.post('/', open)
+         var open = true;
+         var isopen = {open}
+         axios.post('*', isopen)
           .then(function (response) {
-            console.log(response);
+            console.log("this stuff: " + response.data);
           })
           .catch(function (error) {
             console.log(error);
@@ -56,12 +56,13 @@ export default class exitbutton extends React.Component{
          // this.props.action;
       }
       else {
-         const open = false;
+         var open = false;
+         var isopen = {open}
          button.innerText='Show Button';
          // this.props.action(false);
-         axios.post('/', open)
+         axios.post('*', isopen)
          .then(function (response) {
-           console.log(response);
+            console.log("this stuff: " + response.data);
          })
          .catch(function (error) {
            console.log(error);

@@ -34,6 +34,31 @@ ul {
 /*______________________
   Miscellaneous (Reusable)
   ________________________*/
+.table {
+	display: table;
+}
+.t-title {
+	display: table-caption;
+	text-align: center;
+	font-weight: bold;
+	font-size: larger;
+}
+.heading
+{
+	display: table-row;
+	font-weight: bold;
+	text-align: center;
+}
+.t-row {
+	display: table-row;
+}
+.t-col {
+	display: table-cell;
+	border: solid;
+	border-width: thin;
+	padding-left: 5px;
+	padding-right: 5px;	
+}
 
 .right {
 	position: absolute;

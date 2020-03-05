@@ -29,7 +29,7 @@ app.post("/login", function(req, res) {
 
 app.post("*", function(req, res) {
 	const open = req.body.open;
-	console.log(open);
+	console.log("open var: " + open);
 	res.send("got it");
 });
 
