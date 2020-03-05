@@ -44,16 +44,9 @@ class Loginpage extends React.Component {
 			});
 	}
 
-	showButtons() {
-		$("#add-agency-button").removeClass("disabled");
-		$("#edit-agency-button").removeClass("disabled");
-		//document.getElementById("add-agency-button").removeAttribute("disabled");
-		//document.getElementById("add-agency-button").setAttribute("active", "true");
-	}
-
 	authenticate = async stuff => {
 		let res = await axios.post("/login", stuff);
-		console.log(res);
+		//console.log(res);
 		history.push(res.data);
 	};
 
@@ -61,52 +54,12 @@ class Loginpage extends React.Component {
 		event.preventDefault();
 
 		const { username, password } = this.state;
-		console.log(username);
-		console.log(password);
-
 		const authorization = {
 			username,
 			password
 		};
 
 		this.authenticate(authorization);
-
-		/* for (let i = 0; i <= this.state.organization_accounts.length; i++) {
-			if (i >= this.state.organization_accounts.length) {
-				history.push("/");
-			} else if (
-				this.state.organization_accounts[i].fields["username"] ===
-					this.state.username &&
-				this.state.organization_accounts[i].fields["password"] ===
-					this.state.password
-			) {
-				this.props.setLogIn();
-				this.props.setOrg(
-					this.state.organization_accounts[i].fields["org_name"]
-				);
-				this.props.setOrgId(
-					this.state.organization_accounts[i].fields["org_acc_id"]
-				);
-
-				this.props.setOrg(
-					this.state.organization_accounts[i].fields["org_name"]
-				);
-				this.props.setOrgId(
-					this.state.organization_accounts[i].fields["org_acc_id"]
-				);
-
-				history.push(
-					"/Organization_Home/" +
-						this.state.organization_accounts[i].fields["org_name"] +
-						"/" +
-						this.state.organization_accounts[i].fields["org_acc_id"]
-				);
-				//console.log(this.props.getLogIn);
-				break;
-			}
-			//console.log(i);
-			//console.log(this.state.organization_accounts.length);
-		} */
 	}
 
 	handleChange(e) {
