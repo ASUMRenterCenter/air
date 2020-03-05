@@ -10,6 +10,7 @@ import {
 	ButtonToolbar
 } from "../../node_modules/react-bootstrap";
 import "../CSS/loginpage.css";
+import "../CSS/styles.css";
 import history from "./history";
 import axios from "axios";
 
@@ -44,101 +45,22 @@ class Loginpage extends React.Component {
 			});
 	}
 
-	showButtons() {
-		$("#add-agency-button").removeClass("disabled");
-		$("#edit-agency-button").removeClass("disabled");
-		//document.getElementById("add-agency-button").removeAttribute("disabled");
-		//document.getElementById("add-agency-button").setAttribute("active", "true");
-	}
+	authenticate = async stuff => {
+		let res = await axios.post("/login", stuff);
+		//console.log(res);
+		history.push(res.data);
+	};
 
 	handleSubmit(event) {
 		event.preventDefault();
 
 		const { username, password } = this.state;
-		console.log(username);
-		console.log(password);
-
 		const authorization = {
 			username,
 			password
 		};
 
-		axios
-			.post("/login", authorization)
-			.then(function(response) {
-				console.log("logging in and " + response.data);
-			})
-			.catch(err => {
-				console.error(err);
-			});
-		/* var apiBaseUrl = "http://localhost:3000/";
-		var payload = {
-			username: this.state.username,
-			password: this.state.password
-		};
-		axios
-			.post(apiBaseUrl + "login", payload)
-			.then(function(response) {
-				console.log(response);
-				if (response.data.code == 200) {
-					console.log("Login successfull");
-					var uploadScreen = [];
-					uploadScreen.push(
-						<UploadScreen appContext={this.props.appContext} />
-					);
-					this.props.appContext.setState({
-						loginPage: [],
-						uploadScreen: uploadScreen
-					});
-				} else if (response.data.code == 204) {
-					console.log("Username password do not match");
-					alert("username password do not match");
-				} else {
-					console.log("Username does not exists");
-					alert("Username does not exist");
-				}
-			})
-			.catch(function(error) {
-				console.log(error);
-			});
-	} */
-
-		/* for (let i = 0; i <= this.state.organization_accounts.length; i++) {
-			if (i >= this.state.organization_accounts.length) {
-				history.push("/");
-			} else if (
-				this.state.organization_accounts[i].fields["username"] ===
-					this.state.username &&
-				this.state.organization_accounts[i].fields["password"] ===
-					this.state.password
-			) {
-				this.props.setLogIn();
-				this.props.setOrg(
-					this.state.organization_accounts[i].fields["org_name"]
-				);
-				this.props.setOrgId(
-					this.state.organization_accounts[i].fields["org_acc_id"]
-				);
-
-				this.props.setOrg(
-					this.state.organization_accounts[i].fields["org_name"]
-				);
-				this.props.setOrgId(
-					this.state.organization_accounts[i].fields["org_acc_id"]
-				);
-
-				history.push(
-					"/Organization_Home/" +
-						this.state.organization_accounts[i].fields["org_name"] +
-						"/" +
-						this.state.organization_accounts[i].fields["org_acc_id"]
-				);
-				//console.log(this.props.getLogIn);
-				break;
-			}
-			//console.log(i);
-			//console.log(this.state.organization_accounts.length);
-		} */
+		this.authenticate(authorization);
 	}
 
 	handleChange(e) {
@@ -159,13 +81,13 @@ class Loginpage extends React.Component {
 								<h1 className="aligncenter">Organization Login</h1>
 							</Col>
 							<Col>
-								<p className="alignright">
+								{/* <p className="alignright">
 									Here by mistake?
 									<br></br>
 									<Button href="/" size="sm" variant="dark">
 										Back
 									</Button>
-								</p>
+								</p> */}
 							</Col>
 						</Row>
 					</Container>
@@ -210,10 +132,20 @@ class Loginpage extends React.Component {
 										onChange={event => this.handleChange(event)}
 									/> */}
 									{/* <button type="submit">Submit</button>*/}
-									<p>{this.state.greeting}</p>
-									<button type="submit" className="btn btn-primary btn-sm">
-										Submit
-									</button>
+									<div className="login-submit">
+										<ul className="">
+											<li className="">
+												<button type="submit" className="btn btn-primary">
+													Submit
+												</button>
+											</li>
+											<li className="nav-item">
+												<button type="button" className="btn btn-dark" href="/">
+													Back
+												</button>
+											</li>
+										</ul>
+									</div>
 								</form>
 							</Col>
 							<Col md={{ offset: 1 }}>
