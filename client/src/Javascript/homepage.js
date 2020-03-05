@@ -161,10 +161,9 @@ export default class Homepage extends Component {
 		return (
 			<div className="buttonpagescolumn width85">
 				<h1>What resources can we help you find?</h1>
-				<a
-					role="button"
+				<button
+					type="button"
 					className="btn btn-light Fixed right"
-					href="#"
 					onClick={this.surveyClick}
 					id="gotosurveybutton"
 				>
@@ -173,7 +172,7 @@ export default class Homepage extends Component {
 					<h1 id="btn-text">
 						Need Help Choosing a Resource? Click here to take a quick survey.
 					</h1>
-				</a>
+				</button>
 				<div className="container mt-3">
 					{this.state.taxonomies.length > 0
 						? this.state.taxonomies.map(row => row)

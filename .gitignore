@@ -2,7 +2,10 @@
 
 # dependencies
 /client/node_modules
+<<<<<<< HEAD
+=======
 /client/build
+>>>>>>> master_test
 /.pnp
 .pnp.js
 
