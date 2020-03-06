@@ -15,6 +15,7 @@ const base = Airtable.base("app6JuPyfzqD3RZiA");
 
 const getAccounts = async body => {
 	let accounts = [];
+	console.log("before query");
 	await base("organization_accounts")
 		.select({
 			fields: ["org_acc_id", "org_name", "username", "password"],
@@ -24,6 +25,7 @@ const getAccounts = async body => {
 			accounts = [...accounts, ...partialRecords];
 			fetchNextPage();
 		});
+	console.log("after", accounts);
 	return accounts;
 };
 
@@ -46,6 +48,40 @@ const validateUser = (username, password, org_acc_array) => {
 		}
 	}
 	return url;
+};
+
+const locQuery = async string => {
+	let locations = [];
+	//console.log("before query", string);
+	await base("locations")
+		.select({
+			fields: ["organization", "address", "bulletin_board"],
+			sort: [{ field: "organization", direction: "asc" }]
+		})
+		.eachPage((partialRecords, fetchNextPage) => {
+			locations = [...locations, ...partialRecords];
+			fetchNextPage();
+		});
+	//console.log("after query", locations);
+	return locations;
+};
+
+const findLoc = async (recs, rec_id) => {
+	console.log(recs[0].id, rec_id);
+	let record = [];
+	for (let i = 0; i < recs.length; i++) {
+		if (typeof recs[i].fields["organization"] === "undefined") {
+			continue;
+		}
+		if (recs[i].id === rec_id) {
+			record = recs[i];
+		}
+		console.log(recs[i].fields["organization"][0]);
+	}
+	//console.log("I am here", record);
+	//const reco = Promise.all(record);
+	//console.log(recoord);
+	return record;
 };
 
 const app = express();
@@ -72,11 +108,24 @@ app.post(
 	})
 );
 
-app.post("*", function(req, res) {
+app.post(
+	"/Events",
+	asyncHandler(async (req, res, next) => {
+		const rec = Object.keys(req.body);
+		console.log("server rec", rec[0]);
+		const locations = await locQuery(rec[0]);
+		//console.log("after await", locations);
+		const location = await findLoc(locations, rec[0]);
+		console.log("i am before response", location);
+		res.send(location);
+	})
+);
+
+/* app.post("*", function(req, res) {
 	const open = req.body.open;
 	console.log("open var: " + open);
 	res.send("got it");
-});
+}); */
 
 app.listen(PORT, () =>
 	console.log(`Express server is running and listening on port ${PORT}`)
