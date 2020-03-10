@@ -20,6 +20,7 @@ import CreateOrganization from "./Javascript/createOrganization";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Airtable from "airtable";
 import Sidebar from "./Javascript/hotlinebar";
+import AddEvent from "./Javascript/AddEvent";
 
 const Notfound = () => <h1>Not found</h1>;
 
@@ -178,14 +179,14 @@ class Index extends React.Component {
 						)}
 					/>
 					<Route
-						path="/AddEvent/:org_name/:org_acc_id"
+						path="/AddEvent/:org_name/:org_acc_id" //use this.props.getparams (look for jesse)
 						component={props => (
 							<div className="indexdivinner">
 								<Navbar
 									{...props}
 									loggedIn={true}
 									database={base}
-									children={<Bulletin database={base} />}
+									children={<AddEvent {...props} database={base} />}
 								/>
 								<ExitButton action={this.handleExitButton} displayed={this.state.show_exit_button}/>
 							</div>

@@ -6,6 +6,15 @@
   text-align: center;
 }
 
+.redText {
+  color: red;
+}
+
+.creationFormDiv {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
 #moreInfoButton {
   float: right;
   height: 30px;

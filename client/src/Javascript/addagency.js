@@ -24,6 +24,7 @@ export default class AddAgency extends React.Component {
 			active: false,
 			isJordan: false,
 			organizations: [],
+			bulletinPosts:[],
 			updateOrg: []
 		};
 		this.createNewOrg = this.createNewOrg.bind(this);
@@ -64,6 +65,19 @@ export default class AddAgency extends React.Component {
 				});
 				fetchNextPage();
 			});
+
+			this.props //This is to getthe bulletin posts
+				.database("bulletin_board")
+				.select({
+					fields: ["event_name", "description", "id"],
+					sort: [{ field: "id", direction: "asc" }]
+				})
+				.eachPage((partialRecords, fetchNextPage) => {
+					this.setState({
+						bulletinPosts: [...this.state.bulletinPosts, ...partialRecords]
+					});
+					fetchNextPage();
+				});
 		/* ===================================
 			The following is for the search
 			bar to properly search the table
@@ -83,7 +97,25 @@ export default class AddAgency extends React.Component {
 				});
 			});
 		});
+
+		$(document).ready(function() {
+			$("#postSearch").on("keyup", function() {
+				var value = $(this)
+					.val()
+					.toLowerCase();
+				$("#postTable tr").filter(function() {
+					$(this).toggle(
+						$(this)
+							.text()
+							.toLowerCase()
+							.indexOf(value) > -1
+					);
+				});
+			});
+		});
 	}
+
+
 
 	componentDidUpdate() {
 		/*===============================
@@ -167,6 +199,27 @@ export default class AddAgency extends React.Component {
 		}
 	}
 
+	deletePost(postID, index){
+		if (!this.state.isJordan) {
+			alert("You don't have permission to edit.");
+			history.replace("/");
+		} else {
+			this.props.database('bulletin_board').destroy(postID, function(err, deletedRecords) {
+			if (err) {
+				console.error(err);
+				return;
+			}
+			console.log('Deleted', deletedRecords.length, 'records');
+			});
+
+			var holder = this.state.bulletinPosts;
+			holder.splice(index, 1);
+			this.setState({
+				bulletinPosts: holder
+			})
+		}
+	}
+
 	onUpdateItem = (index, value) => {
 		const organizations = [...this.state.organizations];
 		organizations[index].fields["isNotListed"] = value;
@@ -209,7 +262,7 @@ export default class AddAgency extends React.Component {
 		}
 	}
 
-	renderTableData() {
+	renderTableData() { //THIS IS USED TO RENDER THE ORGANIZATION TABLE DATA
 		return this.state.organizations.map((organization, index) => {
 			// const { name, email, id } = organization;
 			return (
@@ -265,6 +318,36 @@ export default class AddAgency extends React.Component {
 		});
 	}
 
+	renderBulletinData() { //THIS IS USED TO RENDER THE Forum Data
+		return this.state.bulletinPosts.map((post, index) => {
+			// const { name, email, id } = organization;
+			return (
+				<tr key={post.id}>
+					<td>{post.fields["id"]}</td>
+					<td>{post.fields["event_name"]}</td>
+					<td>{post.fields["description"]}</td>
+					<td>
+						<Row>
+
+							<Col>
+								<button
+									type="button"
+									className="btn btn-link"
+									onClick={() =>
+										this.deletePost(post.id, index)
+									}
+									// href="#"
+								>
+									<h6>Delete</h6>
+								</button>
+							</Col>
+						</Row>
+					</td>
+				</tr>
+			);
+		});
+	}
+
 	render() {
 		return (
 			<div id="add-agency-page" className="scrollable">
@@ -286,7 +369,7 @@ export default class AddAgency extends React.Component {
 							</Col>
 						</Row>
 					</Container>
-					<Container id="edit-org-table" className="centered">
+					<Container id="edit-org-table" className="centered"> {/*THIS IS THE CONTAINER FOR THE TABLE*/}
 						<div className="form-group row">
 							<div className="col-md-6">
 								<input
@@ -309,6 +392,35 @@ export default class AddAgency extends React.Component {
 										</tr>
 									</thead>
 									<tbody id="myTable">{this.renderTableData()}</tbody>
+								</table>
+							</form>
+						</div>
+					</Container>
+					<br/>
+					<br/>
+					<Container id="delete-post-table" className="centered"> {/*THIS IS THE CONTAINER FOR THE Post TABLE*/}
+						<div className="form-group row">
+							<div className="col-md-6">
+								<input
+									className="form-control"
+									id="postSearch"
+									type="text"
+									placeholder="Search for Events Bulletin Post..."
+								></input>
+							</div>
+						</div>
+						<div className="table-wrapper-scroll-y custom-scrollbar">
+							<form id="delete-post" name="deleted">
+								<table className="table table-striped table-bordered table-hover table-dark">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Event Name</th>
+											<th>Description</th>
+											<th>Delete?</th>
+										</tr>
+									</thead>
+									<tbody id="postTable">{this.renderBulletinData()}</tbody>
 								</table>
 							</form>
 						</div>
