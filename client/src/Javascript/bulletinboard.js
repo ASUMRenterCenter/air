@@ -11,10 +11,10 @@ export default class buttonresults extends React.Component {
 			html: []
 		};
 		this.handleEvents = this.handleEvents.bind(this);
-		this.handlePhones = this.handlePhones.bind(this);
+		// this.handlePhones = this.handlePhones.bind(this);
 		this.handleOrganizations = this.handleOrganizations.bind(this);
-		this.handleAddress = this.handleAddress.bind(this);
-		this.handleLocation = this.handleLocation.bind(this);
+		// this.handleAddress = this.handleAddress.bind(this);
+		// this.handleLocation = this.handleLocation.bind(this);
 		this.handleInformation = this.handleInformation.bind(this);
 		this.returnInformation = this.returnInformation.bind(this);
 		this.processEvents = this.processEvents.bind(this);
@@ -41,48 +41,59 @@ export default class buttonresults extends React.Component {
 		return all_events;
 	};
 
-	handleLocation = async location_id => {
-		console.log("Got to handleLocation");
-		let locations = [];
-		await this.props
-			.database("locations")
-			.find(location_id, (err, location) => {
-				locations.push(location);
-			});
-		return locations;
-	};
-
-	handleAddress = async location => {
-		console.log(location);
-		console.log("Got to handleAddress");
-		let addresses = [];
-		await this.props
-			.database("address")
-			.find(location.fields["address"], (err, address) => {
-				addresses.push(address);
-			});
-		return addresses;
-	};
-
-	handlePhones = async location => {
-		console.log("Got to handlePhones");
-		let phones = [];
-		await this.props.database("phones").find(location, (err, phone) => {
-			phones.push(phone);
-		});
-		return phones;
-	};
-
-	handleOrganizations = async location => {
-		console.log("Got to handleOrganizations");
+	handleOrganizations = async org_id => {
+		console.log("Got to handleOrganization");
 		let organizations = [];
 		await this.props
 			.database("organizations")
-			.find(location, (err, organization) => {
+			.find(org_id, (err, organization) => {
 				organizations.push(organization);
 			});
 		return organizations;
-	};
+	}
+
+	// handleLocation = async location_id => {
+	// 	console.log("Got to handleLocation");
+	// 	let locations = [];
+	// 	await this.props
+	// 		.database("locations")
+	// 		.find(location_id, (err, location) => {
+	// 			locations.push(location);
+	// 		});
+	// 	return locations;
+	// };
+
+	// handleAddress = async location => {
+	// 	console.log(location);
+	// 	console.log("Got to handleAddress");
+	// 	let addresses = [];
+	// 	await this.props
+	// 		.database("address")
+	// 		.find(location.fields["address"], (err, address) => {
+	// 			addresses.push(address);
+	// 		});
+	// 	return addresses;
+	// };
+
+	// handlePhones = async location => {
+	// 	console.log("Got to handlePhones");
+	// 	let phones = [];
+	// 	await this.props.database("phones").find(location, (err, phone) => {
+	// 		phones.push(phone);
+	// 	});
+	// 	return phones;
+	// };
+
+	// handleOrganizations = async location => {
+	// 	console.log("Got to handleOrganizations");
+	// 	let organizations = [];
+	// 	await this.props
+	// 		.database("organizations")
+	// 		.find(location, (err, organization) => {
+	// 			organizations.push(organization);
+	// 		});
+	// 	return organizations;
+	// };
 
 	dataQuery = async string => {
 		let locations;
@@ -102,12 +113,12 @@ export default class buttonresults extends React.Component {
 		return locations;
 	};
 	processEvents = async events => {
-		const locations = await events.map(async (event, index) => {
+		const organizations = await events.map(async (event, index) => {
 			//let locations;
 			console.log("Handling Events");
-			console.log(event.fields["location"][0]);
+			//console.log(event.fields["location"][0]);
 
-			const rec = event.fields["location"][0];
+			const rec = event.fields["organization"][0];
 
 			console.log("rec is", rec);
 
@@ -145,11 +156,11 @@ export default class buttonresults extends React.Component {
 		//await Promise.all([locations, addresses, phones, organizations]);
 		/* console.log("Before Promise");
 		console.log(locations);*/
-		const loc = await Promise.all(locations);
+		const org = await Promise.all(organizations);
 		console.log("Finished await for Promise");
 		//console.log(loc);
-		console.log(loc);
-		return loc;
+		console.log(org);
+		return org;
 	};
 
 	handleInformation = async () => {
@@ -158,19 +169,21 @@ export default class buttonresults extends React.Component {
 		console.log("Before ProcessEvents");
 		console.log(events);
 
-		const locations = await this.processEvents(events);
-		//const locations = await Promise.all(loc);
-		//console.log(loc);
+		/*const locations = await this.processEvents(events);*/
+		const organizations = await this.processEvents(events);
+		const orgs = await Promise.all(organizations);
+		// console.log(loc);
 		console.log("Outside of loop");
-		console.log(locations);
-		console.log(locations[0].data.fields["organization"]);
-		console.log(locations.length);
+		console.log(orgs);
+		console.log(organizations[0].data.fields["name"]);
+		console.log(organizations.length);
+		console.log(events[0].fields['organization']);
 		// let locations;
 		// let addresses;
 		// let phones;
 		// let organizations;
 		let html = [];
-		/*for (let i = 0; i < events.length; i++) {
+		for (let i = 0; i < events.length; i++) {
 			var date = events[i].fields["date"];
 			var month = date.slice(5, 7);
 			var year = date.slice(0, 4);
@@ -190,13 +203,14 @@ export default class buttonresults extends React.Component {
 			} else {
 				ampm = "AM";
 			}
-			console.log(events[i].fields["location"]);
+		
+		/*	console.log(events[i].fields["location"]);
 			var location = await this.handleLocation(events[i].fields["location"]);
 			console.log(location);
 			var address = await this.handleAddress(location.id);
 			var phone = await this.handlePhones(location.id);
 			var organization = await this.handleOrganizations(location.id);
-
+		*/
 			html = [
 				...html,
 				<div className="t-row" key={events[i].id}>
@@ -208,18 +222,18 @@ export default class buttonresults extends React.Component {
 						</div>
 					) : null}
 
-					*/ {
+					{
 			/*------------------------------------------*/
 		}
-		/* {events[i] !== undefined ? (
+		 {events[i] !== undefined ? (
 						<div className="t-col">
 							<p>{hour + minute + " " + ampm}</p>
 						</div>
-					) : null} */
+					) : null} 
 		{
 			/*------------------------------------------*/
 		}
-		/* {events[i] !== undefined ? (
+		 {events[i] !== undefined ? (
 						<div className="t-col">
 							<p>
 								{events[i] !== undefined
@@ -229,53 +243,39 @@ export default class buttonresults extends React.Component {
 						</div>
 					) : (
 						<p>invalid event name</p>
-					)} */
-		{
-			/*------------------------------------------*/
-		}
-		/* {location !== undefined ? (
-						<div className="t-col">
-							<p>
-								{location !== undefined
-									? location.fields["name"]
-									: "event name unavailable"}
-							</p>
-						</div>
-					) : (
-						<h3>invalid location name</h3>
-					)} */
-		{
-			/*------------------------------------------*/
-		}
-		/* {events[i] !== undefined ? (
-						<div className="t-col">
-							<p>
-								{address !== undefined ? address.fields["address_1"] : "street"}
-								&nbsp;
-								{address !== undefined ? address.fields["city"] : "city"},&nbsp;
-								{address !== undefined ? address.fields["State"] : "state"}
-								&nbsp;
-								{address !== undefined ? address.fields["Zip Code"] : "00000"}
-							</p>
-						</div>
-					) : null} */
-		{
-			/*------------------------------------------*/
-		}
-		/*{events[i] !== undefined ? (
-						<div className="t-col">
-							<p>
-								{phone !== undefined
-									? phone.fields["number"]
-									: "phone number unavailable"}
-							</p>
-						</div>
-					) : (
-						<h3>invalid phone number</h3>
 					)}
-				</div>
-			];
-		} */
+		{
+			/*------------------------------------------*/
+		}
+		{organizations[i] !== undefined ? (
+						<div className="t-col">
+							<p>
+								{organizations !== undefined
+									? organizations[i].data.fields["name"]
+									: "organization unavailable"}
+							</p>
+						</div>
+					) : (
+						<h3>invalid organization name</h3>
+					)}
+		{
+			/*------------------------------------------*/
+		}
+		{events[i] !== undefined ? (
+						<div className="t-col">
+							<p>
+								{events[i].fields['address'] !== undefined ?  events[i].fields['address'] : "street"}
+								&nbsp;
+								{events[i].fields['city'] !== undefined ? events[i].fields['city'] : "city"},&nbsp;
+								{events[i].fields['state'] !== undefined ? events[i].fields['state'] : "state"}
+								&nbsp;
+								{events[i].fields['zipcode'] !== undefined ? events[i].fields['zipcode'] : "00000"}
+							</p>
+						</div>
+					) : null} 
+		</div>
+		];
+		}
 		return html;
 	};
 
@@ -283,6 +283,7 @@ export default class buttonresults extends React.Component {
 		console.log("Got to returnInformation");
 		const html = await this.handleInformation();
 		this.setState(prevState => ({
+			html: html,
 			continue: true
 		}));
 		return html;
@@ -292,9 +293,6 @@ export default class buttonresults extends React.Component {
 		if (this.state.continue === false) {
 			console.log("Component Did Update");
 			let html = this.returnInformation();
-			this.setState = prevState => ({
-				html: html
-			});
 		}
 	}
 
@@ -320,9 +318,6 @@ export default class buttonresults extends React.Component {
 						</div>
 						<div className="t-col">
 							<p>Address</p>
-						</div>
-						<div className="t-col">
-							<p>Phone Number</p>
 						</div>
 					</div>
 					{this.state.html}

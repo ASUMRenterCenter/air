@@ -50,6 +50,40 @@ const validateUser = (username, password, org_acc_array) => {
 	return url;
 };
 
+const orgQuery = async string => {
+	let organizations = [];
+	//console.log("before query", string);
+	await base("organizations")
+		.select({
+			fields: ["name", "email", "bulletin_board"],
+			sort: [{ field: "name", direction: "asc" }]
+		})
+		.eachPage((partialRecords, fetchNextPage) => {
+			organizations = [...organizations, ...partialRecords];
+			fetchNextPage();
+		});
+	//console.log("after query", locations);
+	return organizations;
+};
+
+const findOrg = async (recs, rec_id) => {
+	console.log(recs[0].id, rec_id);
+	let record = [];
+	for (let i = 0; i < recs.length; i++) {
+		if (typeof recs[i].fields["name"] === "undefined") {
+			continue;
+		}
+		if (recs[i].id === rec_id) {
+			record = recs[i];
+		}
+		console.log(recs[i].fields["name"][0]);
+	}
+	//console.log("I am here", record);
+	//const reco = Promise.all(record);
+	//console.log(recoord);
+	return record;
+};
+
 const locQuery = async string => {
 	let locations = [];
 	//console.log("before query", string);
@@ -111,13 +145,19 @@ app.post(
 app.post(
 	"/Events",
 	asyncHandler(async (req, res, next) => {
+		// console.log(req);
 		const rec = Object.keys(req.body);
 		console.log("server rec", rec[0]);
-		const locations = await locQuery(rec[0]);
+		const organizations = await orgQuery(rec[0]);
+		console.log(organizations[0]);
+		// const locations = await locQuery(rec[0]);
 		//console.log("after await", locations);
-		const location = await findLoc(locations, rec[0]);
-		console.log("i am before response", location);
-		res.send(location);
+		const organization = await findOrg(organizations, rec[0]);
+		// const location = await findLoc(locations, rec[0]);
+		Promise.all(organizations, organization);
+		console.log("i am before response", organization);
+		// res.send(location);
+		res.send(organization)
 	})
 );
 
