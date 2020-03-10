@@ -4,6 +4,7 @@ import '../CSS/ComponentStyle.css'
 //import AgencyEditingFields from './AgencyEditingFields'
 import React, { Component } from 'react';
 import Form from 'react-bootstrap/Form'
+import history from "./history"
 
 // import {Col} from "react-bootstrap"
 //import SaveChangesButton from "./SaveChangesButton.js"
@@ -66,7 +67,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 			testList: [1, 2, 3, 4, 5],
 			taxonomyNames: [],
 
-			submitLabel: "Submit Info (WARNING, cannot be undone)"
+			submitLabel: "Create Organization"
 
 
 		}
@@ -78,6 +79,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 
 
   componentDidMount() {
+		console.log(this.props);
 		var taxonomyArray = [];
 		this.props.database('taxonomy').select({
 				filterByFormula: '{parent_id} = ""',
@@ -108,13 +110,20 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 	checkRequired(e){
 		if (this.state.organizationName === "" || this.state.organizationPhone === ""|| this.state.address_1 === "" || this.state.locationName === ""){
 			this.setState({
-				submitLabel: "Please fill out ALL required fields then SUBMIT again"
+				submitLabel: "Create Organization (PLEASE FILL OUT REQUIRED FIELDS)"
 			})
 		} else {
 			this.handleSubmit(e);
 			this.setState({
-				submitLabel: "Submission Complete: Only resubmit for new Organization"
-			})
+				submitLabel: "Submission Complete: Redirecting"
+			});
+			history.push(
+				"/" +
+					"AddAgency/" +
+					this.props.match.params.org_name +
+					"/" +
+					this.props.match.params.org_acc_id
+			);
 		}
 	}
 
@@ -385,9 +394,15 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 					<div>
 						<br/>
 						<br/>
+						<div className="rowHeadingPad">
+							<h1>New Organization Creation:</h1>
+							<h4>Please enter the basic information for the new organization.</h4>
+							<p>Fields left blank will be filled with "Not Listed". Additional phones, locations, etc. can be added after creation.</p>
+						</div>
+						<br/>
 						<h3 className="rowHeadingPad">Organization Info:</h3>
 	          <Form.Group controlId="formBasicEmail" className="rowChunk">
-	            <Form.Label>Organization Name (REQUIRED)</Form.Label>
+	            <Form.Label>Organization Name <span className="redText">(REQUIRED)</span></Form.Label>
 	            <textarea
 	              type="organizationName"
 	              name="organizationName"
@@ -432,7 +447,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 					<div>
 						<h3 className="rowHeadingPad">Phone Info:</h3>
 	          <Form.Group controlId="formBasicEmail" className="rowChunk">
-	            <Form.Label>Organization Phone (REQUIRED)</Form.Label>
+	            <Form.Label>Organization Phone <span className="redText">(REQUIRED)</span></Form.Label>
 	            <textarea
 	              type="organizationPhone"
 	              name="organizationPhone"
@@ -502,7 +517,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 					<div >
 					<h3 className="rowHeadingPad">Address Info:</h3>
 	          <Form.Group controlId="formBasicEmail"  className="rowChunk">
-	            <Form.Label>Address Number and Street (REQUIRED)</Form.Label>
+	            <Form.Label>Address Number and Street <span className="redText">(REQUIRED)</span></Form.Label>
 	            <textarea
 	              type="address_1"
 	              name="address_1"
@@ -637,11 +652,16 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 					<br/>
 					<br/>
 					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
 					<hr/>
 					<div>
 					<h3 className="rowHeadingPad">Location Info:</h3>
 						<Form.Group controlId="exampleForm.ControlSelect1" className="rowChunk">
-							<Form.Label>Location "Name" (REQUIRED)</Form.Label>
+							<Form.Label>Location "Name" <span className="redText">(REQUIRED)</span></Form.Label>
 							<textarea
 								type="locationName"
 								name="locationName"

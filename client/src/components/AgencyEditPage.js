@@ -120,8 +120,17 @@ export default class AgencyEditPage extends Component {
 
 	componentDidMount() {
 
+		//Check which part of props to used basedon whether ornot it's admin (AKA jordan)
+		var organizationRecordID = [];
+		if (!this.props.isJordan){
+			organizationRecordID = this.props.match.params.org_name;
+		}
+		else{
+			organizationRecordID= this.props.match.params.org_edit_id;
+		}
+
 		//RETRIEVING ORGANIZATION RECORD
-		this.props.database('organizations').find(this.props.match.params.org_name, (err, record) => {
+		this.props.database('organizations').find(organizationRecordID, (err, record) => {
 		    if (err) { console.error(err); return; }
 		    //console.log('Retrieved', record.id);
 				this.setState({
@@ -1496,7 +1505,11 @@ export default class AgencyEditPage extends Component {
 			<div className ="outermost">
 				<br/>
 				<br/>
+				<h1 className="rowHeadingPad">Edit {this.state.organizationName} Information</h1>
+ 				<br/>
+				<br/>
 				<div className="">
+					<h3 className="rowHeadingPad">Basic {this.state.organizationName} Information</h3>
 					<OrgEditFields
 						{...this.state.organization.fields}
 						handleChange={this.handleChange}
@@ -1504,6 +1517,7 @@ export default class AgencyEditPage extends Component {
 					/>
 				</div>
 				<div className="">
+					<h3 className="rowHeadingPad">{this.state.organizationName} Phone Information:</h3>
 					{this.state.phoneRecords.length > 0
 						? this.state.phoneRecords.map((phones, index) => (
 								<div className="" key={index}>
@@ -1529,6 +1543,7 @@ export default class AgencyEditPage extends Component {
 						<hr className="class-1"/>
 				</div>
 				<div>
+				<h3 className="rowHeadingPad">{this.state.organizationName} Service Information:</h3>
 				{this.state.serviceRecords.length > 0
 					? this.state.serviceRecords.map((services, index) => (
 							<div className="" key={index}>
@@ -1562,6 +1577,7 @@ export default class AgencyEditPage extends Component {
 					<hr className="class-1"/>
 				</div>
 				<div className="">
+				<h3 className="rowHeadingPad">{this.state.organizationName} Contact Information:</h3>
 					{this.state.contactRecords.length > 0
 						? this.state.contactRecords.map((contacts, index) => (
 								<div className="" key={index}>
@@ -1594,6 +1610,7 @@ export default class AgencyEditPage extends Component {
 					<hr className="class-1"/>
 				</div>
 				<div className="">
+				<h3 className="rowHeadingPad">{this.state.organizationName} Location Information:</h3>
 					{this.state.locationRecords.length > 0
 						? this.state.locationRecords.map((location, index) => (
 								<div className="" key={index}>
@@ -1635,11 +1652,14 @@ export default class AgencyEditPage extends Component {
 				</div>
 				<button
 					onClick={event => this.handleSubmit(event)}
-					className="btn btn-dark"
+					className="btn btn-dark centered"
 					type="button"
 				>
 					Submit Changes
 				</button>
+				<br/>
+				<br/>
+				<br/>
 			</div>
 		);
 	}
