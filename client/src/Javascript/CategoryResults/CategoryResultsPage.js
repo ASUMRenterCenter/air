@@ -99,21 +99,23 @@ export default class CategoryResultsPage extends React.Component{
         </div>
         {this.state.organizations.length > 0 ? (
           this.state.organizations.map((organization, index) =>
-            <div key={organization.fields['id']}>
-              <SurveyResult
-                database = {this.props.database}
-                agency_id = {organization.id}
-                agency_name = {organization.fields['name'] === undefined ? "Not available" : organization.fields['name']}
-                agency_website = {organization.fields['url'] === undefined ? "Website Not Available" : organization.fields['url']}
-                phone_number={organization.fields['phones'] === undefined ? "Phone Number Not Available" : organization.fields['phones']}
-                email={organization.fields['email'] === undefined ? "Email Not Available" : organization.fields['email']}
-                address={typeof this.state.addresses[index] === "undefined" ? "Street Not Available" :this.state.addresses[index]['address']}
-                city={typeof this.state.addresses[index] === "undefined" ? "City Not Available" :this.state.addresses[index]['city']}
-                state={typeof this.state.addresses[index] === "undefined" ? "State Not Available" :this.state.addresses[index]['state']}
-                zip_code={typeof this.state.addresses[index] === "undefined" ? "Zip Code Not Available" :this.state.addresses[index]['zip_code']}
-              />
-              <br />
-            </div>
+            organization.fields["isNotListed"] === 0 ? (
+              <div key={organization.fields['id']}>
+                <SurveyResult
+                  database = {this.props.database}
+                  agency_id = {organization.id}
+                  agency_name = {organization.fields['name'] === undefined ? "Not available" : organization.fields['name']}
+                  agency_website = {organization.fields['url'] === undefined ? "Website Not Available" : organization.fields['url']}
+                  phone_number={organization.fields['phones'] === undefined ? "Phone Number Not Available" : organization.fields['phones']}
+                  email={organization.fields['email'] === undefined ? "Email Not Available" : organization.fields['email']}
+                  address={typeof this.state.addresses[index] === "undefined" ? "Street Not Available" :this.state.addresses[index]['address']}
+                  city={typeof this.state.addresses[index] === "undefined" ? "City Not Available" :this.state.addresses[index]['city']}
+                  state={typeof this.state.addresses[index] === "undefined" ? "State Not Available" :this.state.addresses[index]['state']}
+                  zip_code={typeof this.state.addresses[index] === "undefined" ? "Zip Code Not Available" :this.state.addresses[index]['zip_code']}
+                />
+                <br />
+              </div>
+            ):(null)
           )
           ):(null)
         }
