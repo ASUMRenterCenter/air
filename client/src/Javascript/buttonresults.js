@@ -14,7 +14,7 @@ export default class buttonresults extends React.Component{
    }
 
    componentDidMount() {
-      var filter = "({parent_id} = '" + this.state.parent_id + "')";
+      var filter = "({parent_name} = '" + this.state.parent_name + "')";
 		this.props.database('taxonomy').select({
          filterByFormula: filter,
          view : "Grid view",
