@@ -12,29 +12,64 @@ import Accordion from "react-bootstrap/Accordion"
 import axios from "axios";
 
 const ref = React.createRef();
-function CustomToggle({ children, eventKey, agency_name, agency_website}) {
-    const decoratedOnClick = useAccordionToggle(eventKey, () =>
-      null,
-    );
-  
-    return (
+
+var showWhat = "Show More";
+function CustomToggle({ children, eventKey, agency_name, agency_website, thisClass}) {
+  const decoratedOnClick = useAccordionToggle(eventKey, () => {
+    if (showWhat === "Show More"){
+      showWhat = "Show Less";
+    } else {
+      showWhat = "Show More";
+    }
+    thisClass.setState(previousState=>({
+      showWhat: showWhat
+    }));
+  });
+
+  return (
+    <div>
       <div>
-        <div>
-          <h5 style = {{float: "left"}}>{agency_name} : <a href={agency_website}>{agency_website}</a></h5>
-        </div>
-        <div>
-          <Button
-            type="button"
-            variant="dark"
-            style={{float: "right"}}
-            onClick={decoratedOnClick}
-          >
-            {children}
-          </Button>
-        </div>
+        <h5 style = {{float: "left"}}>{agency_name} : <a href={agency_website}>{agency_website}</a></h5>
       </div>
-    );
-  }
+      <div>
+        <Button
+          type="button"
+          variant="dark"
+          style={{float: "right"}}
+          onClick={decoratedOnClick}
+        >
+          {children}
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+
+
+// function CustomToggle({ children, eventKey, agency_name, agency_website}) {
+//     const decoratedOnClick = useAccordionToggle(eventKey, () =>
+//       null,
+//     );
+  
+//     return (
+//       <div>
+//         <div>
+//           <h5 style = {{float: "left"}}>{agency_name} : <a href={agency_website}>{agency_website}</a></h5>
+//         </div>
+//         <div>
+//           <Button
+//             type="button"
+//             variant="dark"
+//             style={{float: "right"}}
+//             onClick={decoratedOnClick}
+//           >
+//             {children}
+//           </Button>
+//         </div>
+//       </div>
+//     );
+//   }
 export default class SurveyResultsPage extends React.Component{
 
     constructor(props) {
@@ -42,7 +77,8 @@ export default class SurveyResultsPage extends React.Component{
         this.state = {
             tax_ids: [],
             html: [],
-            continue: false
+            continue: false,
+            showWhat: "Show More"
         }
         this.handleInformation = this.handleInformation.bind(this);
         this.processInformation = this.processInformation.bind(this);
@@ -98,7 +134,7 @@ export default class SurveyResultsPage extends React.Component{
                     html_inner = [...html_inner, <Accordion key ={org.id}>
                                                     <Card>
                                                         <Card.Header>
-                                                            <CustomToggle eventKey="0" agency_name = {org.fields['name']} agency_website = {org.fields['url']}>Show More</CustomToggle>
+                                                            <CustomToggle eventKey="0" agency_name = {org.fields['name']} agency_website = {org.fields['url']} thisClass = {this}>{this.state.showWhat}</CustomToggle>
                                                         </Card.Header>
                                                         <Accordion.Collapse eventKey="0">
                                                             <Card.Body>
