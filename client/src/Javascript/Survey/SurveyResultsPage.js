@@ -16,14 +16,24 @@ const ref = React.createRef();
 var showWhat = "Show More";
 function CustomToggle({ children, eventKey, agency_name, agency_website, thisClass}) {
   const decoratedOnClick = useAccordionToggle(eventKey, () => {
+    // console.log("Got Here")
+    // var elem = document.getElementById(agency_name);
+    // console.log("Elem Value: ", elem.value);
+    // if(elem.value === "Show More"){
+    //     elem.value = "Show Less";
+    // }
+    // else{
+    //     elem.value = "Show More";
+    // }
     if (showWhat === "Show More"){
       showWhat = "Show Less";
     } else {
       showWhat = "Show More";
     }
-    thisClass.setState(previousState=>({
-      showWhat: showWhat
-    }));
+    thisClass.changeButton(showWhat);
+    // thisClass.setState(previousState=>({
+    //   showWhat: showWhat
+    // }));
   });
 
   return (
@@ -34,6 +44,7 @@ function CustomToggle({ children, eventKey, agency_name, agency_website, thisCla
       <div>
         <Button
           type="button"
+          id={agency_name}
           variant="dark"
           style={{float: "right"}}
           onClick={decoratedOnClick}
@@ -83,7 +94,14 @@ export default class SurveyResultsPage extends React.Component{
         this.handleInformation = this.handleInformation.bind(this);
         this.processInformation = this.processInformation.bind(this);
         this.returnInformation = this.returnInformation.bind(this);
+        this.changeButton = this.changeButton.bind(this);
         // this.handleTaxonomies = this.handleTaxonomies.bind(this);
+    }
+
+    changeButton (newContent) {
+        this.setState({
+            showWhat: newContent
+        })
     }
 
     handleInformation = async () => {

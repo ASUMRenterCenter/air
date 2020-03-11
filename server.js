@@ -55,7 +55,7 @@ const orgQuery = async string => {
 	//console.log("before query", string);
 	await base("organizations")
 		.select({
-			fields: ["name", "email", "url", "locations", "phones", "bulletin_board"],
+			fields: ["name", "email", "url", "locations", "phones", "isNotListed", "bulletin_board"],
 			sort: [{ field: "name", direction: "asc" }]
 		})
 		.eachPage((partialRecords, fetchNextPage) => {
@@ -260,10 +260,14 @@ app.post(
 			}
 			else{
 				let promise2 = await orgs_ids[i].map(async (org_id, index)=>{
+					
 					let organization = await findRec(organizations, org_id, "name");
-					orgsinner = [...orgsinner, organization];
-					locinner= [...locinner, organization.fields['locations'][0]];
-					phoneinner = [...phoneinner, organization.fields['phones'][0]];
+					if(organization.fields['isNotListed'] === 0){
+						orgsinner = [...orgsinner, organization];
+						locinner= [...locinner, organization.fields['locations'][0]];
+						phoneinner = [...phoneinner, organization.fields['phones'][0]];
+					}
+					
 				});
 				orgs = [...orgs, orgsinner];
 				loc_ids = [...loc_ids, locinner];
