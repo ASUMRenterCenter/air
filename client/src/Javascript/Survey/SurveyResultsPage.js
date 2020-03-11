@@ -1,5 +1,5 @@
 import React from 'react';
-import SurveyResult from './SurveyResult';
+// import SurveyResult from './SurveyResult';
 import '../../CSS/styles.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';

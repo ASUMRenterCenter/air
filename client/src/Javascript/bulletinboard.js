@@ -195,9 +195,9 @@ export default class buttonresults extends React.Component {
 			if (hour > 12 && hour < 24) {
 				ampm = "PM";
 				hour = hour - 12;
-			} else if (hour == 12) {
+			} else if (hour === 12) {
 				ampm = "PM";
-			} else if (hour == 0) {
+			} else if (hour === 0) {
 				ampm = "AM";
 				hour = 12;
 			} else {
