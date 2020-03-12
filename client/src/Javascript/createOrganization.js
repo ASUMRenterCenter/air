@@ -117,13 +117,16 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 			this.setState({
 				submitLabel: "Submission Complete: Redirecting"
 			});
-			history.push(
-				"/" +
-					"AddAgency/" +
-					this.props.match.params.org_name +
+
+			setTimeout(() => {
+				history.push(
 					"/" +
-					this.props.match.params.org_acc_id
-			);
+						"AddAgency/" +
+						this.props.match.params.org_name +
+						"/" +
+						this.props.match.params.org_acc_id
+				)
+			}, 5500); // FIXME    STILL NEEDS TO BE TESTED
 		}
 	}
 
@@ -189,6 +192,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
           "description": this.state.organizationDescription,
           "email": this.state.organizationEmail,
           "url": this.state.organizationURL,
+					"isNotListed": 0,
         }
       },
     ],(err, records) => {

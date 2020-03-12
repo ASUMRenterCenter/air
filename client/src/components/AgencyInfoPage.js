@@ -570,16 +570,21 @@ export default class AgencyInfo extends Component { //FIXME should be agency cre
 
             </div>
           </Jumbotron>
-          <div className = "agencyInfoText" ref={ref}>
-            <h3>Name: {this.state.organizationName}</h3>
-            <h3>Website: {this.state.organizationURL}</h3>
-            {/*<h3>Phone: 406 - XXX - XXXX</h3>*/}
-            <h3>Email: {this.state.organizationEmail}</h3>
-            {/*<h3>Rating: 8 / 10</h3>*/}
-            <h3>Description:</h3>
-            <p>{this.state.organizationDescription}</p>
-            <h3>Phones:</h3>
-            <div>
+          <div className = "" ref={ref}>
+						<h1 className="centered">{this.state.organizationName}</h1>
+						<div className="infoChunk">
+	            <h3>Name: {this.state.organizationName}</h3>
+	            <h3>Website: {this.state.organizationURL}</h3>
+	            {/*<h3>Phone: 406 - XXX - XXXX</h3>*/}
+	            <h3>Email: {this.state.organizationEmail}</h3>
+	            {/*<h3>Rating: 8 / 10</h3>*/}
+	            <h3>Description:</h3>
+	            <p>{this.state.organizationDescription}</p>
+						</div>
+						<br/>
+						<br/>
+            <h1 className="centered">Phones:</h1>
+            <div className="infoChunk">
               {this.state.phoneRecords.length > 0
                 ? this.state.phoneRecords.map((phones, index) => (
                     <div key={index}>
@@ -592,12 +597,13 @@ export default class AgencyInfo extends Component { //FIXME should be agency cre
                   ))
                 : ""}
             </div>
-            <div>
-            <br/>
-            <h3>Services: </h3>
+						<br/>
+						<br/>
+						<h1 className="centered">Services: </h1>
+            <div className="infoChunk">
             {this.state.serviceRecords.length > 0
               ? this.state.serviceRecords.map((services, index) => (
-                  <div className="container mt-3" key={index}>
+                  <div className="" key={index}>
                     <ServiceInfo
                       {...services.fields}
                       taxonomy = {this.state.serviceTaxonomies[index]}
@@ -608,9 +614,10 @@ export default class AgencyInfo extends Component { //FIXME should be agency cre
                 ))
               : ""}
             </div>
-            <div>
-            <br/>
-            <h3>Contacts:</h3>
+						<br/>
+						<br/>
+						<h1 className="centered">Contacts:</h1>
+            <div className="infoChunk">
               {this.state.contactRecords.length > 0
                 ? this.state.contactRecords.map((contacts, index) => (
                     <div key={index}>
@@ -626,9 +633,11 @@ export default class AgencyInfo extends Component { //FIXME should be agency cre
                   ))
                 : ""}
             </div>
-						<div>
+						<br/>
+						<br/>
+						<h1 className="centered">Locations:</h1>
+						<div className="infoChunk">
             <br/>
-            <h3>Locations:</h3>
               {this.state.locationRecords.length > 0
                 ? this.state.locationRecords.map((location, index) => (
                     <div key={index}>
@@ -645,6 +654,8 @@ export default class AgencyInfo extends Component { //FIXME should be agency cre
                   ))
                 : ""}
             </div>
+						<br/>
+						<br/>
           </div>
         </div>
       </div>
