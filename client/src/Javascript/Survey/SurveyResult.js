@@ -49,6 +49,7 @@ export default class SurveyResult extends React.Component{
 
   componentDidMount() {
     this.props.database('phones').find(this.state.phone_number, (err, phone) => {
+      console.log(phone);
       this.setState(previousState => ({
         phone_number: phone.fields['number'],
       }));

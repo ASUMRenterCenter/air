@@ -51,9 +51,19 @@ export default class SurveyResult extends React.Component{
 
   componentDidMount() {
     this.props.database('phones').find(this.state.phone_number, (err, phone) => {
-      this.setState(previousState => ({
-        phone_number: phone.fields['number'],
-      }));
+      console.log(phone);
+      if(phone.fields['number'] !== "undefined"){
+        this.setState(previousState => ({
+          phone_number: phone.fields['number'],
+        }));
+      }
+      else{
+        console.log("Undefined phone")
+        this.setState(previousState => ({
+          phone_number: "undefined",
+        }));
+      }
+
     });
     console.log(showWhat);
   }

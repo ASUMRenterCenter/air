@@ -18,7 +18,7 @@ export default class Homepage extends Component {
 	componentDidMount() {
 		var taxonomy_array = []
 		this.props.database('taxonomy').select({
-			filterByFormula: '{parent_id} = ""',
+			filterByFormula: '{parent_name} = ""',
 			view: "Grid view",
 		}).eachPage((taxonomies, fetchNextPage) => {
 			if(!this.state.mobile){

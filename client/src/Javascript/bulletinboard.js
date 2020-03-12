@@ -12,13 +12,13 @@ export default class buttonresults extends React.Component {
 		};
 		this.handleEvents = this.handleEvents.bind(this);
 		// this.handlePhones = this.handlePhones.bind(this);
-		this.handleOrganizations = this.handleOrganizations.bind(this);
+		// this.handleOrganizations = this.handleOrganizations.bind(this);
 		// this.handleAddress = this.handleAddress.bind(this);
 		// this.handleLocation = this.handleLocation.bind(this);
 		this.handleInformation = this.handleInformation.bind(this);
 		this.returnInformation = this.returnInformation.bind(this);
 		this.processEvents = this.processEvents.bind(this);
-		this.dataQuery = this.dataQuery.bind(this);
+		// this.dataQuery = this.dataQuery.bind(this);
 	}
 
 	// locations = [];
@@ -41,16 +41,16 @@ export default class buttonresults extends React.Component {
 		return all_events;
 	};
 
-	handleOrganizations = async org_id => {
-		console.log("Got to handleOrganization");
-		let organizations = [];
-		await this.props
-			.database("organizations")
-			.find(org_id, (err, organization) => {
-				organizations.push(organization);
-			});
-		return organizations;
-	}
+	// handleOrganizations = async org_id => {
+	// 	console.log("Got to handleOrganization");
+	// 	let organizations = [];
+	// 	await this.props
+	// 		.database("organizations")
+	// 		.find(org_id, (err, organization) => {
+	// 			organizations.push(organization);
+	// 		});
+	// 	return organizations;
+	// }
 
 	// handleLocation = async location_id => {
 	// 	console.log("Got to handleLocation");
@@ -95,23 +95,23 @@ export default class buttonresults extends React.Component {
 	// 	return organizations;
 	// };
 
-	dataQuery = async string => {
-		let locations;
-		console.log("before query", string);
-		await this.props.database("locations").find(string, (err, location) => {
-			if (err) {
-				console.error(err);
-				return;
-			}
-			locations = location;
-			console.log("Inside query");
-			console.log(location);
-			console.log(locations);
-			//console.log(locations[0].id);
-		});
-		console.log("after query", locations);
-		return locations;
-	};
+	// dataQuery = async string => {
+	// 	let locations;
+	// 	console.log("before query", string);
+	// 	await this.props.database("locations").find(string, (err, location) => {
+	// 		if (err) {
+	// 			console.error(err);
+	// 			return;
+	// 		}
+	// 		locations = location;
+	// 		console.log("Inside query");
+	// 		console.log(location);
+	// 		console.log(locations);
+	// 		//console.log(locations[0].id);
+	// 	});
+	// 	console.log("after query", locations);
+	// 	return locations;
+	// };
 	processEvents = async events => {
 		const organizations = await events.map(async (event, index) => {
 			//let locations;
@@ -195,9 +195,9 @@ export default class buttonresults extends React.Component {
 			if (hour > 12 && hour < 24) {
 				ampm = "PM";
 				hour = hour - 12;
-			} else if (hour == 12) {
+			} else if (hour === 12) {
 				ampm = "PM";
-			} else if (hour == 0) {
+			} else if (hour === 0) {
 				ampm = "AM";
 				hour = 12;
 			} else {
@@ -239,6 +239,20 @@ export default class buttonresults extends React.Component {
 								{events[i] !== undefined
 									? events[i].fields["event_name"]
 									: "event name unavailable"}
+							</p>
+						</div>
+					) : (
+						<p>invalid event name</p>
+					)}
+		{
+			/*------------------------------------------*/
+		}
+		 {events[i] !== undefined ? (
+						<div className="t-col">
+							<p>
+								{events[i] !== undefined
+									? events[i].fields["description"]
+									: "event description unavailable"}
 							</p>
 						</div>
 					) : (
@@ -313,8 +327,11 @@ export default class buttonresults extends React.Component {
 						<div className="t-col">
 							<p>Event Name</p>
 						</div>
+						<div className='t-col'>
+							<p>Description</p>
+						</div>
 						<div className="t-col">
-							<p>Location</p>
+							<p>Organization</p>
 						</div>
 						<div className="t-col">
 							<p>Address</p>
