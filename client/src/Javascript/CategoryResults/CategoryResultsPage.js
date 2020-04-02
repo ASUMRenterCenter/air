@@ -89,7 +89,7 @@ export default class CategoryResultsPage extends React.Component{
     return (
       <div ref ={ref}>
         <div className="jumbotron">
-          <h4>{this.state.taxonomy_name} Results: </h4>
+          <h4 class='resultsText'>{this.state.taxonomy_name} Results: </h4>
           <div id="printSaveShare">
             <PrintButton id="printSaveShare"></PrintButton>
             <Pdf targetRef={ref} filename="code-example.pdf">
