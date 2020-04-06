@@ -149,9 +149,9 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 		console.log("taxonomy layer 1" + this.state.serviceTaxonomyName);
 
 		setTimeout(() =>{
-			var newTaxonomyArray = [];
+			var newTaxonomyArray = []; //FIXME this is where you need to change from ID to name
 			this.props.database('taxonomy').select({
-					filterByFormula: "({parent_id} = '" + this.state.serviceTaxonomyName + "')",
+					filterByFormula: "({parent_name} = '" + this.state.serviceTaxonomyName + "')",
 					view: 'Grid view',
 			}).firstPage((err, records) => {
 					if (err) { console.error(err); return; }
@@ -169,7 +169,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 				console.log("Service Taxonomy ID: " + this.state.serviceTaxonomyName);
 
 				this.setState({
-					taxonomyRecords: recordHolder,
+					taxonomyRecords: recordHolder, //FIXME HERES WHERE YOU WERE SEAN
 				})
 				console.log(this.state.taxonomyRecords);
 				console.log(recordHolder);
@@ -642,7 +642,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 								return(
 									<Form.Control key={id} as="select" name="serviceTaxonomyName" onChange={event => this.handleServiceTaxonomy(event)}>
 										{(recordSet || []).map((record, key) => {
-											return <option key={key} value={record.fields.id}>{record.fields.name}</option>;
+											return <option key={key} value={record.fields.name}>{record.fields.name}</option>;
 										})}
 									</Form.Control>
 								)
