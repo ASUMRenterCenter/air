@@ -14,7 +14,7 @@ import axios from "axios";
 const ref = React.createRef();
 
 var showWhat = "Show More";
-function CustomToggle({ children, eventKey, agency_name, agency_website, thisClass}) {
+function CustomToggle({ children, eventKey, agency_name, thisClass}) {
   const decoratedOnClick = useAccordionToggle(eventKey, () => {
     // console.log("Got Here")
     // var elem = document.getElementById(agency_name);
@@ -30,23 +30,22 @@ function CustomToggle({ children, eventKey, agency_name, agency_website, thisCla
     } else {
       showWhat = "Show More";
     }
-    thisClass.changeButton(showWhat);
-    // thisClass.setState(previousState=>({
-    //   showWhat: showWhat
-    // }));
+    // thisClass.changeButton(showWhat);
+    thisClass.setState(previousState=>({
+      showWhat: showWhat
+    }));
   });
 
   return (
-    <div>
+    <div class='alignCenter'>
       <div>
-        <h5 style = {{float: "left"}}>{agency_name} : <a href={agency_website}>{agency_website}</a></h5>
+        <h5 class='orgText'>{agency_name}</h5>
       </div>
       <div>
         <Button
           type="button"
           id={agency_name}
           variant="dark"
-          style={{float: "right"}}
           onClick={decoratedOnClick}
         >
           {children}
@@ -94,15 +93,15 @@ export default class SurveyResultsPage extends React.Component{
         this.handleInformation = this.handleInformation.bind(this);
         this.processInformation = this.processInformation.bind(this);
         this.returnInformation = this.returnInformation.bind(this);
-        this.changeButton = this.changeButton.bind(this);
+        // this.changeButton = this.changeButton.bind(this);
         // this.handleTaxonomies = this.handleTaxonomies.bind(this);
     }
 
-    changeButton (newContent) {
-        this.setState({
-            showWhat: newContent
-        })
-    }
+    // changeButton (newContent) {
+    //     this.setState({
+    //         showWhat: newContent
+    //     })
+    // }
 
     handleInformation = async () => {
         console.log("Got to getTaxonomyIds");
@@ -152,10 +151,11 @@ export default class SurveyResultsPage extends React.Component{
                     html_inner = [...html_inner, <Accordion key ={org.id}>
                                                     <Card>
                                                         <Card.Header>
-                                                            <CustomToggle eventKey="0" agency_name = {org.fields['name']} agency_website = {org.fields['url']} thisClass = {this}>{this.state.showWhat}</CustomToggle>
+                                                            <CustomToggle eventKey="0" agency_name = {org.fields['name']} thisClass = {this}>{this.state.showWhat}</CustomToggle>
                                                         </Card.Header>
                                                         <Accordion.Collapse eventKey="0">
                                                             <Card.Body>
+                                                                <p>Organization URL: <a href={org.fields['url']}>{org.fields['url']}</a></p>
                                                                 <p>Phone: {phone[index]}</p>
                                                                 <p>Email: {org.fields['email']}</p>
                                                                 <p>Address: {addr.fields['address_1']}, {addr.fields['city']}, {addr.fields['state']} {addr.fields['Zip Code']}</p>
@@ -171,7 +171,7 @@ export default class SurveyResultsPage extends React.Component{
 			
 			let html_piece = (<div ref ={ref} key={taxonomy_name}>
 							<div className="jumbotron">
-								<h4>{taxonomy_name} Results: </h4>
+								<h4 class='resultsText'>{taxonomy_name} Results: </h4>
 								{html_inner}
 							</div>
 							</div>);
@@ -200,7 +200,7 @@ export default class SurveyResultsPage extends React.Component{
 
     render(){
         if(!this.state.continue){
-            return <h1>Please Wait While We Gather Events!</h1>
+            return <h1>Please Wait While We Gather Results!</h1>
         }
         else{
             return (

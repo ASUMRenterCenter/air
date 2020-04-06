@@ -7,7 +7,7 @@ import "../../CSS/ComponentStyle.css"
 import ResultMoreInfoBody from './ResultMoreInfoBody'
 
 var showWhat = "Show More";
-function CustomToggle({ children, eventKey, agency_name, agency_website, thisClass}) {
+function CustomToggle({ children, eventKey, agency_name, thisClass}) {
   const decoratedOnClick = useAccordionToggle(eventKey, () => {
     if (showWhat === "Show More"){
       showWhat = "Show Less";
@@ -22,15 +22,14 @@ function CustomToggle({ children, eventKey, agency_name, agency_website, thisCla
   });
 
   return (
-    <div>
+    <div class='alignCenter'>
       <div>
-        <h5 style = {{float: "left"}}>{agency_name} : <a href={agency_website}>{agency_website}</a></h5>
+        <h5 class='orgText'>{agency_name}</h5>
       </div>
       <div>
         <Button
           type="button"
           variant="dark"
-          style={{float: "right"}}
           onClick={decoratedOnClick}
         >
           {children}
@@ -72,14 +71,13 @@ export default class SurveyResult extends React.Component{
 
   render () {
       return (
-        <div>
+        <div class='accordionDiv'>
           <Accordion>
             <Card>
               <Card.Header>
                 <CustomToggle eventKey="0"
                 onClick={event => this.myFunction(event)}
                 agency_name = {this.props.agency_name}
-                agency_website = {this.props.agency_website}
                 thisClass = {this}>
                   {this.state.showWhat}
                 </CustomToggle>
@@ -89,6 +87,7 @@ export default class SurveyResult extends React.Component{
                   <ResultMoreInfoBody
                     agency_id={this.props.agency_id}
                     phone_number={this.state.phone_number}
+                    agency_website = {this.props.agency_website}
                     email={this.props.email}
                     address={this.props.address}
                     city={this.props.city}

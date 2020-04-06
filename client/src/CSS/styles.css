@@ -633,6 +633,19 @@ ________________________*/
 		opacity: 1;
 	}
 }
+
+.resultsText {
+	font-size: 35px;
+}
+
+.alignCenter {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+.orgText {
+	font-size: 30px;
+}
 /* Homepage Go through */
 /* #parent {
 	display: flex;
