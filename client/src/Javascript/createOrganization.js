@@ -165,20 +165,25 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 				var recordHolder = this.state.taxonomyRecords;
 				console.log("Pre push the recordHolder =  " + recordHolder);
 				recordHolder.push(newTaxonomyArray);
-				console.log("post push the recordHolder =  " + recordHolder);
+				console.log("post push the recordHolder =  ");
+				console.log(recordHolder);
+
 				console.log("Service Taxonomy ID: " + this.state.serviceTaxonomyName);
 
 				this.setState({
 					taxonomyRecords: recordHolder, //FIXME HERES WHERE YOU WERE SEAN
 				})
+				console.log("Here is taxonomy records really soon");
 				console.log(this.state.taxonomyRecords);
-				console.log(recordHolder);
+				//console.log(recordHolder);
 			}, 500);
 
 		}, 100);
 
 		setTimeout(() => {
 			console.log(this.state.serviceTaxonomyName);
+			console.log("The final state records: ");
+			console.log(this.state.taxonomyRecords);
 		}, 7000);
 
 	}
@@ -641,6 +646,7 @@ export default class CreateOrganization extends Component { //FIXME should be ag
 							{(this.state.taxonomyRecords || []).map((recordSet, id) =>{
 								return(
 									<Form.Control key={id} as="select" name="serviceTaxonomyName" onChange={event => this.handleServiceTaxonomy(event)}>
+										<option key ='99' value={"NONE"}>If more options available, please continue</option>
 										{(recordSet || []).map((record, key) => {
 											return <option key={key} value={record.fields.name}>{record.fields.name}</option>;
 										})}

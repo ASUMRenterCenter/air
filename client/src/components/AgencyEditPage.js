@@ -132,7 +132,7 @@ export default class AgencyEditPage extends Component {
 		//RETRIEVING ORGANIZATION RECORD
 		this.props.database('organizations').find(organizationRecordID, (err, record) => {
 		    if (err) { console.error(err); return; }
-		    //console.log('Retrieved', record.id);
+		    ////console.log('Retrieved', record.id);
 				this.setState({
 					organization: record,
 					serviceTaxonomies: [[record, record], [record, record]] //TAXONOMY PLACEHOLDER TO AVOID GLITCHES
@@ -146,7 +146,7 @@ export default class AgencyEditPage extends Component {
 		}).firstPage((err, records) => {
 				if (err) { console.error(err); return; }
 				records.forEach((record) => {
-						//console.log('Retrieved', record.get('name'));
+						////console.log('Retrieved', record.get('name'));
 						taxonomyArray.push(record);
 				});
 		});
@@ -161,13 +161,13 @@ export default class AgencyEditPage extends Component {
 			})
 		}, 1000);
 		setTimeout(() => {
-			//console.log(this.state.taxonomyRecords);
+			////console.log(this.state.taxonomyRecords);
 		}, 1500);
 
 
 		//RETRIEVING THE PHONE RECORD(S)
 		setTimeout(() => {
-		//console.log("ID GOING IN IS: " + this.state.organization.fields.name);
+		////console.log("ID GOING IN IS: " + this.state.organization.fields.name);
 			var phonesArray = [];
 			this.props.database('phones').select({
 					filterByFormula: '{organizations} = "' + this.state.organization.fields.name +'"',
@@ -175,13 +175,13 @@ export default class AgencyEditPage extends Component {
 			}).firstPage((err, records) => {
 			    if (err) { console.error(err); return; }
 			    records.forEach((record) => {
-			        //console.log('Retrieved Phone: ', record.get('number'));
+			        ////console.log('Retrieved Phone: ', record.get('number'));
 							phonesArray.push(record);
 			    });
 			});
 
 			setTimeout(() => {
-				//console.log("Phones array" + phonesArray);
+				////console.log("Phones array" + phonesArray);
 				this.setState({
 					phoneRecords: phonesArray,
 				})
@@ -192,7 +192,7 @@ export default class AgencyEditPage extends Component {
 
 		//RETRIEVE SERVICE RECORDS: //////////////////////////////////////////////
 		setTimeout(() => {
-			//console.log("ID GOING IN IS: " + this.state.organization.fields.name);
+			////console.log("ID GOING IN IS: " + this.state.organization.fields.name);
 			var servicesArray = [];
 			this.props.database('services').select({
 					filterByFormula: '{organization} = "' + this.state.organization.fields.name +'"',
@@ -200,13 +200,13 @@ export default class AgencyEditPage extends Component {
 			}).firstPage((err, records) => {
 					if (err) { console.error(err); return; }
 					records.forEach((record) => {
-					//		console.log('Retrieved service', record.get('Name'));
+					//		//console.log('Retrieved service', record.get('Name'));
 							servicesArray.push(record);
 					});
 			});
 
 			setTimeout(() => {
-				//console.log(servicesArray);
+				////console.log(servicesArray);
 				this.setState({
 					serviceRecords: servicesArray, ///FIXME: ARE WE KEEPING RECORDS OR ID NUMBERS??????
 				})
@@ -217,7 +217,7 @@ export default class AgencyEditPage extends Component {
 
 		//RETRIEVE CONTACT RECORDS: //////////////////////////////////////////////
 		setTimeout(() => {
-			//console.log("ID GOING IN IS: " + this.state.organization.fields.name);
+			////console.log("ID GOING IN IS: " + this.state.organization.fields.name);
 			var contactsArray = [];
 			this.props.database('contact').select({
 					filterByFormula: '{organizations} = "' + this.state.organization.fields.name +'"',
@@ -225,7 +225,7 @@ export default class AgencyEditPage extends Component {
 			}).firstPage((err, records) => {
 					if (err) { console.error(err); return; }
 					records.forEach((record) => {
-							//console.log('Retrieved contact', record.get('Name'));
+							////console.log('Retrieved contact', record.get('Name'));
 							contactsArray.push(record);
 					});
 			});
@@ -235,8 +235,8 @@ export default class AgencyEditPage extends Component {
 			}
 
 			setTimeout(() => {
-				//console.log("The one and only contact array is: ")
-				//console.log(contactsArray);
+				////console.log("The one and only contact array is: ")
+				////console.log(contactsArray);
 				this.setState({
 					contactRecords: contactsArray, ///FIXME: ARE WE KEEPING RECORDS OR ID NUMBERS??????
 					contactServiceNames: contactServiceNamesArray
@@ -288,7 +288,7 @@ export default class AgencyEditPage extends Component {
 			}).firstPage((err, records) => {
 					if (err) { console.error(err); return; }
 					records.forEach((record) => {
-							console.log('Retrieved location', record.get('name'));
+							//console.log('Retrieved location', record.get('name'));
 							locationsArray.push(record);
 					});
 			});
@@ -304,8 +304,8 @@ export default class AgencyEditPage extends Component {
 					locationAddresses: locationAddressesArray,
 					locationServices: locationServicesArray,
 				})
-				//console.log("The location Records are as follows: ");
-				//console.log(locationsArray);
+				////console.log("The location Records are as follows: ");
+				////console.log(locationsArray);
 			}, 2000);
 		}, 2000); //// END OF RETRIEVING LOCATION RECORDS
 
@@ -337,17 +337,17 @@ export default class AgencyEditPage extends Component {
 			var locationAddressesArray = [];
 			var rearrangedArray = [];
 			for (let i = 0; i < this.state.locationRecords.length; i++){
-				console.log("Making it in the address retrieval loop");
-				//console.log(this.state.locationRecords[i].fields);
+				//console.log("Making it in the address retrieval loop");
+				////console.log(this.state.locationRecords[i].fields);
 				this.props.database('address').find(this.state.locationRecords[i].fields.address, (err, record) => {
 				    if (err) { console.error(err); return; }
-				    //console.log('Retrieved');
-						//console.log(record);
+				    ////console.log('Retrieved');
+						////console.log(record);
 						locationAddressesArray.push(record);
 				});
 			}
 			setTimeout(() => {
-				//console.log("Phones array" + phonesArray);
+				////console.log("Phones array" + phonesArray);
 				for (let i = 0; i < this.state.locationRecords.length; i++){ //What's this little gem you asK? Well, even though we retrieve address records
 					for (let j = 0; j < this.state.locationRecords.length; j++){//and push them to a list in the same order the locations appear in, somehow
 						if (this.state.locationRecords[i].fields.address === locationAddressesArray[j].id){//because react is a treat, they still do not get added
@@ -355,10 +355,10 @@ export default class AgencyEditPage extends Component {
 						}																								//this thing fixes that problem!
 					}
 				}
-				//console.log("H E R E   I S   R E A R R A N G E D   A R R A Y ");
-				//console.log(rearrangedArray);
-				//console.log(this.state.locationRecords[0].fields.address);
-				//console.log(locationAddressesArray[0].fields.address_1);
+				////console.log("H E R E   I S   R E A R R A N G E D   A R R A Y ");
+				////console.log(rearrangedArray);
+				////console.log(this.state.locationRecords[0].fields.address);
+				////console.log(locationAddressesArray[0].fields.address_1);
 				this.setState({
 					locationAddressRecords: rearrangedArray,
 				})
@@ -370,30 +370,30 @@ export default class AgencyEditPage extends Component {
 
 		//Retrieve Service Taxonomies /////////////////////////////////////////////
 		setTimeout(() => {
-			//console.log("Even accessing the service stuff?");
+			////console.log("Even accessing the service stuff?");
 			var allTax = [];
 			// var taxonomyArray = [];
 			for (let i = 0; i < this.state.serviceRecords.length; i++){
-				//console.log(this.state.serviceRecords[i].fields.Name + " at index " + i)
+				////console.log(this.state.serviceRecords[i].fields.Name + " at index " + i)
 				allTax.push([]);
 				// taxonomyArray = [];
-				//console.log("Taxonomy Array at iteration " + i);
-				//console.log(allTax);
+				////console.log("Taxonomy Array at iteration " + i);
+				////console.log(allTax);
 				this.props.database('taxonomy').select({
 						filterByFormula: '{services 2} = "' + this.state.serviceRecords[i].fields.id +'"',
 						view: 'Grid view',
 				}).firstPage((err, records) => {
 						if (err) { console.error(err); return; }
 						records.forEach((record) => {
-					//			console.log('Retrieved taxonomy', record.get('name'), 'at ' + i);
+					//			//console.log('Retrieved taxonomy', record.get('name'), 'at ' + i);
 								allTax[i].push(record);
 						});
 						//allTax.push(taxonomyArray);
 				});
 			}
 			setTimeout(() => {
-				//console.log("Alltax here");
-				//console.log(allTax);
+				////console.log("Alltax here");
+				////console.log(allTax);
 				this.setState({
 					serviceTaxonomies: allTax
 				})
@@ -418,30 +418,30 @@ export default class AgencyEditPage extends Component {
   componentDidMount(){
     this.props.database('organizations').find('recgRmL5hpzXrhUHI', (err, record) => {
       if (err) { console.error(err); return; }
-      console.log('Retrieved', record);
+      //console.log('Retrieved', record);
       this.setState(previousState => ({
         organization: record
       }));
     });
-    console.log(this.state.organization);
+    //console.log(this.state.organization);
   }
 */
 
 	componentDidUpdate() {
-		//console.log("Here is the organization: ");
-		//console.log(this.state.organization);
-		//console.log(this.state.phoneRecords);
-		//console.log(this.state.organization.id);
-		//console.log("STARTS HERE:::::::::")
-		//console.log(this.state.organization != []);
-		//console.log(!this.state.org_update);
-		//console.log(this.state.phoneRecords.length > 0);
-		//console.log(this.state.serviceRecords.length > 0);
-		//console.log(this.state.contactRecords.length > 0);
-		//console.log(this.state.locationRecords.length > 0);
-		//console.log(this.state.locationAddressRecords.length > 0);
-		console.log("H e r e   a r e   a l l   p r o p s :  ")
-		console.log(this.props);
+		////console.log("Here is the organization: ");
+		////console.log(this.state.organization);
+		////console.log(this.state.phoneRecords);
+		////console.log(this.state.organization.id);
+		////console.log("STARTS HERE:::::::::")
+		////console.log(this.state.organization != []);
+		////console.log(!this.state.org_update);
+		////console.log(this.state.phoneRecords.length > 0);
+		////console.log(this.state.serviceRecords.length > 0);
+		////console.log(this.state.contactRecords.length > 0);
+		////console.log(this.state.locationRecords.length > 0);
+		////console.log(this.state.locationAddressRecords.length > 0);
+		//console.log("H e r e   a r e   a l l   p r o p s :  ")
+		//console.log(this.props);
 
 		if (
 			this.state.organization !== [] &&
@@ -452,7 +452,7 @@ export default class AgencyEditPage extends Component {
 			this.state.locationRecords.length > 0 &&						//If the user clicks "update", the empty name is uploaded to the database
 			this.state.locationAddressRecords.length > 0		//this causes all other fields not to load, since most are linked to the org name
 		) {																													//and the base can't handle an empty string for a name!!!!
-			console.log("R e a c h i n g   i n s i d e   t h e   d i d U p d a t e   i f ")
+			//console.log("R e a c h i n g   i n s i d e   t h e   d i d U p d a t e   i f ")
 			var phoneNumArray = [];
 			var phoneDescArray = [];
 			for (let i = 0; i < this.state.phoneRecords.length; i++){
@@ -523,7 +523,7 @@ export default class AgencyEditPage extends Component {
 			}
 
 			/*setTimeout(() => {
-				console.log(allTax);
+				//console.log(allTax);
 			}, 2000);*/
 
 			this.setState({
@@ -582,44 +582,44 @@ export default class AgencyEditPage extends Component {
 		}*/
 
 		setTimeout(() => {
-			//console.log(this.state.organizationName);
-			//console.log(this.state.organizationEmail);
-			//console.log(this.state.organizationURL);
-			//console.log(this.state.organizationDescription);
-			//console.log(this.state.phoneNumbers);
-			//console.log(this.state.phoneDescriptions)
+			////console.log(this.state.organizationName);
+			////console.log(this.state.organizationEmail);
+			////console.log(this.state.organizationURL);
+			////console.log(this.state.organizationDescription);
+			////console.log(this.state.phoneNumbers);
+			////console.log(this.state.phoneDescriptions)
 
-			//console.log(this.state.serviceNames);
-			//console.log(this.state.serviceURLs);
-			//console.log("Service Taxonomies: vvv")
-			//console.log(this.state.serviceTaxonomies);
-			//console.log(this.state.contactNames);
-			//console.log(this.state.contactTitles);
-			//console.log(this.state.contactDepartments);
-			//console.log(this.state.contactEmails);
-			//console.log("The contact services are: ");
-			//console.log(this.state.contactServices);
-			//console.log("The location names are: ");
-			//console.log(this.state.locationNames);
-			//console.log("The latitudes are: ");
-			//console.log(this.state.locationLatitude);
-			//console.log("H E R E  I S  T H E  A D D R E S S  I N F O")
-			//console.log(this.state.addressCities);
-			//console.log(this.state.locationRecords[0].id);
-			//console.log(this.state.addressStates[0]);
-			//console.log(this.state.locationAddressRecords[0]);
+			////console.log(this.state.serviceNames);
+			////console.log(this.state.serviceURLs);
+			////console.log("Service Taxonomies: vvv")
+			////console.log(this.state.serviceTaxonomies);
+			////console.log(this.state.contactNames);
+			////console.log(this.state.contactTitles);
+			////console.log(this.state.contactDepartments);
+			////console.log(this.state.contactEmails);
+			////console.log("The contact services are: ");
+			////console.log(this.state.contactServices);
+			////console.log("The location names are: ");
+			////console.log(this.state.locationNames);
+			////console.log("The latitudes are: ");
+			////console.log(this.state.locationLatitude);
+			////console.log("H E R E  I S  T H E  A D D R E S S  I N F O")
+			////console.log(this.state.addressCities);
+			////console.log(this.state.locationRecords[0].id);
+			////console.log(this.state.addressStates[0]);
+			////console.log(this.state.locationAddressRecords[0]);
 			/*for (let i = 0; i < this.state.locationRecords.length; i++){
-				console.log("Printing for index: " + i)
-				console.log(this.state.addresses[i]);
-				console.log(this.state.addressCities[i]);
-				console.log(this.state.addressStates[i]);
-				console.log(this.state.addressZipCodes[i]);
-				console.log(this.state.addressCountries[i]);
-				console.log(this.state.addressTypes[i]);
-				console.log(this.state.locationAddressRecords[i]);
+				//console.log("Printing for index: " + i)
+				//console.log(this.state.addresses[i]);
+				//console.log(this.state.addressCities[i]);
+				//console.log(this.state.addressStates[i]);
+				//console.log(this.state.addressZipCodes[i]);
+				//console.log(this.state.addressCountries[i]);
+				//console.log(this.state.addressTypes[i]);
+				//console.log(this.state.locationAddressRecords[i]);
 			}*/
-			//console.log(this.state.locationAddressRecords);
-			console.log(this.state.serviceRecords);
+			////console.log(this.state.locationAddressRecords);
+			//console.log(this.state.serviceRecords);
 		}, 10000);
 	}
 
@@ -627,7 +627,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			[e.target.name]: e.target.value
 		});
-		console.log(e.target.value);
+		//console.log(e.target.value);
 	}
 
 	handleNumberChange(e, index) {
@@ -637,7 +637,7 @@ export default class AgencyEditPage extends Component {
 			phoneNumber: newHolder
 		})
 
-		//console.log(this.state.phoneNumbers);
+		////console.log(this.state.phoneNumbers);
 	}
 
 	handleDescriptionChange(e, index) {
@@ -647,7 +647,7 @@ export default class AgencyEditPage extends Component {
 			phoneDescriptions: newHolder
 		})
 
-		//console.log(this.state.phoneDescriptions);
+		////console.log(this.state.phoneDescriptions);
 	}
 
 	handleServiceNameChange(e, index){
@@ -656,7 +656,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			serviceNames: newHolder
 		})
-		//console.log(this.state.serviceNames);
+		////console.log(this.state.serviceNames);
 	}
 
 	handleServiceDescriptionChange(e, index){
@@ -665,7 +665,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			serviceDescriptions: newHolder
 		})
-		console.log(this.state.serviceDescriptions);
+		//console.log(this.state.serviceDescriptions);
 	}
 
 	handleServiceAltNameChange(e, index){
@@ -674,7 +674,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			serviceAltNames: newHolder
 		})
-		console.log(this.state.serviceAltNames);
+		//console.log(this.state.serviceAltNames);
 	}
 
 	handleServiceURLChange(e, index){
@@ -683,7 +683,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			serviceURLs: newHolder
 		})
-		console.log(this.state.serviceURLs);
+		//console.log(this.state.serviceURLs);
 	}
 
 	handleServiceEmailChange(e, index){
@@ -692,7 +692,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			serviceEmails: newHolder
 		})
-		console.log(this.state.serviceEmails);
+		//console.log(this.state.serviceEmails);
 	}
 
 	handleContactNameChange(e, index){
@@ -701,7 +701,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			contactNames: newHolder
 		})
-		console.log(this.state.contactNames);
+		//console.log(this.state.contactNames);
 	}
 
 	handleContactTitleChange(e, index){
@@ -710,7 +710,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			contactTitles: newHolder
 		})
-		console.log(this.state.contactTitles);
+		//console.log(this.state.contactTitles);
 	}
 
 	handleContactEmailChange(e, index){
@@ -719,7 +719,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			contactEmails: newHolder
 		})
-		console.log(this.state.contactEmails);
+		//console.log(this.state.contactEmails);
 	}
 
 	handleContactDepartmentChange(e, index){
@@ -728,7 +728,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			contactDepartments: newHolder
 		})
-		console.log(this.state.contactDepartments);
+		//console.log(this.state.contactDepartments);
 	}
 
 	handleLocationNameChange(e, index){
@@ -737,7 +737,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			locationNames: newHolder
 		})
-		console.log(this.state.locationNames);
+		//console.log(this.state.locationNames);
 	}
 
 	handleLocationAltNameChange(e, index){
@@ -746,7 +746,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			locationAltNames: newHolder
 		})
-		console.log(this.state.locationAltNames);
+		//console.log(this.state.locationAltNames);
 	}
 
 	handleLocationDescriptionChange(e, index){
@@ -755,7 +755,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			locationDescriptions: newHolder
 		})
-		console.log(this.state.locationDescriptions);
+		//console.log(this.state.locationDescriptions);
 	}
 
 	handleLocationTransportationChange(e, index){
@@ -764,7 +764,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			locationTransportation: newHolder
 		})
-		console.log(this.state.locationTransportation);
+		//console.log(this.state.locationTransportation);
 	}
 
 	handleLocationLatitudeChange(e, index){
@@ -773,7 +773,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			locationLatitude: newHolder
 		})
-		console.log(this.state.locationLatitude);
+		//console.log(this.state.locationLatitude);
 	}
 
 	handleLocationLongitudeChange(e, index){
@@ -782,7 +782,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			locationLongitude: newHolder
 		})
-		console.log(this.state.locationLongitude);
+		//console.log(this.state.locationLongitude);
 	}
 
 	handleLocationAddressTypeChange(e, index){
@@ -791,7 +791,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			addressTypes: newHolder
 		})
-		console.log(this.state.addressTypes);
+		//console.log(this.state.addressTypes);
 	}
 
 	handleLocationAddressCountryChange(e, index){
@@ -800,7 +800,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			addressCountries: newHolder
 		})
-		console.log(this.state.addressCountries);
+		//console.log(this.state.addressCountries);
 	}
 
 	handleLocationAddressZipCodeChange(e, index){
@@ -809,7 +809,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			addressZipCodes: newHolder
 		})
-		console.log(this.state.addressZipCodes);
+		//console.log(this.state.addressZipCodes);
 	}
 
 	handleLocationAddressStateChange(e, index){
@@ -818,7 +818,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			addressStates: newHolder
 		})
-		console.log(this.state.addressStates);
+		//console.log(this.state.addressStates);
 	}
 
 	handleLocationAddressCityChange(e, index){
@@ -827,7 +827,7 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			addressCities: newHolder
 		})
-		console.log(this.state.addressCities);
+		//console.log(this.state.addressCities);
 	}
 
 	handleLocationAddressChange(e, index){
@@ -836,67 +836,69 @@ export default class AgencyEditPage extends Component {
 		this.setState({
 			addresses: newHolder
 		})
-		console.log(this.state.addresses);
+		//console.log(this.state.addresses);
 	}
 
 	/*handleServiceTaxonomy(e, serviceIndex, taxonomyIndex){
-		console.log("Service Taxonomy Information: ")
-		console.log(serviceIndex);
-		console.log(taxonomyIndex);
+		//console.log("Service Taxonomy Information: ")
+		//console.log(serviceIndex);
+		//console.log(taxonomyIndex);
 		var taxonomyHolder = this.state.serviceTaxonomies;
 		taxonomyHolder[serviceIndex][taxonomyIndex] = e.target.value;
 		this.setState({
 			serviceTaxonomies: taxonomyHolder
 		});
-		console.log("taxonomy layer 1" + this.state.serviceTaxonomies[serviceIndex][taxonomyIndex]);
+		//console.log("taxonomy layer 1" + this.state.serviceTaxonomies[serviceIndex][taxonomyIndex]);
 	}*/
 
 	handleServiceTaxonomy(e, serviceIndex){
 		this.setState({
 			[e.target.name]: e.target.value
 		});
-		console.log("taxonomy layer 1" + this.state.serviceTaxonomyName);
+		//console.log("taxonomy layer 1" + this.state.serviceTaxonomyName);
 
 		setTimeout(() =>{
-			console.log("THE SERVICE INDEX IS: " + serviceIndex);
+			//console.log("THE SERVICE INDEX IS: " + serviceIndex);
 			var finalLayer = false;
 			var newTaxonomyArray = [];
 			this.props.database('taxonomy').select({
-					filterByFormula: "({parent_id} = '" + this.state.serviceTaxonomyName + "')",
+					filterByFormula: "({parent_name} = '" + this.state.serviceTaxonomyName + "')",
 					view: 'Grid view',
 			}).firstPage((err, records) => {
 					if (err) { console.error(err); return; }
 					records.forEach((record) => {
-							console.log('Retrieved layer 2 ', record.get('name'));
+							//console.log('Retrieved layer 2 ', record.get('name'));
 							newTaxonomyArray.push(record);
 					});
 			});
 
 			setTimeout(() => {
 				var recordHolder = this.state.taxonomyRecords;
-				console.log("Pre push the recordHolder =  " + recordHolder);
+				console.log("Pre push the recordHolder =  ");
+				console.log(recordHolder);
 				if (newTaxonomyArray.length > 0){
 					recordHolder.push(newTaxonomyArray);
 				} else {
 					finalLayer = true;
 				}
-				console.log("post push the recordHolder =  " + recordHolder);
-				console.log("Service Taxonomy ID: " + this.state.serviceTaxonomyName);
+				console.log("post push the recordHolder =  ");
+				console.log(recordHolder);
+				//console.log("Service Taxonomy ID: " + this.state.serviceTaxonomyName);
 
 				this.setState({
 					taxonomyRecords: recordHolder,
 				})
-				console.log("Here we print the taxonomyRecords and the recordHolder: ")
-				console.log(this.state.taxonomyRecords);
-				console.log(recordHolder);
+				//console.log("Here we print the taxonomyRecords and the recordHolder: ")
+				//console.log(this.state.taxonomyRecords);
+				//console.log(recordHolder);
 				if (finalLayer === true){
 					var holder = this.state.serviceTaxonomies;
-					console.log("Here is holder!!!")
-					console.log(holder);
-					console.log("Here is the last of the taxonomies:")
-					console.log(this.state.taxonomyRecords[this.state.taxonomyRecords.length - 1]);
+					//console.log("Here is holder!!!")
+					//console.log(holder);
+					//console.log("Here is the last of the taxonomies:")
+					//console.log(this.state.taxonomyRecords[this.state.taxonomyRecords.length - 1]);
 					for (let i = 0; i < this.state.taxonomyRecords[this.state.taxonomyRecords.length - 1].length; i++){
-						if (this.state.taxonomyRecords[this.state.taxonomyRecords.length - 1][i].fields.id === this.state.serviceTaxonomyName){
+						if (this.state.taxonomyRecords[this.state.taxonomyRecords.length - 1][i].fields.name === this.state.serviceTaxonomyName){
 							holder[serviceIndex].push(this.state.taxonomyRecords[this.state.taxonomyRecords.length -1][i]);
 						}
 					}
@@ -905,8 +907,8 @@ export default class AgencyEditPage extends Component {
 						for (let i = 0; i < holder[serviceIndex].length; i++){
 							idNumbers[i] = holder[serviceIndex][i].id
 						}
-						console.log("Here are the id numbers: ::::::")
-						console.log(idNumbers);
+						//console.log("Here are the id numbers: ::::::")
+						//console.log(idNumbers);
 						this.props.database('services').update([
 						  {
 						    "id": this.state.serviceRecords[serviceIndex].id,
@@ -920,7 +922,7 @@ export default class AgencyEditPage extends Component {
 						    return;
 						  }
 						  records.forEach((record) => {
-						    console.log(record.get('id'));
+						    //console.log(record.get('id'));
 						  });
 						});
 						this.setState({
@@ -934,17 +936,17 @@ export default class AgencyEditPage extends Component {
 		}, 100);
 
 		setTimeout(() => {
-			console.log(this.state.serviceTaxonomyName);
+			//console.log(this.state.serviceTaxonomyName);
 		}, 7000);
 
 	}
 
 
 	handleLocationService(e, locationIndex){
-		console.log("The location index: ");
-		console.log(locationIndex);
-		console.log("T H E  V A L U E  P A S S E D  I N :  ");
-		console.log(e.target.value);
+		//console.log("The location index: ");
+		//console.log(locationIndex);
+		//console.log("T H E  V A L U E  P A S S E D  I N :  ");
+		//console.log(e.target.value);
 		this.props.database('locations').update([ //FIXME: THE user can select "none" but this does not affect the database!!!
 			{																			//Luckily, if the contact originally has not services, this still works
 				"id": this.state.locationRecords[locationIndex].id,
@@ -958,7 +960,7 @@ export default class AgencyEditPage extends Component {
 				return;
 			}
 			records.forEach(function(record) {
-				console.log(record.get('name'));
+				//console.log(record.get('name'));
 			});
 		});
 
@@ -984,10 +986,10 @@ export default class AgencyEditPage extends Component {
 	}
 
 	handleContactService(e, contactIndex){
-		console.log("The contact index: ");
-		console.log(contactIndex);
-		console.log("T H E  V A L U E  P A S S E D  I N :  ");
-		console.log(e.target.value);
+		//console.log("The contact index: ");
+		//console.log(contactIndex);
+		//console.log("T H E  V A L U E  P A S S E D  I N :  ");
+		//console.log(e.target.value);
 		this.props.database('contact').update([ //FIXME: THE user can select "none" but this does not affect the database!!!
 		  {																			//Luckily, if the contact originally has not services, this still works
 		    "id": this.state.contactRecords[contactIndex].id,
@@ -1001,7 +1003,7 @@ export default class AgencyEditPage extends Component {
 		    return;
 		  }
 		  records.forEach(function(record) {
-		    console.log(record.get('name'));
+		    //console.log(record.get('name'));
 		  });
 		});
 
@@ -1027,10 +1029,10 @@ export default class AgencyEditPage extends Component {
 	}
 
 	handleContactPhone(e, contactIndex){
-		console.log("The contact index: ");
-		console.log(contactIndex);
-		console.log("T H E  V A L U E  P A S S E D  I N :  ");
-		console.log(e.target.value);
+		//console.log("The contact index: ");
+		//console.log(contactIndex);
+		//console.log("T H E  V A L U E  P A S S E D  I N :  ");
+		//console.log(e.target.value);
 		this.props.database('contact').update([ //FIXME: THE user can select "none" but this does not affect the database!!!
 			{																			//Luckily, if the contact originally has not services, this still works
 				"id": this.state.contactRecords[contactIndex].id,
@@ -1044,7 +1046,7 @@ export default class AgencyEditPage extends Component {
 				return;
 			}
 			records.forEach(function(record) {
-				console.log(record.get('name'));
+				//console.log(record.get('name'));
 			});
 		});
 
@@ -1076,9 +1078,9 @@ export default class AgencyEditPage extends Component {
 		    console.error(err);
 		    return;
 		  }
-		  console.log('Deleted', deletedRecords.length, 'records');
+		  //console.log('Deleted', deletedRecords.length, 'records');
 		});
-		//console.log(this.state.phoneRecords[index].id);
+		////console.log(this.state.phoneRecords[index].id);
 		setTimeout(function() {
 			refreshPage();
 		}, 100);
@@ -1090,9 +1092,9 @@ export default class AgencyEditPage extends Component {
 				console.error(err);
 				return;
 			}
-			console.log('Deleted', deletedRecords.length, 'records');
+			//console.log('Deleted', deletedRecords.length, 'records');
 		});
-		//console.log(this.state.phoneRecords[index].id);
+		////console.log(this.state.phoneRecords[index].id);
 		setTimeout(function() {
 			refreshPage();
 		}, 100);
@@ -1105,9 +1107,9 @@ export default class AgencyEditPage extends Component {
 				console.error(err);
 				return;
 			}
-			console.log('Deleted', deletedRecords.length, 'records');
+			//console.log('Deleted', deletedRecords.length, 'records');
 		});
-		//console.log(this.state.phoneRecords[index].id);
+		////console.log(this.state.phoneRecords[index].id);
 		setTimeout(function() {
 			refreshPage();
 		}, 100);
@@ -1120,9 +1122,9 @@ export default class AgencyEditPage extends Component {
 				console.error(err);
 				return;
 			}
-			console.log('Deleted', deletedRecords.length, 'records');
+			//console.log('Deleted', deletedRecords.length, 'records');
 		});
-		//console.log(this.state.phoneRecords[index].id);
+		////console.log(this.state.phoneRecords[index].id);
 		setTimeout(function() {
 			refreshPage();
 		}, 100);
@@ -1132,13 +1134,13 @@ export default class AgencyEditPage extends Component {
 
 
 	deleteTaxonomy(serviceIndex, taxonomyIndex){
-		//console.log("State of service taxonomies going into funciton vvv THE INDEXES: " + serviceIndex + taxonomyIndex);
-		//console.log(this.state.serviceTaxonomies);
+		////console.log("State of service taxonomies going into funciton vvv THE INDEXES: " + serviceIndex + taxonomyIndex);
+		////console.log(this.state.serviceTaxonomies);
 
 		var holder = this.state.serviceTaxonomies;
 		holder[serviceIndex].splice(taxonomyIndex, 1)
-		//console.log("what holder makes: ");
-		//console.log(holder);
+		////console.log("what holder makes: ");
+		////console.log(holder);
 		this.setState({
 			serviceTaxonomies: holder
 		})
@@ -1159,7 +1161,7 @@ export default class AgencyEditPage extends Component {
 				return;
 			}
 			records.forEach((record) => {
-				console.log(record.get('id'));
+				//console.log(record.get('id'));
 			});
 		});
 		this.setState({
@@ -1189,7 +1191,7 @@ export default class AgencyEditPage extends Component {
 				return;
 			}
 		});
-		//console.log(this.state.phoneRecord.id);
+		////console.log(this.state.phoneRecord.id);
 		setTimeout(function() {
 			refreshPage();
 		}, 100);
@@ -1219,7 +1221,7 @@ export default class AgencyEditPage extends Component {
 		    return;
 		  }
 		  records.forEach(function (record) {
-		    console.log(record.getId());
+		    //console.log(record.getId());
 		  });
 		});
 
@@ -1249,7 +1251,7 @@ export default class AgencyEditPage extends Component {
 				return;
 			}
 		});
-		//console.log(this.state.phoneRecord.id);
+		////console.log(this.state.phoneRecord.id);
 		setTimeout(function() {
 			refreshPage();
 		}, 100);
@@ -1279,9 +1281,9 @@ export default class AgencyEditPage extends Component {
 			}
 			newLocation = records;
 		});
-		//console.log(this.state.phoneRecord.id);
+		////console.log(this.state.phoneRecord.id);
 		setTimeout(() => {
-			//console.log(newLocation);
+			////console.log(newLocation);
 			this.props.database('address').create([
 				{
 					"fields": {
@@ -1303,7 +1305,7 @@ export default class AgencyEditPage extends Component {
 					return;
 				}
 				records.forEach(function (record) {
-					console.log(record.getId());
+					//console.log(record.getId());
 				});
 			});
 		}, 1000);
@@ -1335,7 +1337,7 @@ export default class AgencyEditPage extends Component {
 					return;
 				}
 				records.forEach(function(record) {
-					//console.log(record.get('name'));
+					////console.log(record.get('name'));
 				});
 			}
 		);
@@ -1346,7 +1348,7 @@ export default class AgencyEditPage extends Component {
 
 		if (this.state.phoneRecords.length > 0) {
 			for (let i =0; i < this.state.phoneRecords.length; i++){
-				console.log(this.state.phoneRecords);
+				//console.log(this.state.phoneRecords);
 				this.props.database("phones").update(
 					[
 						{
@@ -1363,7 +1365,7 @@ export default class AgencyEditPage extends Component {
 							return;
 						}
 						records.forEach(function(record) {
-							console.log(record.get("name"));
+							//console.log(record.get("name"));
 						});
 					}
 				);
@@ -1394,7 +1396,7 @@ export default class AgencyEditPage extends Component {
 							return;
 						}
 						records.forEach(function(record) {
-							console.log(record.get("id"));
+							//console.log(record.get("id"));
 						});
 					}
 				);
@@ -1403,7 +1405,7 @@ export default class AgencyEditPage extends Component {
 
 		//UPDATING CONTACT INFO /////////////////
 		if (this.state.contactRecords.length > 0) {
-			console.log("W e A r e m a k i n g i t i n  th e i f")
+			//console.log("W e A r e m a k i n g i t i n  th e i f")
 			for (let i = 0; i < this.state.contactRecords.length; i++){
 				this.props.database("contact").update(
 					[
@@ -1423,7 +1425,7 @@ export default class AgencyEditPage extends Component {
 							return;
 						}
 						records.forEach(function(record) {
-							console.log(record.get("id"));
+							//console.log(record.get("id"));
 						});
 					}
 				);
@@ -1432,7 +1434,7 @@ export default class AgencyEditPage extends Component {
 
 		//UPDATING LOCATION INFO /////////////////
 		if (this.state.locationRecords.length > 0) {
-			console.log("MADE IT INSIDE THE LOCATION IF");
+			//console.log("MADE IT INSIDE THE LOCATION IF");
 			for (let i = 0; i < this.state.locationRecords.length; i++){
 				this.props.database("locations").update(
 					[
@@ -1454,17 +1456,17 @@ export default class AgencyEditPage extends Component {
 							return;
 						}
 						records.forEach(function(record) {
-							console.log(record.get("id"));
+							//console.log(record.get("id"));
 						});
 					}
 				);
 
-				/*console.log(this.state.addresses[i]);
-				console.log(this.state.addressCities[i]);
-				console.log(this.state.addressStates[i]);
-				console.log(this.state.addressZipCodes[i]);
-				console.log(this.state.addressCountries[i]);
-				console.log(this.state.addressTypes[i]);*/
+				/*//console.log(this.state.addresses[i]);
+				//console.log(this.state.addressCities[i]);
+				//console.log(this.state.addressStates[i]);
+				//console.log(this.state.addressZipCodes[i]);
+				//console.log(this.state.addressCountries[i]);
+				//console.log(this.state.addressTypes[i]);*/
 
 				this.props.database('address').update([
 				  {
@@ -1486,7 +1488,7 @@ export default class AgencyEditPage extends Component {
 				    return;
 				  }
 				  records.forEach(function(record) {
-				    console.log(record.get('address_1'));
+				    //console.log(record.get('address_1'));
 				  });
 				});
 
@@ -1744,7 +1746,7 @@ class PhoneEditFields extends Component {
 	}
 
 	render() {
-		//console.log(this.props)
+		////console.log(this.props)
 		return (
 			<div>
 				<Form>
@@ -1799,8 +1801,8 @@ class ServiceEditFields extends Component {
 
 
 	render() {
-		console.log("HERE ARE PROPS");
-		console.log(this.props.taxonomy);
+		//console.log("HERE ARE PROPS");
+		//console.log(this.props.taxonomy);
 		if (this.props.taxonomy === [][0]){
 			return (<h1>loading services</h1>);
 		}
@@ -1898,7 +1900,7 @@ class ServiceEditFields extends Component {
 									<Form.Control key={id} as="select" name="serviceTaxonomyName" onChange={event => this.props.handleServiceTaxonomy(event, this.props.index)}>
 										<option key={999} value={-1}>Please Select an Option</option>
 										{(recordSet || []).map((record, key) => {
-											return <option key={key} value={record.fields.id}>{record.fields.name}</option>;
+											return <option key={key} value={record.fields.name}>{record.fields.name}</option>;
 										})}
 									</Form.Control>
 								)
@@ -1944,26 +1946,26 @@ class ContactEditFields extends Component {
 
 
 	render() {
-		//console.log("H E R E  A R E  T H E  C O N T A C T  P R O P S")
-		//console.log(this.props.services[0].id)
-		//console.log("And the services are: ");
-		//console.log(this.props.services);
-		//console.log("THE CONTACT SERVICE PASSED IN IS: ");
-		//console.log(this.props.contactServiceName);
+		////console.log("H E R E  A R E  T H E  C O N T A C T  P R O P S")
+		////console.log(this.props.services[0].id)
+		////console.log("And the services are: ");
+		////console.log(this.props.services);
+		////console.log("THE CONTACT SERVICE PASSED IN IS: ");
+		////console.log(this.props.contactServiceName);
 		var name = "";
 		if(this.props.contactServiceName === [][1]){
 			name = "none";
 		} else {
 			name = this.props.contactServiceName;
 		}
-		//console.log("The name is : " + name);
+		////console.log("The name is : " + name);
 		var number = "";
 		if(this.props.contactPhoneNumber === [][1]){
 			number = "none";
 		} else {
 			number = this.props.contactPhoneNumber;
 		}
-		//console.log("The number is : " + number);
+		////console.log("The number is : " + number);
 
 		return (
 			<div >
@@ -2059,10 +2061,10 @@ class LocationEditFields extends Component { // WE WILL ALSO USE THESE FOR ADDRE
 
 
 	render() {
-		//console.log("H E R E  A R E  T H E  L O C A T I O N   P R O P S")
-		//console.log(this.props)
-		//console.log("And the services are: ");
-		//console.log(this.props.services);
+		////console.log("H E R E  A R E  T H E  L O C A T I O N   P R O P S")
+		////console.log(this.props)
+		////console.log("And the services are: ");
+		////console.log(this.props.services);
 		var name = "";
 		if(this.props.locationServiceName === [][1]){
 			name = "none";
@@ -2070,8 +2072,8 @@ class LocationEditFields extends Component { // WE WILL ALSO USE THESE FOR ADDRE
 			name = this.props.locationServiceName;
 		}
 
-		//console.log("The address record is as follows: ")
-		//console.log(this.props.addressRecord);
+		////console.log("The address record is as follows: ")
+		////console.log(this.props.addressRecord);
 
 		if(this.props.addressRecord === [][0]){
 			return(
