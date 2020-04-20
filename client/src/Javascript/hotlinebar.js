@@ -7,6 +7,7 @@ export default class HotlineBar extends Component {
 		super(props);
 		this.state = {
             hotlines: [],
+            buttonclosed: false
         }
         this.wrapperRef = React.createRef();
     }
@@ -29,14 +30,32 @@ export default class HotlineBar extends Component {
         console.log("was clicked")
     }
 
+    icondisplay(){
+        if(this.state.buttonclosed){
+            this.setState({
+                buttonclosed: false
+            })
+        }
+        else {
+            this.setState({
+                buttonclosed: true
+            })
+        }
+    }
+
     render (){
         return (
             <div ref={this.wrapperRef} className="wrapper buttonpagescolumn">
                 <div className="side">
-                    <button 
+                    {this.state.buttonclosed ? (<button 
                         className="nav__icon"
-                        onClick={() => this.handleClick()}
-                    >&#9776; Hotlines</button>
+                        onClick={() => {this.handleClick(); this.icondisplay();}}
+                    >&#x25C1;</button>) :
+                    (<button 
+                        className="nav__icon"
+                        onClick={() => {this.handleClick(); this.icondisplay();}}
+                    >&#x274C;</button>)
+                    }
                     <div className="nav__body">
                         <ul className="sidebarcontent">
                             {this.state.hotlines.length > 0 ? (
